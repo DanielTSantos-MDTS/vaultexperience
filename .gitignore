@@ -1,0 +1,11 @@
+# Arquivos de ambiente (contêm senhas)
+.env
+
+# Pasta de dependências (muito pesada)
+node_modules/
+
+# Caso eu decida ignorar uma pasta de testes no futuro, deixo aqui:
+tests/
+
+# Para para códigos que talvez utilize
+snippets/
