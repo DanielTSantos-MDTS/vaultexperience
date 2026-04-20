@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import slug from 'mongoose-slug-updater'
 const { Schema, model } = mongoose;
 
 const categoriaSchema = new Schema ({
@@ -8,7 +9,9 @@ const categoriaSchema = new Schema ({
     },
     slug: {
         type: String,
-        lowercase: true
+        slug: nome,
+        lowercase: true,
+        unique: true
     }
 })
 
