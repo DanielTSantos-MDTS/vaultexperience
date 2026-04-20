@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
+
 import Endereco from './Endereco'
+import Reputacao from './Reputacao'
 
 const userSchema = new Schema({
     usuario:{
@@ -16,16 +18,21 @@ const userSchema = new Schema({
     email: {
         type: String,
         unique: true,
-        lowercase: true
+        lowercase: true,
+        required: true
     },
     tel: {
         type: String,
         required: true
     },
     dataNascimento: {
-        type: Date
+        type: Date,
+        required: true
     },
-    endereco: Endereco,
+    endereco: {
+        endereco,
+        required: true
+    },
     notaAtual:{
         type: Number,
         default: 0
@@ -33,6 +40,10 @@ const userSchema = new Schema({
     quantidadeAvaliacoes: {
         type: Number,
         default: 0
+    },
+    reputacao: {
+        type: Schema.Types.ObjectId,
+        ref: 'Reputacao'
     }
 });
 
