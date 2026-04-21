@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
-import User from './User';
-import Reputacao from './Reputacao'
-import Venda from './Venda';
+import User from './User.js';
+import Reputacao from './Reputacao.js'
+import Venda from './Venda.js';
 
 const avaliacaoSchema = new Schema ({
     avaliador:{
@@ -43,8 +43,23 @@ avaliacaoSchema.post('save', async function(doc) {
 
     vendedor.quantidadeAvaliacoes = vendedor.quantidadeAvaliacoes + 1;
     
-    vendedor.notaAtual = ((vendedor.notaAtual * quantidadeAntiga) + doc.estrelas) / vendedor.quantidadeAvaliacoes;
+    const calculoNota = ((vendedor.notaAtual * quantidadeAntiga) + doc.estrelas) / vendedor.quantidadeAvaliacoes;
 
+    vendedor.notaAtual = Math.max(0, Math.min(calculoNota, 5));
+
+    let reputacaoAtual;
+
+    if (vendedor.notaAtual >= 4.5){
+        reputacaoAtual = await Reputacao.findOne({ label: 'Mestre'});
+    } else if (vendedor.notaAtual >= 2.5){
+        reputacaoAtual = await Reputacao.findOne({label: 'Confiável'});
+    } else {
+        reputacaoAtual = await Reputacao.findOne({label: 'Iniciante'});
+    }
+    
+    if (reputacaoAtual){
+        vendedor.reputacao = reputacaoAtual;
+    }
     await vendedor.save();
 });
 
