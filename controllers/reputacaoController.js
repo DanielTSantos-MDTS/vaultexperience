@@ -6,46 +6,49 @@ export default {
             const reputacaoLista = await Reputacao.find();
             return res.json(reputacaoLista);
         } catch (error){
-            return res.status(500).json(`Erro ao listar reputação. Erro: ${error}`);
+            return res.status(500).json(`Erro ao listar reputações. Erro: ${error}`);
         }
     },
-    async listarUm (req, res) {
+    async buscarPorId (req, res) {
         try {
             const id = req.params.id;
-            const reputacaoListaUm = await Reputacao.findById(id)
-            return res.json(reputacaoListaUm);
+            const reputacao = await Reputacao.findById(id)
+
+            if(!reputacao) return res.status(404).json('Reputação não encontrada')
+            
+            return res.status(200).json(reputacaoListaUm);
         } catch (error){
-            return res.status(500).json(`Erro ao listar reputação específica. Erro: ${error}`);
+            return res.status(500).json(`Erro ao buscar reputação. Erro: ${error}`);
         }
     },
-    async adicionar (req, res){
+    async criar (req, res){
         try{
             const label = req.body.label;
             const novaReputacao = await Reputacao.create({ label: label });
 
             return res.status(201).json(novaReputacao);
         } catch (error){
-            res.status(500).json(`Erro ao criar nova reputação. Erro: ${error}`);
+            res.status(500).json(`Erro ao criar reputação. Erro: ${error}`);
         }
     },
     async atualizar (req, res){
         try{
             const id = req.params.id;
-            const label = req.body.label;
+            const atualizcao = req.body.label;
             
             const reputacao = await Reputacao.findById(id);
 
             if (!reputacao) return res.status(404).json({Erro: 'Reputação não encontrada' });
-            reputacao.label = label || reputacao.label;
+            reputacao.label = atualizacao || reputacao.label;
             
             await reputacao.save();
             
-            res.json('Reputação atualizada com sucesso')
+            res.json('Reputação atualizada')
         } catch (error){
-            res.status(500).json(`Erro ao atualizar Reputação`);
+            res.status(500).json(`Erro ao atualizar Reputação. Erro ${error}`);
         }
     },
-    async deletar (req, res){
+    async apagar (req, res){
         try{
             const id = req.params.id;
             
@@ -53,9 +56,9 @@ export default {
             
             if (!reputacao) return res.status(404).json({Erro: 'Reputação não encontrada' });
 
-            return res.json('Reputação apagada com sucesso!');
+            return res.json('Reputação excluída com sucesso!');
         } catch (error){
-            return res.status(500).json(`Erro ao apagar reputação. Erro: ${error}`);
+            return res.status(500).json(`Erro ao excluída reputação. Erro: ${error}`);
         }
     }
 }
