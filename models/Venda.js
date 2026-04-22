@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
-import User from "./User";
-import Iten from "./Iten";
+import User from "./User.js";
+import Iten from "./Iten.js";
 
 const vendaSchema = new Schema ({
     comprador: {

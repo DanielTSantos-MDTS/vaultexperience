@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
-import User from "./User"
-import Categoria from "./Categoria";
-import Estado from "./Estado"
+import User from "./User.js"
+import Categoria from "./Categoria.js";
+import Estado from "./Estado.js";
 
 const itemSchema = new Schema ({
     nome: {

@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
-import Iten from "./Iten";
-import User from "./User";
+import Iten from "./Iten.js";
+import User from "./User.js";
 
 const trocaSchema = new Schema ({
     ofertante: {

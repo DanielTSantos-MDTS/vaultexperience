@@ -9,7 +9,7 @@ const categoriaSchema = new Schema ({
     },
     slug: {
         type: String,
-        slug: nome,
+        slug: 'nome',
         lowercase: true,
         unique: true
     }

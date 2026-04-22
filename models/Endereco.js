@@ -39,5 +39,5 @@ const enderecoSchema = new Schema({
     _id: false
 });
 
-const Endereco = model('Endereco', enderecoSchema);
+const Endereco = enderecoSchema;
 export default Endereco;
