@@ -44,6 +44,10 @@ const userSchema = new Schema({
     reputacao: {
         type: Schema.Types.ObjectId,
         ref: 'Reputacao'
+    },
+    dataCriação:{
+        type: Date,
+        default: Date.now
     }
 });
 
