@@ -5,12 +5,14 @@ dotenv.config();
 
 import Reputacao from './models/Reputacao.js'
 import reputacaoRouter from './Routes/reputacaoRouter.js'
+import avaliacaoRouter from './Routes/avaliacaoRouter.js'
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 app.use('/reputacao', reputacaoRouter);
+app.use('/avaliacao', avaliacaoRouter);
 
 const db = process.env.DATABASE_URL;
 async function criarReputacoes() {
