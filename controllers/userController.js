@@ -48,7 +48,7 @@ export default {
 
       await usuario.save();
 
-      return res.status(200).json('Usuário atualizado')
+      return res.status(200).json(usuario)
     } catch (error){
       return res.status(500).json(`Erro ao atualizar usuário. Erro: ${error}`);
     }

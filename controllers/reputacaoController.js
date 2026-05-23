@@ -43,7 +43,7 @@ export default {
             
             await reputacao.save();
             
-            res.json('Reputação atualizada')
+            res.status(200).json(reputacao);
         } catch (error){
             res.status(500).json(`Erro ao atualizar Reputação. Erro ${error}`);
         }

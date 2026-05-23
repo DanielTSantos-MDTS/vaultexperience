@@ -3,7 +3,6 @@ const { Schema, model } = mongoose;
 
 import User from "./User.js"
 import Categoria from "./Categoria.js";
-import Estado from "./Estado.js";
 
 const itemSchema = new Schema ({
     nome: {
@@ -26,8 +25,8 @@ const itemSchema = new Schema ({
       required: true
     },
     estado:{
-        type: Schema.Types.ObjectId,
-        ref: 'Estado',
+        type: String,
+        enum: ['Novo', 'Seminovo', 'Usado'],
         required: true
     },
     imagens: [{type: String}],

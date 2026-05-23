@@ -48,7 +48,7 @@ export default {
             
             await avaliacao.save();
             
-            return res.json('Avaliação atualizada');
+            return res.status(200).json(avaliacao);
         } catch (error){
             return res.status(500).json(`Erro ao atualizar avaliação. Erro: ${error}`);
         }
