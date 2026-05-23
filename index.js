@@ -9,6 +9,8 @@ import avaliacaoRouter from './Routes/avaliacaoRouter.js';
 import userRouter from './Routes/userRouter.js';
 import itemRouter from './Routes/itemRouter.js';
 import categoriaRouter from './Routes/categoriaRouter.js'
+import vendaRouter from './Routes/vendaRouter.js';
+import trocaRouter from './Routes/trocaRouter.js';
 
 const app = express();
 const port = 3000;
@@ -19,6 +21,8 @@ app.use('/avaliacao', avaliacaoRouter);
 app.use('/usuarios', userRouter);
 app.use('/item', itemRouter);
 app.use('/categoria', categoriaRouter);
+app.use('/venda', vendaRouter);
+app.use('/troca', trocaRouter);
 
 const db = process.env.DATABASE_URL;
 async function criarReputacoes() {
