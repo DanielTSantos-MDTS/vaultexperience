@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedido Confirmado — Vault Experience</title>
+  <link rel="icon" href="assets/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Barlow:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/store.css" />
+  <link rel="stylesheet" href="css/checkout-result.css" />
+</head>
+<body>
+
+<!-- NAVBAR mínima -->
+<nav id="navbar">
+  <div class="nav-top">
+    <a href="index.html" class="logo">
+      <img src="assets/logo.png" alt="Vault Experience" class="logo-img" />
+    </a>
+  </div>
+</nav>
+
+<main id="result-page">
+  <div class="content-wrapper">
+    <div class="result-card" id="result-card">
+      <!-- Conteúdo injetado pelo JS -->
+    </div>
+  </div>
+</main>
+
+<footer id="footer">
+  <div class="footer-bottom" style="padding:24px">
+    <span>© 2025 <span>Vault Experience</span>. Todos os direitos reservados.</span>
+  </div>
+</footer>
+
+<script src="js/store.js"></script>
+<script>
+'use strict';
+const fmt = n => Number(n).toFixed(2).replace('.', ',');
+
+document.addEventListener('DOMContentLoaded', () => {
+  const raw   = sessionStorage.getItem('valt_last_order');
+  const order = raw ? JSON.parse(raw) : null;
+  const card  = document.getElementById('result-card');
+
+  if (!order) {
+    card.innerHTML = `
+      <div class="result-icon result-icon--ok">✅</div>
+      <h1 class="result-title">Compra Realizada!</h1>
+      <p class="result-sub">Seu pedido foi confirmado com sucesso.</p>
+      <a href="index.html" class="btn-result-primary">Voltar para a loja</a>
+    `;
+    return;
+  }
+
+  const method = order.payment.method;
+
+  if (method === 'pix') {
+    // Gera QR code mock (URL de imagem QR via API pública)
+    const pixCode = `00020126580014br.gov.bcb.pix0136${order.id}5204000053039865802BR5913VaultExperience6013SaoPaulo62070503***6304${Math.floor(Math.random()*9999).toString().padStart(4,'0')}`;
+    const qrUrl   = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
+
+    card.innerHTML = `
+      <div class="result-icon result-icon--pix">⚡</div>
+      <h1 class="result-title">Aguardando Pagamento</h1>
+      <p class="result-sub">Escaneie o QR Code abaixo para pagar via Pix.</p>
+      <div class="pix-qr-wrap">
+        <img src="${qrUrl}" alt="QR Code Pix" class="pix-qr" />
+      </div>
+      <div class="pix-code-wrap">
+        <input type="text" id="pix-code" class="pix-code-input" value="${pixCode}" readonly />
+        <button class="btn-copy" onclick="copyPix()">
+          <i class="ti ti-copy"></i> Copiar Código
+        </button>
+      </div>
+      <p class="pix-warn">⏱ O código expira em <strong>30 minutos</strong>.</p>
+
+      ${orderSummaryHtml(order)}
+
+      <div class="result-actions">
+        <a href="index.html" class="btn-result-secondary">Voltar para a loja</a>
+      </div>
+    `;
+  } else if (method === 'boleto') {
+    card.innerHTML = `
+      <div class="result-icon result-icon--ok">📄</div>
+      <h1 class="result-title">Pedido Recebido!</h1>
+      <p class="result-sub">Seu boleto bancário foi gerado. Pague até o vencimento para confirmar o pedido.</p>
+      <button class="btn-result-primary" onclick="downloadBoleto()">
+        <i class="ti ti-file-download"></i> Baixar Boleto
+      </button>
+      ${orderSummaryHtml(order)}
+      <div class="result-actions">
+        <a href="index.html" class="btn-result-secondary">Voltar para a loja</a>
+      </div>
+    `;
+  } else {
+    card.innerHTML = `
+      <div class="result-icon result-icon--ok">🎉</div>
+      <h1 class="result-title">Compra Aprovada!</h1>
+      <p class="result-sub">Seu pedido foi confirmado e está sendo preparado.</p>
+      ${orderSummaryHtml(order)}
+      <div class="result-actions">
+        <a href="index.html" class="btn-result-primary">Continuar comprando</a>
+      </div>
+    `;
+  }
+});
+
+function orderSummaryHtml(order) {
+  const items = order.items.map(i =>
+    `<div class="os-row"><span>${i.qty}x ${i.name}</span><span>R$ ${fmt(i.price * i.qty)}</span></div>`
+  ).join('');
+  return `
+    <div class="order-summary-box">
+      <h3 class="os-title">📦 Pedido ${order.id}</h3>
+      ${items}
+      <div class="os-divider"></div>
+      <div class="os-row os-row--total"><span>Total</span><span>R$ ${fmt(order.total)}</span></div>
+      <div class="os-row"><span>Entrega</span><span>${order.address.rua}, ${order.address.numero} — ${order.address.cidade}/${order.address.estado}</span></div>
+    </div>
+  `;
+}
+
+function copyPix() {
+  const input = document.getElementById('pix-code');
+  if (!input) return;
+  input.select();
+  navigator.clipboard.writeText(input.value).then(() => {
+    const btn = document.querySelector('.btn-copy');
+    if (btn) { btn.textContent = '✅ Copiado!'; setTimeout(() => btn.innerHTML = '<i class="ti ti-copy"></i> Copiar Código', 2000); }
+  });
+}
+
+function downloadBoleto() {
+  // Mock: abre uma janela de impressão como boleto simulado
+  const w = window.open('', '_blank');
+  w.document.write('<h2 style="font-family:monospace;padding:40px">Boleto Vault Experience — SIMULADO<br><br>Linha digitável: 34191.75009 01234.678902 12345.670001 1 10000000000000</h2>');
+  w.print();
+}
+</script>
+</body>
+</html>

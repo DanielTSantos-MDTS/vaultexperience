@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo – Vault Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="css/mega-menu.css">
+<link rel="stylesheet" href="css/mobile-menu.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/categorias.css">
+<link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header id="navbar">
+  <div class="nav-top">
+    <a href="index.html" class="logo" aria-label="Vault Experience – Início">
+      <img src="assets/logo.png" alt="Vault Experience" class="logo-img" />
+    </a>
+
+    <div class="search-wrap">
+      <input type="text" id="search-input" placeholder="Buscar consoles, jogos, mangás…" aria-label="Buscar" />
+      <button class="search-btn" aria-label="Pesquisar">
+        <svg width="16" height="16" fill="none" stroke="#000" stroke-width="2.5" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="nav-actions">
+      <button class="btn-anunciar">Anunciar</button>
+
+      <button class="icon-btn" data-valt="fav-btn" aria-label="Favoritos"
+  onclick="window.location.href='favorites.html'">
+        <svg width="22" height="22" fill="none" stroke="#ccc" stroke-width="1.8" viewBox="0 0 24 24">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+
+      <button class="icon-btn" data-valt="cart-btn" aria-label="Carrinho"
+  onclick="window.location.href='cart.html'">
+        <svg width="22" height="22" fill="none" stroke="#ccc" stroke-width="1.8" viewBox="0 0 24 24">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+      </button>
+
+      <button class="icon-btn" id="hamburger-btn" aria-label="Menu"></button>
+
+      <div class="user-menu-container">
+        <div id="auth-area">
+          <button class="login-btn" id="login-btn">Entrar</button>
+        </div>
+        <div class="user-menu hidden" id="user-menu">
+          <button class="icon-btn" id="user-btn" title="Minha Conta">
+            <svg width="22" height="22" fill="none" stroke="#ccc" stroke-width="1.8" viewBox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-dropdown-header">
+              <span class="user-name" id="username-display">Username</span>
+              <span class="user-status">Online</span>
+            </div>
+            <hr class="dropdown-divider">
+            <ul class="dropdown-list">
+              <li><a href="#"><span class="material-symbols-rounded">storefront</span>Meus Anúncios</a></li>
+              <li><a href="#"><span class="material-symbols-rounded">package</span>Meus Pedidos</a></li>
+              <li><a href="#"><span class="material-symbols-rounded">account_balance_wallet</span>Carteira</a></li>
+              <li><a href="#"><span class="material-symbols-rounded">manage_accounts</span>Minha Conta</a></li>
+              <li><a href="#"><span class="material-symbols-rounded">shield</span>Segurança & Privacidade</a></li>
+              <li><a href="#"><span class="material-symbols-rounded">help</span>Ajuda</a></li>
+            </ul>
+            <hr class="dropdown-divider">
+            <ul class="dropdown-list">
+              <li>
+                <a href="#" class="logout-link" id="logout-btn">
+                  <span class="material-symbols-rounded">logout</span>Sair
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-sub" role="navigation" aria-label="Categorias"></div>
+    </nav>
+  </div>
+  <div class="nav-sub-inner" id="cat-menu"></div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="cat-breadcrumb-bar">
+  <div class="cat-breadcrumb-inner">
+    <nav class="breadcrumb" id="breadcrumb" aria-label="Navegação">
+      <a href="index.html">Início</a>
+      <span class="bc-sep">›</span>
+      <span id="bc-cat">Catálogo</span>
+      <span class="bc-sep bc-sub-sep hidden" id="bc-sub-sep">›</span>
+      <span id="bc-sub" class="hidden"></span>
+    </nav>
+  </div>
+</div>
+
+<!-- MAIN CATALOG LAYOUT -->
+<div class="catalog-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="catalog-sidebar" id="catalog-sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">Filtros</span>
+      <button class="sidebar-clear" id="clear-filters">Limpar tudo</button>
+    </div>
+
+    <!-- Subcategorias -->
+    <div class="filter-group" id="subcats-group">
+      <div class="filter-group-title">
+        <span>Subcategorias</span>
+        <i class="ti ti-chevron-down filter-toggle-icon"></i>
+      </div>
+      <div class="filter-group-body" id="subcats-list"></div>
+    </div>
+
+    <!-- Preço -->
+    <div class="filter-group">
+      <div class="filter-group-title">
+        <span>Faixa de Preço</span>
+        <i class="ti ti-chevron-down filter-toggle-icon"></i>
+      </div>
+      <div class="filter-group-body">
+        <div class="price-range-wrap">
+          <div class="price-inputs">
+            <div class="price-field">
+              <label>Mín</label>
+              <input type="number" id="price-min" placeholder="R$ 0" min="0" />
+            </div>
+            <div class="price-sep">—</div>
+            <div class="price-field">
+              <label>Máx</label>
+              <input type="number" id="price-max" placeholder="R$ 999" min="0" />
+            </div>
+          </div>
+          <button class="price-apply-btn" id="apply-price">Aplicar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Avaliação -->
+    <div class="filter-group">
+      <div class="filter-group-title">
+        <span>Avaliação</span>
+        <i class="ti ti-chevron-down filter-toggle-icon"></i>
+      </div>
+      <div class="filter-group-body">
+        <div class="rating-filters" id="rating-filters">
+          <label class="filter-check-label" data-rating="5">
+            <input type="radio" name="rating" value="5" />
+            <span class="stars-mini">★★★★★</span><span class="rating-txt">5 estrelas</span>
+          </label>
+          <label class="filter-check-label" data-rating="4">
+            <input type="radio" name="rating" value="4" />
+            <span class="stars-mini">★★★★☆</span><span class="rating-txt">4+ estrelas</span>
+          </label>
+          <label class="filter-check-label" data-rating="3">
+            <input type="radio" name="rating" value="3" />
+            <span class="stars-mini">★★★☆☆</span><span class="rating-txt">3+ estrelas</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disponibilidade -->
+    <div class="filter-group">
+      <div class="filter-group-title">
+        <span>Disponibilidade</span>
+        <i class="ti ti-chevron-down filter-toggle-icon"></i>
+      </div>
+      <div class="filter-group-body">
+        <label class="filter-check-label">
+          <input type="checkbox" id="filter-instock" />
+          <span>Somente em estoque</span>
+        </label>
+        <label class="filter-check-label">
+          <input type="checkbox" id="filter-promo" />
+          <span>Em promoção</span>
+        </label>
+        <label class="filter-check-label">
+          <input type="checkbox" id="filter-new" />
+          <span>Novidades</span>
+        </label>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="catalog-main">
+
+    <!-- HERO BANNER DA CATEGORIA -->
+    <div class="cat-hero" id="cat-hero">
+      <div class="cat-hero-overlay"></div>
+      <div class="cat-hero-content">
+        <div class="cat-hero-icon" id="cat-hero-icon"></div>
+        <div>
+          <h1 class="cat-hero-title" id="cat-hero-title">Catálogo</h1>
+          <p class="cat-hero-desc" id="cat-hero-desc">Explore nossa seleção completa</p>
+        </div>
+      </div>
+      <div class="cat-hero-stats" id="cat-hero-stats">
+        <div class="cat-stat">
+          <span class="cat-stat-num" id="stat-products">0</span>
+          <span class="cat-stat-lbl">Produtos</span>
+        </div>
+        <div class="cat-stat-div"></div>
+        <div class="cat-stat">
+          <span class="cat-stat-num">4.8★</span>
+          <span class="cat-stat-lbl">Avaliação média</span>
+        </div>
+        <div class="cat-stat-div"></div>
+        <div class="cat-stat">
+          <span class="cat-stat-num">24h</span>
+          <span class="cat-stat-lbl">Entrega digital</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBCATEGORIA -->
+    <div class="subcat-pills-wrap" id="subcat-pills-wrap">
+      <div class="subcat-pills" id="subcat-pills"></div>
+    </div>
+
+    <!-- TOOLBAR (ORDENAÇÃO E VISUALIZAÇÃO) -->
+    <div class="catalog-toolbar">
+      <div class="toolbar-left">
+        <span class="results-count"><span id="results-num">0</span> produtos encontrados</span>
+      </div>
+      <div class="toolbar-right">
+        <button class="filter-mobile-btn" id="filter-mobile-btn">
+          <i class="ti ti-filter"></i> Filtros
+          <span class="filter-badge hidden" id="filter-badge">0</span>
+        </button>
+        <div class="sort-wrap">
+          <label for="sort-select">Ordenar:</label>
+          <select id="sort-select">
+            <option value="relevancia">Relevância</option>
+            <option value="preco-asc">Menor preço</option>
+            <option value="preco-desc">Maior preço</option>
+            <option value="avaliacao">Melhor avaliação</option>
+            <option value="novidades">Mais recentes</option>
+          </select>
+        </div>
+        <div class="view-toggle">
+          <button class="view-btn active" id="view-grid" aria-label="Grade" title="Visualização em grade">
+            <i class="ti ti-layout-grid"></i>
+          </button>
+          <button class="view-btn" id="view-list" aria-label="Lista" title="Visualização em lista">
+            <i class="ti ti-layout-list"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="active-filters-bar hidden" id="active-filters-bar">
+      <div class="active-filters-chips" id="active-filters-chips"></div>
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="product-grid cat-grid" id="catalog-grid"></div>
+
+    <!-- PRODUTO VAZIO -->
+    <div class="empty-state hidden" id="empty-state">
+      <div class="empty-icon">🎮</div>
+      <h3>Nenhum produto encontrado</h3>
+      <p>Tente ajustar os filtros ou buscar por outro termo.</p>
+      <button class="btn-clear-all" id="btn-clear-all">Limpar filtros</button>
+    </div>
+
+    <div class="catalog-pagination" id="catalog-pagination"></div>
+  </main>
+</div>
+
+<!-- FILTROS -->
+<div class="mobile-filter-overlay hidden" id="mobile-filter-overlay">
+  <div class="mobile-filter-drawer" id="mobile-filter-drawer">
+    <div class="mobile-filter-header">
+      <h3>Filtros</h3>
+      <button id="close-filter-drawer" aria-label="Fechar filtros">
+        <i class="ti ti-x"></i>
+      </button>
+    </div>
+    <div class="mobile-filter-body" id="mobile-filter-body">
+
+      <!-- CLONE BARRA LATERAL -->
+    </div>
+    <div class="mobile-filter-footer">
+      <button class="btn-clear-mobile" id="clear-mobile">Limpar</button>
+      <button class="btn-apply-mobile" id="apply-mobile">Ver resultados</button>
+    </div>
+  </div>
+</div>
+
+<div class="mobile-overlay" id="mobile-overlay" role="dialog" aria-modal="true" aria-label="Menu principal">
+  <button class="mobile-close" id="mobile-close" aria-label="Fechar menu">&times;</button>
+  <div class="mobile-cat-list" id="mobile-cat-list"></div>
+  <button class="btn-anunciar" style="width:fit-content">Anunciar</button>
+</div>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="Vault Experience" class="footer-logo" />
+      <p class="footer-desc">
+        Somos a solução para o mercado geek e retrô, disponibilizando uma plataforma moderna
+        que permite que o comprador receba o produto desejado e o vendedor receba pelo que
+        vendeu. Tudo isso com praticidade e segurança.
+      </p>
+      <div class="footer-socials">
+        <a href="#" class="social-btn" aria-label="Discord">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M8 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"/><path d="M14 12a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"/>
+            <path d="M15.5 17c0 1 1.5 3 2 3c1.5 0 2.833 -1.667 3.5 -3c.667 -1.667 .5 -5.833 -1.5 -11.5c-1.457 -1.015 -3 -1.34 -4.5 -1.5l-.972 1.923a11.913 11.913 0 0 0 -4.053 0l-.975 -1.923c-1.5 .16 -3.043 .485 -4.5 1.5c-2 5.667 -2.167 9.833 -1.5 11.5c.667 1.333 2 3 3.5 3c.5 0 2 -2 2 -3"/>
+            <path d="M7 16.5c3.5 1 6.5 1 10 0"/>
+          </svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4l0 -8"/>
+            <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M16.5 7.5v.01"/>
+          </svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">AJUDA</p>
+      <ul class="footer-links">
+        <li><a href="#">Fale conosco</a></li>
+        <li><a href="#">Trocas e devoluções</a></li>
+        <li><a href="#">Tarifas e prazos</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">Institucional</p>
+      <ul class="footer-links">
+        <li><a href="#">Quem somos</a></li>
+        <li><a href="#">Política de privacidade</a></li>
+        <li><a href="#">Política de reembolso</a></li>
+        <li><a href="#">Termos de uso</a></li>
+      </ul>
+    </div>
+  </div>
+  <hr class="footer-divider" />
+  <div class="footer-trust-container">
+    <div class="trust-block">
+      <p class="trust-title">Formas de pagamento</p>
+      <div class="footer-socials">
+        <a href="#" class="social-btn" aria-label="Visa">
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#aaa">
+            <path d="M9.112 8.262L5.97 15.758H3.92L2.374 9.775c-.094-.368-.175-.503-.461-.658C1.447 8.864.677 8.627 0 8.479l.046-.217h3.3a.904.904 0 01.894.764l.817 4.338 2.018-5.102zm8.033 5.049c.008-1.979-2.736-2.088-2.717-2.972.006-.269.262-.555.822-.628a3.66 3.66 0 011.913.336l.34-1.59a5.207 5.207 0 00-1.814-.333c-1.917 0-3.266 1.02-3.278 2.479-.012 1.079.963 1.68 1.698 2.04.756.367 1.01.603 1.006.931-.005.504-.602.725-1.16.734-.975.015-1.54-.263-1.992-.473l-.351 1.642c.453.208 1.289.39 2.156.398 2.037 0 3.37-1.006 3.377-2.564m5.061 2.447H24l-1.565-7.496h-1.656a.883.883 0 00-.826.55l-2.909 6.946h2.036l.405-1.12h2.488zm-2.163-2.656l1.02-2.815.588 2.815zm-8.16-4.84l-1.603 7.496H8.34l1.605-7.496z"/>
+          </svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Mastercard">
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#aaa">
+            <path d="M11.343 18.031c.058.049.12.098.181.146-1.177.783-2.59 1.238-4.107 1.238C3.32 19.416 0 16.096 0 12c0-4.095 3.32-7.416 7.416-7.416 1.518 0 2.931.456 4.105 1.238-.06.051-.12.098-.165.15C9.6 7.489 8.595 9.688 8.595 12c0 2.311 1.001 4.51 2.748 6.031zm5.241-13.447c-1.52 0-2.931.456-4.105 1.238.06.051.12.098.165.15C14.4 7.489 15.405 9.688 15.405 12c0 2.31-1.001 4.507-2.748 6.031-.058.049-.12.098-.181.146 1.177.783 2.588 1.238 4.107 1.238C20.68 19.416 24 16.096 24 12c0-4.094-3.32-7.416-7.416-7.416z"/>
+          </svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Pix">
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#aaa">
+            <path d="M5.283 18.36a3.505 3.505 0 0 0 2.493-1.032l3.6-3.6a.684.684 0 0 1 .946 0l3.613 3.613a3.504 3.504 0 0 0 2.493 1.032h.71l-4.56 4.56a3.647 3.647 0 0 1-5.156 0L4.85 18.36ZM18.428 5.627a3.505 3.505 0 0 0-2.493 1.032l-3.613 3.614a.67.67 0 0 1-.946 0l-3.6-3.6A3.505 3.505 0 0 0 5.283 5.64h-.434l4.573-4.572a3.646 3.646 0 0 1 5.156 0l4.559 4.559ZM1.068 9.422 3.79 6.699h1.492a2.483 2.483 0 0 1 1.744.722l3.6 3.6a1.73 1.73 0 0 0 2.443 0l3.614-3.613a2.482 2.482 0 0 1 1.744-.723h1.767l2.737 2.737a3.646 3.646 0 0 1 0 5.156l-2.736 2.736h-1.768a2.482 2.482 0 0 1-1.744-.722l-3.613-3.613a1.77 1.77 0 0 0-2.444 0l-3.6 3.6a2.483 2.483 0 0 1-1.744.722H3.791l-2.723-2.723a3.646 3.646 0 0 1 0-5.156"/>
+          </svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Boleto">
+         <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#aaa">
+          <path d="M20,3H4A3,3,0,0,0,1,6V18a3,3,0,0,0,3,3H20a3,3,0,0,0,3-3V6A3,3,0,0,0,20,3Zm1,15a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V6A1,1,0,0,1,4,5H20a1,1,0,0,1,1,1ZM7,8v8a1,1,0,0,1-2,0V8A1,1,0,0,1,7,8Zm3,0v4a1,1,0,0,1-2,0V8a1,1,0,0,1,2,0Zm3,0v8a1,1,0,0,1-2,0V8a1,1,0,0,1,2,0Zm3,0v4a1,1,0,0,1-2,0V8a1,1,0,0,1,2,0Zm3,0v8a1,1,0,0,1-2,0V8a1,1,0,0,1,2,0Zm-9,7v1a1,1,0,0,1-2,0V15a1,1,0,0,1,2,0Zm6,0v1a1,1,0,0,1-2,0V15a1,1,0,0,1,2,0Z"/>
+        </svg>
+       </a>   
+      </div>
+    </div>
+  </div>
+  <hr class="footer-divider" />
+  <div class="footer-bottom">
+    <p class="footer-copy">Copyright © <span>Vault Experience</span> since 2026</p>
+    <p class="footer-badge">PRESS START TO PLAY ▮</p>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script src="js/store.js"></script>
+<script src="js/categorias.js"></script>
+</body>
+</html>
+
+<!-- Copyright since 2026 By Jeff.dev; Kalyl.dev; vitor.dev -->
