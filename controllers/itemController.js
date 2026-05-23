@@ -12,7 +12,7 @@ export default {
     },
     async buscarPorId (req, res){
         try{
-            const id = req.params;
+            const id = req.params.id;
 
             const item = await Item.findById(id);
 
@@ -36,7 +36,7 @@ export default {
     },
     async atualizar (req, res){
         try{
-            const id = req.params;
+            const id = req.params.id;
 
             const atualizacao = req.body;
             
@@ -55,7 +55,7 @@ export default {
     },
     async apagar (req, res){
         try{
-            const id = req.params;
+            const id = req.params.id;
 
             const item = await Item.findByIdAndDelete(id);
 
