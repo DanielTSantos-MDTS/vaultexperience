@@ -3,7 +3,10 @@ import Venda from "../models/Venda.js";
 export default{
     async listar (req, res){
         try{
-            const vendas = await Venda.find();
+            const vendas = await Venda.find()
+            .populate('comprador', 'usuario')
+            .populate('vendedor', 'usuario')
+            .populate('item', 'nome');
 
             res.status(200).json(vendas);
         } catch(error){
@@ -14,7 +17,10 @@ export default{
         try{
             const id = req.params.id;
 
-            const venda = await Venda.findById(id);
+            const venda = await Venda.findById(id)
+            .populate('comprador', 'usuario')
+            .populate('vendedor', 'usuario')
+            .populate('item', 'nome');
 
             if(!venda) return res.status(404).json({Erro: "venda não encontrada"});
             
@@ -29,6 +35,11 @@ export default{
 
             const novaVenda = await Venda.create(corpo);
 
+            await novaVenda
+            .populate('comprador', 'usuario')
+            .populate('vendedor', 'usuario')
+            .populate('item', 'nome');
+            
             return res.status(201).json(novaVenda);
         } catch(error){
             res.status(500).json(`Erro ao criar venda. Erro: ${error}`);
@@ -45,6 +56,13 @@ export default{
             if(!venda) return res.status(404).json({Erro: "Venda não encontrada"});
 
             Object.assign(venda, atualizacao);
+            
+            await venda.save();
+
+            await venda
+            .populate('comprador', 'usuario')
+            .populate('vendedor', 'usuario')
+            .populate('item', 'nome');
             
             return res.status(200).json(venda);
         } catch(error){

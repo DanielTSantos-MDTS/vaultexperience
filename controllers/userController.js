@@ -3,7 +3,8 @@ import User from "../models/User.js";
 export default {
   async listar (req, res) {
     try{
-      const usuarios = await User.find();
+      const usuarios = await User.find()
+      .populate('reputacao', 'label');
 
       return res.status(200).json(usuarios);
     } catch (error) {
@@ -14,8 +15,10 @@ export default {
     try{
       const id = req.params.id;
 
-      const usuario = await User.findById(id);
+      const usuario = await User.findById(id)
+      .populate('reputacao', 'label');
 
+      
       if(!usuario) return res.status(404).json({Erro: 'Usuário não encontrado'});
       
       return res.status(200).json(usuario);
@@ -29,6 +32,9 @@ export default {
 
       const novoUsuario = await User.create(corpo);
 
+      await usuario
+      .populate('reputacao', 'label');
+      
       return res.status(201).json(novoUsuario);
     } catch (error){
       return res.status(500).json(`Erro ao criar usuário. Erro: ${error}`);
@@ -47,6 +53,9 @@ export default {
       Object.assign(usuario, atualizacao);
 
       await usuario.save();
+
+      await usuario
+      .populate('reputacao', 'label');
 
       return res.status(200).json(usuario)
     } catch (error){

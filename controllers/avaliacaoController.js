@@ -3,7 +3,10 @@ import Avaliacao from "../models/Avaliacao.js";
 export default {
     async listar (req, res){
         try{
-            const avaliacoes = await Avaliacao.find();
+            const avaliacoes = await Avaliacao.find()
+            .populate('avaliador', 'usuario')
+            .populate('vendaAvaliada', 'item status valorOfertado dataOferta')
+            .populate('vendedorAvaliado', 'usuario');
 
             return res.status(200).json(avaliacoes);
         } catch (error) {
@@ -14,7 +17,10 @@ export default {
         try{
             const id = req.params.id;
             
-            const avaliacao = await Avaliacao.findById(id);
+            const avaliacao = await Avaliacao.findById(id)
+            .populate('avaliador', 'usuario')
+            .populate('vendaAvaliada', 'item status valorOfertado dataOferta')
+            .populate('vendedorAvaliado', 'usuario');
             
             if(!avaliacao) return res.status(404).json('Avaliação não encontrada')
                 
@@ -29,6 +35,11 @@ export default {
         
             const novaAvaliacao = await Avaliacao.create(corpo);
 
+            await novaAvaliacao
+            .populate('avaliador', 'usuario')
+            .populate('vendaAvaliada', 'item status valorOfertado dataOferta')
+            .populate('vendedorAvaliado', 'usuario');
+            
             return res.status(201).json(novaAvaliacao);
         } catch (error){
             return res.status(500).json(`Erro ao criar avaliação. Erro: ${error}`);
@@ -47,6 +58,11 @@ export default {
             Object.assign(avaliacao, atualizacao);
             
             await avaliacao.save();
+
+            await avaliacao
+            .populate('avaliador', 'usuario')
+            .populate('vendaAvaliada', 'item status valorOfertado dataOferta')
+            .populate('vendedorAvaliado', 'usuario');
             
             return res.status(200).json(avaliacao);
         } catch (error){

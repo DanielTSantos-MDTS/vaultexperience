@@ -4,8 +4,12 @@ import Troca from '../models/Troca.js';
 export default{
     async listar(req, res){
         try{
-            const trocas = await Troca.find();
-
+            const trocas = await Troca.find()
+            .populate('ofertante', 'usuario')
+            .populate('destinatario', 'usuario')
+            .populate('itemOfertado', 'nome')
+            .populate('itemDesejado', 'nome');
+            
             res.status(200).json(trocas);
         } catch(error){
             res.status(500).json(`Erro ao listar trocas. Erro: ${error}`);
@@ -14,8 +18,12 @@ export default{
     async buscarPorId(req,res){
         try{
             const id = req.params.id;
-
-            const troca = await Troca.findById(id);
+            
+            const troca = await Troca.findById(id)
+            .populate('ofertante', 'usuario')
+            .populate('destinatario', 'usuario')
+            .populate('itemOfertado', 'nome')
+            .populate('itemDesejado', 'nome');
 
             if(!troca) return res.status(404).json({Erro: "Troca não encontrada"});
 
@@ -29,6 +37,12 @@ export default{
             const corpo = req.body;
 
             const novaTroca = await Troca.create(corpo);
+
+            await novaTroca
+            .populate('ofertante', 'usuario')
+            .populate('destinatario', 'usuario')
+            .populate('itemOfertado', 'nome')
+            .populate('itemDesejado', 'nome');
 
             return res.status(201).json(novaTroca);
         } catch (error){
@@ -46,6 +60,14 @@ export default{
             if(!troca) return res.status(404).json({Erro: "Troca não encontrada"});
 
             Object.assign(troca, corpo);
+
+            await troca.save();
+
+            await troca
+            .populate('ofertante', 'usuario')
+            .populate('destinatario', 'usuario')
+            .populate('itemOfertado', 'nome')
+            .populate('itemDesejado', 'nome');
             
             return res.status(200).json(troca);
         } catch(error){
