@@ -4,7 +4,8 @@ const { Schema, model } = mongoose;
 const enderecoSchema = new Schema({
     cep: {
         type: String,
-        required: true
+        required: true,
+        match: [/^\d{5}-\d{3}$/, 'Formato de CEP inválido! Use 00000-000.']
     },
     logradouro: {
         type: String,
@@ -17,7 +18,7 @@ const enderecoSchema = new Schema({
     },
     numero: {
         type: String,
-        require: true
+        required: true
     },
     complemento: {
         type: String,
@@ -39,5 +40,4 @@ const enderecoSchema = new Schema({
     _id: false
 });
 
-const Endereco = enderecoSchema;
-export default Endereco;
+export default enderecoSchema;

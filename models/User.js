@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
-import Endereco from './Endereco.js'
+import enderecoSchema from './Endereco.js'
 import Reputacao from './Reputacao.js'
 
 const userSchema = new Schema({
@@ -30,7 +30,7 @@ const userSchema = new Schema({
         required: true
     },
     endereco: {
-        type: Endereco,
+        type: enderecoSchema,
         required: true
     },
     notaAtual:{
