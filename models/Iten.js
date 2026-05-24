@@ -3,6 +3,7 @@ const { Schema, model } = mongoose;
 
 import User from "./User.js"
 import Categoria from "./Categoria.js";
+import enderecoSchema from "./Endereco.js";
 
 const itemSchema = new Schema ({
     nome: {
@@ -35,6 +36,9 @@ const itemSchema = new Schema ({
         ref: 'User',
         required: true
     },
+    localizacao:{
+        type: enderecoSchema,
+    },
     troca:{
         type: Boolean,
         default: false,
@@ -54,5 +58,5 @@ const itemSchema = new Schema ({
     toObject: { getters: true }
 });
 
-const Item = model('Item', itemSchema);
+const Item = model('Iten', itemSchema);
 export default Item;

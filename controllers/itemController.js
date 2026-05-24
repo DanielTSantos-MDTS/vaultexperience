@@ -1,4 +1,5 @@
 import Item from "../models/Iten.js";
+import User from "../models/User.js";
 
 export default {
     async listar (req, res){
@@ -27,6 +28,12 @@ export default {
         try{
             const corpo = req.body;
 
+            const vendedor = await User.findById(corpo.dono);
+
+            if(!vendedor) return res.status(404).json({Erro: "Vendedor não encontrado"});
+
+            corpo.localizacao = vendedor.endereco;
+            
             const novoItem = await Item.create(corpo);
 
             return res.status(201).json(novoItem);
