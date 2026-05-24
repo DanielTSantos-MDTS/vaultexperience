@@ -1,5 +1,5 @@
 import express from 'express';
-import vendaCotroller from "../controllers/vendaCotroller.js";
+import vendaCotroller from "../controllers/vendaController.js";
 const router = express.Router();
 
 router.get("/", vendaCotroller.listar);
