@@ -1,6 +1,10 @@
 const registerForm  = document.getElementById('register-form');
 const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
+const nomeInput = document.getElementById('inputNome');
+const sobrenomeInput = document.getElementById('inputSobrenome');
+const contatoInput = document.getElementById('inputContato');
+const dataInput = document.getElementById('data-input');
 const submitButton  = document.getElementById('register-btn');
 
 submitButton.disabled = true;
@@ -87,8 +91,51 @@ passwordInput.addEventListener('input', () => {
 /*--- SUBMIT — CADASTRAR ---*/
 registerForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  const username = usernameInput.value.trim();
-  localStorage.setItem('vault_logged', 'true');
-  localStorage.setItem('vault_user', username);
-  window.location.href = 'index.html';
+  // localStorage.setItem('vault_logged', 'true');
+  // localStorage.setItem('vault_user', username);
+  
+  /*--- FORMATAÇÃO — DA — DATA  ---*/
+  const mapaDeMeses = {
+    "Janeiro": "01", "Fevereiro": "02", "Março": "03", "Abril": "04",
+    "Maio": "05", "Junho": "06", "Julho": "07", "Agosto": "08",
+    "Setembro": "09", "Outubro": "10", "Novembro": "11", "Dezembro": "12"
+  };
+  const textoDia = document.querySelector('#birth-day-select .custom-select__value').textContent;
+  const textoMes = document.querySelector('#birth-month-select .custom-select__value').textContent;
+  const textoAno = document.querySelector('#birth-year-select .custom-select__value').textContent;
+  
+  if (textoDia === 'Dia' || textoMes === 'Mês' || textoAno === 'Ano') {
+    alert("Por favor, preencha a sua data de nascimento completa!");
+    return; 
+  }
+  
+  const mesEmNumero = mapaDeMeses[textoMes];
+  const dataFormatada = `${textoAno}-${mesEmNumero}-${textoDia.padStart(2, '0')}`;
+
+  fetch('http://localhost:3000/usuarios/registrar', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      nome: nomeInput.value,
+      sobrenome: sobrenomeInput.value,
+      dataNascimento: dataFormatada,
+      contatoPrincipal: contatoInput.value,
+      username: usernameInput.value,
+      password: passwordInput.value
+    })
+  })
+  .then(resposta => resposta.json())
+  .then(dados => {
+    if(dados.Erro) {
+      alert (`Erro: ${dados.Erro}`)
+    } else {
+      alert("Registro Concluído com sucesso!");
+      window.location.href = 'login.html';
+    }
+  })
+  .catch(erro => {
+    console.error(`Erro na comunicação com o banco de dados. Erro: ${erro}`);
+  })
 });

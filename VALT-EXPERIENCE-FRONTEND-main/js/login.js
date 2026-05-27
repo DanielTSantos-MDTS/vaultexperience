@@ -49,19 +49,28 @@ loginForm.addEventListener(
 
     e.preventDefault();
 
-    localStorage.setItem(
-      'vault_logged',
-      'true'
-    );
-
-    localStorage.setItem(
-      'vault_user',
-      loginUser.value
-    );
-
-    window.location.href =
-      'index.html';
-
+    fetch('http://localhost:3000/aut/login',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: loginUser.value,
+        password: loginPassword.value 
+      })
+    })
+    .then(resposta => resposta.json())
+    .then(dados => {
+      if(dados.Erro){
+        alert(`Erro: ${dados.Erro}`);
+      } else {
+        localStorage.setItem('vault_token', dados.token)
+        localStorage.setItem('vault_user', dados.username)
+      }
+      
+      window.location.href ='index.html';
+      
+    })
   }
 );
 

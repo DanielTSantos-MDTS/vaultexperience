@@ -36,9 +36,9 @@ const itemSchema = new Schema ({
         ref: 'User',
         required: true
     },
-    localizacao:{
-        type: enderecoSchema,
-    },
+    // localizacao:{
+    //     type: enderecoSchema,
+    // },
     troca:{
         type: Boolean,
         default: false,

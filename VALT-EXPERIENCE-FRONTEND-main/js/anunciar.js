@@ -5,6 +5,7 @@
 const form        = document.getElementById('anunciar-form');
 const submitBtn   = document.getElementById('anunciar-submit');
 const tituloInput = document.getElementById('titulo');
+const descricaoInput = document.getElementById('descricao');
 const precoInput  = document.getElementById('preco');
 const categoriaEl = document.getElementById('categoria');
 const condicaoEl  = document.getElementById('condicao');
@@ -95,15 +96,40 @@ form.addEventListener('submit', e => {
   submitBtn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin .8s linear infinite"></i> Publicando...';
 
   // Simula envio (substituir por chamada real à API)
-  setTimeout(() => {
-    submitBtn.innerHTML = '<i class="ti ti-check"></i> Anúncio publicado!';
-    submitBtn.style.background = '#22c55e';
-    submitBtn.style.color = '#fff';
 
-    setTimeout(() => {
-      window.location.href = 'index.html';
-    }, 1800);
-  }, 1800);
+  const vault_token = localStorage.getItem('vault_token');  
+
+  fetch('http://localhost:3000/item/anunciar',{
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json',
+      'authorization': `Bearer ${vault_token}`
+    },
+    body: JSON.stringify({
+      nome: tituloInput.value,
+      descricao: descricaoInput.value,
+      valor: precoInput.value,
+      categoria: categoriaEl.value,
+      estado: condicaoEl.value,
+    })
+  })
+  .then(resposta => resposta.json())
+  .then(dados =>{
+    if(dados.Erro){
+      alert(`Erro: ${dados.Erro}`)
+    } else{
+      console.log(`Dados Enviado: \r ${dados}`);      
+      setTimeout(() => {
+        submitBtn.innerHTML = '<i class="ti ti-check"></i> Anúncio publicado!';
+        submitBtn.style.background = '#22c55e';
+        submitBtn.style.color = '#fff';
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1800);
+      }, 1800);
+    }
+  })
+  
 });
 
 // ─── Animação do spinner ──────────────────────────────────────────────────────

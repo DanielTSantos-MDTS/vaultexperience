@@ -32,12 +32,6 @@ export default {
         try{
             const corpo = req.body;
 
-            const vendedor = await User.findById(req.id);
-
-            if(!vendedor) return res.status(404).json({Erro: "Vendedor não encontrado"});
-
-            corpo.localizacao = vendedor.endereco;
-            
             corpo.dono = req.id;
             
             const novoItem = await Item.create(corpo);
@@ -48,7 +42,7 @@ export default {
 
             return res.status(201).json(novoItem);
         } catch (error) {
-            return res.status(500).json(`Erro ao criar item. Erro: ${error}`);
+            return res.status(500).json({Erro: `Erro ao criar item. Erro: ${error}`});
         }
     },
     async atualizar (req, res){

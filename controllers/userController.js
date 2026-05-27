@@ -32,8 +32,7 @@ export default {
 
       const novoUsuario = await User.create(corpo);
 
-      await usuario
-      .populate('reputacao', 'label');
+      await novoUsuario.populate('reputacao', 'label');
       
       return res.status(201).json(novoUsuario);
     } catch (error){
@@ -59,7 +58,7 @@ export default {
 
       return res.status(200).json(usuario)
     } catch (error){
-      return res.status(500).json(`Erro ao atualizar usuário. Erro: ${error}`);
+      return res.status(500).json({Erro: `Erro ao atualizar usuário. Erro: ${error.message}`});
     }
   },
   async apagar (req, res){

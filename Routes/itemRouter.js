@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', itemController.listar);
 router.get('/:id', itemController.buscarPorId);
-router.post('/', verificarToken.autorizar ,itemController.criar);
+router.post('/anunciar', verificarToken.autorizar ,itemController.criar);
 router.put('/:id', verificarToken.autorizar, itemController.atualizar);
 router.delete('/:id', verificarToken.autorizar, itemController.apagar);
 

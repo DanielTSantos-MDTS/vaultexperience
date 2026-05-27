@@ -229,6 +229,9 @@ function init() {
 
 /*--- RENDER — BREADCRUMB ---*/
 function renderBreadcrumb() {
+
+  if (!dom.bcCat) return;
+  
   const catInfo = CATALOG_DATA[state.cat];
   dom.bcCat.textContent = catInfo?.label || state.cat;
 
@@ -244,6 +247,9 @@ function renderBreadcrumb() {
 
 /*--- RENDER — HERO ---*/
 function renderHero() {
+
+  if (!dom.heroEl) return;
+  
   const catInfo = CATALOG_DATA[state.cat];
   if (!catInfo) return;
 
@@ -274,6 +280,9 @@ function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
 /*--- RENDER — SUBCATEGORIAS ---*/
 function renderSubcatPills() {
+
+  if(!dom.subcatPills) return;
+  
   const catInfo = CATALOG_DATA[state.cat];
   if (!catInfo) return;
 
@@ -308,6 +317,9 @@ function makePill(subKey, label, iconCls, isActive) {
 
 /*--- RENDER — SUBCATÁLOGOS DA BARRA LATERAL ---*/
 function renderSidebarSubcats() {
+
+  if(!dom.subcatsList) return;
+  
   const catInfo = CATALOG_DATA[state.cat];
   if (!catInfo) return;
   dom.subcatsList.innerHTML = '';
@@ -365,6 +377,9 @@ function getPaged(items) {
 
 /*--- RENDERS --- */
 function renderProducts() {
+
+  if(!dom.resultsNum) return;
+  
   const filtered = getFiltered();
   const paged    = getPaged(filtered);
 

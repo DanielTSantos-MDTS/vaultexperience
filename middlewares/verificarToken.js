@@ -12,7 +12,7 @@ export default {
 
         if (parts.length != 2) return res.status(401).json({Erro: "Formato de Token Invalido"});
 
-        jwt.verify(parts[1], "teste", (error, decoded) => {
+        jwt.verify(parts[1], process.env.JWT_SECRET, (error, decoded) => {
             
             if(error) return res.status(401).json({Erro: "Token Invalido"});
 

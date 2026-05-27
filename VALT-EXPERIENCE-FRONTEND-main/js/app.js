@@ -151,6 +151,8 @@ const SUBCAT_SLUG = {
   'Utilitários':          'utilitarios',
 };
 
+  const prateleiraFranquias = document.getElementById('grid-franquias');
+
 /* --- Menu de categorias --- */
 function buildCatMenu() {
   const container = document.getElementById('cat-menu');
@@ -346,6 +348,102 @@ function buildCards() {
   });
 }
 
+// O nosso Caminhão de Entregas!
+fetch('http://localhost:3000/item')
+  .then(resposta => resposta.json())
+  .then(listaDeItens => {
+      // 1. Apontamos para as prateleira
+      const prateleiraPopulares = document.getElementById('grid-populares');
+
+      const prateleiraOfertas = document.getElementById('grid-ofertas');
+
+
+      prateleiraPopulares.innerHTML = ''; 
+
+      prateleiraOfertas.innerHTML = ''; 
+      
+
+      const itensEmOferta = listaDeItens.filter(item => item.valor < 100);
+      
+      // 3. Colocamos os produtos reais na prateleira
+      listaDeItens.forEach((item, index) => {
+          
+          // Usamos o molde exato dos seus amigos, mas com dados do banco!
+          const quadradinhoHTML = `
+            <div class="card" style="animation: slide-in .5s ease ${index * 0.08}s both; cursor: pointer;" onclick="window.location.href='produto.html'">
+              
+              <div class="card-img" style="display: flex; align-items: center; justify-content: center; background-color: #222;">
+                <span style="color: #555; font-size: 12px;">Sem foto</span>
+              </div>
+              
+              <div class="card-body">
+                <h3 style="color: #fff; font-size: 16px; margin: 0 0 5px 0;">${item.nome}</h3>
+                <p style="color: #aaa; font-size: 12px; margin: 0 0 10px 0;">${item.categoria.nome}</p>
+                <h3 style="color: #f1c40f; margin: 0;">R$ ${item.valor}</h3>
+                <p style="color: #555; font-size: 11px; margin-top: 10px;">Vendedor: ${item.dono.usuario}</p>
+              </div>
+
+            </div>
+          `;
+
+          prateleiraPopulares.innerHTML += quadradinhoHTML;
+      });
+
+      itensEmOferta.forEach((item, index) => {
+          
+          // Usamos o molde exato dos seus amigos, mas com dados do banco!
+          const quadradinhoHTML = `
+            <div class="card" style="animation: slide-in .5s ease ${index * 0.08}s both; cursor: pointer;" onclick="window.location.href='produto.html'">
+              
+              <div class="card-img" style="display: flex; align-items: center; justify-content: center; background-color: #222;">
+                <span style="color: #555; font-size: 12px;">Sem foto</span>
+              </div>
+              
+              <div class="card-body">
+                <h3 style="color: #fff; font-size: 16px; margin: 0 0 5px 0;">${item.nome}</h3>
+                <p style="color: #aaa; font-size: 12px; margin: 0 0 10px 0;">${item.categoria.nome}</p>
+                <h3 style="color: #f1c40f; margin: 0;">R$ ${item.valor}</h3>
+                <p style="color: #555; font-size: 11px; margin-top: 10px;">Vendedor: ${item.dono.usuario}</p>
+              </div>
+
+            </div>
+          `;
+
+          prateleiraOfertas.innerHTML += quadradinhoHTML;
+      });
+      
+  })
+  .catch(erro => {
+      console.error("Erro na requisição:", erro);
+  });
+      
+  fetch('http://localhost:3000/categoria')
+  .then(resposta => resposta.json())
+  .then(listaDeFranquias =>{
+    prateleiraFranquias.innerHTML = ''; 
+
+    listaDeFranquias.forEach((franquia, index) => {
+      const cardFranquia = `
+            <div class="card" style="animation: slide-in .5s ease ${index * 0.08}s both; cursor: pointer;" onclick="window.location.href='produto.html'">
+              
+              <div class="card-img" style="display: flex; align-items: center; justify-content: center; background-color: #222;">
+                <span style="color: #555; font-size: 12px;">Sem foto</span>
+              </div>
+              
+              <div class="card-body">
+                <p style="color: #aaa; font-size: 12px; margin: 0 0 10px 0;">${franquia.nome}</p>
+              </div>
+
+            </div>
+          `
+
+            prateleiraFranquias.innerHTML += cardFranquia;
+    })
+  })
+  .catch(error => {
+    console.error("Erro na requisição:", erro);
+  })
+
 /* --- Utilitários --- */
 const fmt = (n) =>
   n.toLocaleString('pt-BR', {
@@ -400,7 +498,7 @@ const logoutBtn = document.getElementById('logout-btn');
 const usernameDisplay = document.getElementById('username-display');
 const loginBtn = document.getElementById('login-btn');
 
-const isLogged = localStorage.getItem('vault_logged');
+const isLogged = localStorage.getItem('vault_token');
 const username = localStorage.getItem('vault_user');
 
 if (loginBtn) {
@@ -409,26 +507,32 @@ if (loginBtn) {
   });
 }
 
-
-if (isLogged === 'true') {
+if (isLogged) {
+  // Tem crachá! Esconde a caixa do Entrar e mostra a do Usuário
   if (authArea) authArea.classList.add('hidden');
   if (userMenu) userMenu.classList.remove('hidden');
+  
+  // Escreve o nome do Zemundo na tela
   if (usernameDisplay && username) usernameDisplay.textContent = username;
+} else {
+  // Não tem crachá! Mostra a caixa do Entrar e esconde a do Usuário
+  if (authArea) authArea.classList.remove('hidden');
+  if (userMenu) userMenu.classList.add('hidden');
 }
 
 if (logoutBtn) {
   logoutBtn.addEventListener('click', e => {
     e.preventDefault();
-    localStorage.removeItem('vault_logged');
+    localStorage.removeItem('vault_token');
     localStorage.removeItem('vault_user');
     window.location.reload();
   });
 }
 
-if (isLogged === 'true') {
-  if (loginBtn) loginBtn.style.display = 'none';
-  if (userMenu) userMenu.style.display = 'flex';
-} else {
-  if (loginBtn) loginBtn.style.display = '';
-  if (userMenu) userMenu.style.display = 'none';
-}
+// if (isLogged) {
+//   if (loginBtn) loginBtn.style.display = 'none';
+//   if (userMenu) userMenu.style.display = 'flex';
+// } else {
+//   if (loginBtn) loginBtn.style.display = '';
+//   if (userMenu) userMenu.style.display = 'none';
+// }

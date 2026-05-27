@@ -7,23 +7,11 @@ import enderecoSchema from './Endereco.js'
 import Reputacao from './Reputacao.js'
 
 const userSchema = new Schema({
-    usuario:{
+    nome:{
         type: String,
         required: true
     },
-    senha: {
-        type: String,
-        required: true,
-        minlength: 8,
-        select: false
-    },
-    email: {
-        type: String,
-        unique: true,
-        lowercase: true,
-        required: true
-    },
-    tel: {
+    sobrenome:{
         type: String,
         required: true
     },
@@ -31,10 +19,25 @@ const userSchema = new Schema({
         type: Date,
         required: true
     },
-    endereco: {
-        type: enderecoSchema,
-        required: true
+    contatoPrincipal: {
+        type: String,
+        unique: true
     },
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 8,
+        select: false
+    },
+    // endereco: {
+    //     type: enderecoSchema,
+    //     required: true
+    // },
     notaAtual:{
         type: Number,
         default: 0
@@ -54,11 +57,11 @@ const userSchema = new Schema({
 });
 
 userSchema.pre('save', async function (next){
-    if(!this.isModified('senha')) return next();
+    if(!this.isModified('password')) return next();
 
-    const hash = await bcrypt.hash(this.senha, saltRounds);
+    const hash = await bcrypt.hash(this.password, saltRounds);
 
-    this.senha = hash;
+    this.password = hash;
 })
 
 const User = model('User', userSchema);
