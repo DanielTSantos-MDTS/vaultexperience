@@ -1,13 +1,10 @@
-// ============================
-//  Vault Experience — Anunciar
-// ============================
-
 const form        = document.getElementById('anunciar-form');
 const submitBtn   = document.getElementById('anunciar-submit');
 const tituloInput = document.getElementById('titulo');
 const precoInput  = document.getElementById('preco');
 const categoriaEl = document.getElementById('categoria');
 const condicaoEl  = document.getElementById('condicao');
+const franquiaEl  = document.getElementById('franquia'); // opcional
 const uploadArea  = document.getElementById('upload-area');
 const fotoInput   = document.getElementById('foto-input');
 const fotoPreview = document.getElementById('foto-preview');
@@ -15,6 +12,7 @@ const fotoPreview = document.getElementById('foto-preview');
 let fotos = [];
 
 // ─── Habilitar botão quando campos obrigatórios preenchidos ───────────────────
+// Franquia é opcional: não entra na validação do checkForm.
 function checkForm() {
   const ok =
     tituloInput.value.trim().length > 3 &&
@@ -90,6 +88,20 @@ function renderPreview() {
 // ─── Submit ───────────────────────────────────────────────────────────────────
 form.addEventListener('submit', e => {
   e.preventDefault();
+
+  // Coleta os dados do formulário (incluindo franquia, que é opcional)
+  const payload = {
+    titulo:    tituloInput.value.trim(),
+    categoria: categoriaEl.value,
+    condicao:  condicaoEl.value,
+    franquia:  franquiaEl.value || null, // null quando não selecionado
+    descricao: document.getElementById('descricao').value.trim(),
+    preco:     parseFloat(precoInput.value),
+    fotos:     fotos.map(f => f.file),
+  };
+
+  // Log para depuração — substituir pela chamada real à API
+  console.log('Payload do anúncio:', payload);
 
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin .8s linear infinite"></i> Publicando...';
