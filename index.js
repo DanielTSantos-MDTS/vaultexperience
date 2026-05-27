@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import express from "express";
 import dotenv from 'dotenv';
+import cors from 'cors';
 dotenv.config();
 
 import Reputacao from './models/Reputacao.js';
@@ -11,11 +12,13 @@ import itemRouter from './Routes/itemRouter.js';
 import categoriaRouter from './Routes/categoriaRouter.js'
 import vendaRouter from './Routes/vendaRouter.js';
 import trocaRouter from './Routes/trocaRouter.js';
+import authRouter from './Routes/authRouter.js';
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(cors());
 app.use('/reputacao', reputacaoRouter);
 app.use('/avaliacao', avaliacaoRouter);
 app.use('/usuarios', userRouter);
@@ -23,6 +26,7 @@ app.use('/item', itemRouter);
 app.use('/categoria', categoriaRouter);
 app.use('/venda', vendaRouter);
 app.use('/troca', trocaRouter);
+app.use('/aut', authRouter);
 
 const db = process.env.DATABASE_URL;
 async function criarReputacoes() {

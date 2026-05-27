@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt'
 const { Schema, model } = mongoose;
+const saltRounds = 10;
 
 import enderecoSchema from './Endereco.js'
 import Reputacao from './Reputacao.js'
@@ -50,6 +52,14 @@ const userSchema = new Schema({
         default: Date.now
     }
 });
+
+userSchema.pre('save', async function (next){
+    if(!this.isModified('senha')) return next();
+
+    const hash = await bcrypt.hash(this.senha, saltRounds);
+
+    this.senha = hash;
+})
 
 const User = model('User', userSchema);
 export default User;

@@ -35,10 +35,11 @@ export default{
 
             const novaVenda = await Venda.create(corpo);
 
-            await novaVenda
-            .populate('comprador', 'usuario')
-            .populate('vendedor', 'usuario')
-            .populate('item', 'nome');
+            await novaVenda.populate('comprador', 'usuario');
+            
+            await novaVenda.populate('vendedor', 'usuario');
+            
+            await novaVenda.populate('item', 'nome');
             
             return res.status(201).json(novaVenda);
         } catch(error){
