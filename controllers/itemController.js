@@ -32,17 +32,19 @@ export default {
         try{
             const corpo = req.body;
 
-            const vendedor = await User.findById(corpo.dono);
+            const vendedor = await User.findById(req.id);
 
             if(!vendedor) return res.status(404).json({Erro: "Vendedor não encontrado"});
 
             corpo.localizacao = vendedor.endereco;
             
+            corpo.dono = req.id;
+            
             const novoItem = await Item.create(corpo);
 
-            await novoItem
-            .populate('dono', 'usuario')
-            .populate('categoria', 'nome');
+            await novoItem.populate('dono', 'usuario');
+            
+            await novoItem.populate('categoria', 'nome');
 
             return res.status(201).json(novoItem);
         } catch (error) {
@@ -58,6 +60,8 @@ export default {
             const item = await Item.findById(id);
             
             if(!item) return res.status(404).json({Erro: 'Item não encontrado'});
+
+            if(!(item.dono.equals(req.id))) return res.status(403).json({Erro: "Somente o dono do item pode alterá-lo"});
             
             Object.assign(item, atualizacao);
 
@@ -76,10 +80,15 @@ export default {
         try{
             const id = req.params.id;
 
-            const item = await Item.findByIdAndDelete(id);
+            const item = await Item.findById(id);
 
             if(!item) return res.status(404).json({Erro: 'Item não encontrado'});
 
+            if(!(item.dono.equals(req.id))) return res.status(403).json({Erro: "Somente o dono do item pode alterá-lo"});
+
+            await item.deleteOne();
+
+            
             res.status(200).json('Item excluído com sucesso');
         } catch (error){
             res.status(500).json(`Erro ao excluir item. Erro: ${error}`);

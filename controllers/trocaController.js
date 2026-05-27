@@ -38,11 +38,13 @@ export default{
 
             const novaTroca = await Troca.create(corpo);
 
-            await novaTroca
-            .populate('ofertante', 'usuario')
-            .populate('destinatario', 'usuario')
-            .populate('itemOfertado', 'nome')
-            .populate('itemDesejado', 'nome');
+            await novaTroca.populate('ofertante', 'usuario');
+            
+            await novaTroca.populate('destinatario', 'usuario');
+            
+            await novaTroca.populate('itemOfertado', 'nome');
+            
+            await novaTroca.populate('itemDesejado', 'nome');
 
             return res.status(201).json(novaTroca);
         } catch (error){

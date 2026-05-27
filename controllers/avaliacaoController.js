@@ -35,10 +35,11 @@ export default {
         
             const novaAvaliacao = await Avaliacao.create(corpo);
 
-            await novaAvaliacao
-            .populate('avaliador', 'usuario')
-            .populate('vendaAvaliada', 'item status valorOfertado dataOferta')
-            .populate('vendedorAvaliado', 'usuario');
+            await novaAvaliacao.populate('avaliador', 'usuario');
+            
+            await novaAvaliacao.populate('vendaAvaliada', 'item status valorOfertado dataOferta');
+            
+            await novaAvaliacao.populate('vendedorAvaliado', 'usuario');
             
             return res.status(201).json(novaAvaliacao);
         } catch (error){
