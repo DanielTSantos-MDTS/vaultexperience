@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Criar Conta | Vault Experience</title>
+
+  <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
+
+  <!-- FONTES -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- ICONS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/register.css">
+  <link rel="stylesheet" href="css/store.css" />
+
+</head>
+
+<body>
+
+  <main class="register-page">
+
+    <!-- VOLTAR -->
+    <a href="login.html" class="back-button">
+      <i class="ti ti-arrow-left"></i>
+    </a>
+
+    <!-- CARD -->
+    <section class="register-card">
+
+      <!-- LOGO -->
+      <div class="register-logo">
+        <img src="assets/logo.png" alt="Vault Experience">
+      </div>
+
+      <!-- TEXTO -->
+      <p class="register-subtitle">
+        Nos informe alguns dados para que possamos melhorar sua experiência.
+      </p>
+
+      <!-- FORM -->
+      <form id="register-form">
+
+        <!-- NOME + SOBRENOME -->
+        <div class="double-input">
+
+          <div class="input-group">
+            <label>Nome</label>
+            <input type="text" placeholder="Nome" required>
+          </div>
+
+          <div class="input-group">
+            <label>Sobrenome</label>
+            <input type="text" placeholder="Sobrenome" required>
+          </div>
+
+        </div>
+
+        <!-- DATA NASCIMENTO -->
+        <div class="input-group">
+
+          <label>Data de nascimento</label>
+
+          <div class="triple-input">
+
+            <!-- SELECT CUSTOMIZADO: DIA -->
+            <div class="custom-select" id="birth-day-select">
+              <div class="custom-select__trigger">
+                <span class="custom-select__value" data-placeholder="Dia">Dia</span>
+                <svg class="custom-select__arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="custom-select__dropdown">
+                <div class="custom-select__list" id="birth-day-list"></div>
+              </div>
+            </div>
+
+            <!-- SELECT CUSTOMIZADO: MÊS -->
+            <div class="custom-select" id="birth-month-select">
+              <div class="custom-select__trigger">
+                <span class="custom-select__value" data-placeholder="Mês">Mês</span>
+                <svg class="custom-select__arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="custom-select__dropdown">
+                <div class="custom-select__list">
+                  <div class="custom-select__option" data-value="Janeiro">Janeiro</div>
+                  <div class="custom-select__option" data-value="Fevereiro">Fevereiro</div>
+                  <div class="custom-select__option" data-value="Março">Março</div>
+                  <div class="custom-select__option" data-value="Abril">Abril</div>
+                  <div class="custom-select__option" data-value="Maio">Maio</div>
+                  <div class="custom-select__option" data-value="Junho">Junho</div>
+                  <div class="custom-select__option" data-value="Julho">Julho</div>
+                  <div class="custom-select__option" data-value="Agosto">Agosto</div>
+                  <div class="custom-select__option" data-value="Setembro">Setembro</div>
+                  <div class="custom-select__option" data-value="Outubro">Outubro</div>
+                  <div class="custom-select__option" data-value="Novembro">Novembro</div>
+                  <div class="custom-select__option" data-value="Dezembro">Dezembro</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SELECT CUSTOMIZADO: ANO -->
+            <div class="custom-select" id="birth-year-select">
+              <div class="custom-select__trigger">
+                <span class="custom-select__value" data-placeholder="Ano">Ano</span>
+                <svg class="custom-select__arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="custom-select__dropdown">
+                <div class="custom-select__list" id="birth-year-list"></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- CONTATO -->
+        <div class="input-group">
+          <label>Email ou celular</label>
+
+          <span class="input-info">
+            Você poderá receber notificações.
+          </span>
+
+          <input type="text" placeholder="Digite seu email ou celular" required>
+        </div>
+
+        <!-- USUÁRIO -->
+        <div class="input-group">
+          <label>Usuário</label>
+          <input id="username" type="text" placeholder="Digite seu usuário" required>
+        </div>
+
+        <!-- SENHA -->
+        <div class="input-group">
+          <label>Senha</label>
+
+          <input id="password" type="password" placeholder="Digite sua senha" required>
+
+          <span class="input-info password-rules">
+            A senha deve conter:
+            <br><br>
+            <span id="rule-length">• 8+ caracteres</span><br>
+            <span id="rule-upper">• 1 letra maiúscula</span><br>
+            <span id="rule-lower">• 1 letra minúscula</span><br>
+            <span id="rule-number">• 1 número</span><br>
+            <span id="rule-special">• 1 caractere especial</span>
+          </span>
+        </div>
+
+        <!-- BOTÃO -->
+        <button id="register-btn" type="submit" disabled>
+          Cadastrar
+        </button>
+
+      </form>
+
+      <!-- LOGIN -->
+      <p class="login-link">
+        Já tem uma conta?
+        <a href="login.html">Entrar</a>
+      </p>
+
+    </section>
+
+  </main>
+
+  <script src="js/register.js"></script>
+  <script src="js/store.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anunciar - Vault Experience</title>
+
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/anunciar.css">
+  <link rel="stylesheet" href="css/store.css">
+  <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+
+<body>
+
+  <!-- Botão Voltar -->
+  <a href="index.html" class="back-button">
+    <i class="ti ti-arrow-left"></i>
+  </a>
+
+  <main class="anunciar-page">
+
+    <!-- LADO ESQUERDO — logo + benefícios -->
+    <section class="anunciar-left">
+
+      <div class="anunciar-logo">
+        <img src="assets/logo.png" alt="Vault Experience">
+      </div>
+
+      <h1>
+        Anuncie em poucos<br>
+        minutos com total<br>
+        <span>segurança</span>
+      </h1>
+
+      <p>
+        Coloque seu produto à venda na maior plataforma
+        geek do Brasil e alcance milhares de colecionadores.
+      </p>
+
+      <ul class="benefit-list">
+
+        <li class="benefit-item">
+          <div class="benefit-icon">
+            <i class="ti ti-shield-check"></i>
+          </div>
+          <div class="benefit-text">
+            <strong>Ambiente seguro</strong>
+            <span>Usuários verificados e ferramentas de proteção para negociações seguras.</span>
+          </div>
+        </li>
+
+        <li class="benefit-item">
+          <div class="benefit-icon">
+            <i class="ti ti-star"></i>
+          </div>
+          <div class="benefit-text">
+            <strong>Seu anúncio em destaque</strong>
+            <span>Seu produto sendo visto por milhões de usuários todos os dias.</span>
+          </div>
+        </li>
+
+        <li class="benefit-item">
+          <div class="benefit-icon">
+            <i class="ti ti-currency-dollar"></i>
+          </div>
+          <div class="benefit-text">
+            <strong>Recomendação de preço</strong>
+            <span>Ajudamos você a definir o melhor preço para vender o seu produto.</span>
+          </div>
+        </li>
+
+        <li class="benefit-item">
+          <div class="benefit-icon">
+            <i class="ti ti-bolt"></i>
+          </div>
+          <div class="benefit-text">
+            <strong>Publicação instantânea</strong>
+            <span>Seu anúncio vai ao ar em segundos, sem burocracia.</span>
+          </div>
+        </li>
+
+      </ul>
+
+    </section>
+
+    <!-- LADO DIREITO — formulário -->
+    <section class="anunciar-right">
+
+      <div class="anunciar-card">
+
+        <h2>Criar anúncio</h2>
+        <p class="card-subtitle">Preencha as informações do seu produto</p>
+
+        <form id="anunciar-form">
+
+          <!-- Título -->
+          <div class="input-group">
+            <label for="titulo">Título do anúncio</label>
+            <input
+              type="text"
+              id="titulo"
+              placeholder="Ex: Action Figure Marvel — Homem de Ferro"
+              maxlength="80"
+            >
+          </div>
+
+          <!-- Categoria + Condição -->
+          <div class="input-row">
+
+            <div class="input-group">
+              <label for="categoria">Categoria</label>
+              <div class="select-wrapper">
+                <select id="categoria">
+                  <option value="" disabled selected>Selecione</option>
+                  <option>Action Figures</option>
+                  <option>Quadrinhos & Mangás</option>
+                  <option>Games</option>
+                  <option>Cards & TCG</option>
+                  <option>Vestuário Geek</option>
+                  <option>Acessórios</option>
+                  <option>Eletrônicos</option>
+                  <option>Outros</option>
+                </select>
+                <i class="ti ti-chevron-down select-icon"></i>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="condicao">Condição</label>
+              <div class="select-wrapper">
+                <select id="condicao">
+                  <option value="" disabled selected>Selecione</option>
+                  <option>Novo</option>
+                  <option>Seminovo</option>
+                  <option>Usado</option>
+                </select>
+                <i class="ti ti-chevron-down select-icon"></i>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Franquia (opcional) -->
+          <div class="input-group">
+            <label for="franquia">Franquia <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--gray-400);font-size:12px;">(opcional)</span></label>
+            <div class="select-wrapper">
+              <select id="franquia">
+                <option value="">Selecione</option>
+                <option>Star Wars</option>
+                <option>Senhor dos Anéis</option>
+                <option>Marvel</option>
+                <option>DC</option>
+                <option>Rockstar</option>
+                <option>Riot</option>
+                <option>Garena</option>
+                <option>Nintendo</option>
+                <option>Outros</option>
+              </select>
+              <i class="ti ti-chevron-down select-icon"></i>
+            </div>
+          </div>
+
+          <!-- Descrição -->
+          <div class="input-group">
+            <label for="descricao">Descrição</label>
+            <textarea
+              id="descricao"
+              placeholder="Descreva o produto com detalhes: estado, acompanha caixa, defeitos, etc."
+              rows="4"
+            ></textarea>
+          </div>
+
+          <!-- Preço -->
+          <div class="input-group">
+            <label for="preco">Preço (R$)</label>
+            <div class="price-wrapper">
+              <span class="price-prefix">R$</span>
+              <input
+                type="number"
+                id="preco"
+                placeholder="0,00"
+                min="0"
+                step="0.01"
+              >
+            </div>
+          </div>
+
+          <!-- Upload de foto -->
+          <div class="input-group">
+            <label>Fotos do produto</label>
+            <div class="upload-area" id="upload-area">
+              <i class="ti ti-photo-plus upload-icon"></i>
+              <span class="upload-label">Clique ou arraste as fotos aqui</span>
+              <span class="upload-hint">Até 8 imagens · JPG, PNG ou WEBP</span>
+              <input type="file" id="foto-input" accept="image/*" multiple hidden>
+            </div>
+            <div class="foto-preview" id="foto-preview"></div>
+          </div>
+
+          <!-- Botão -->
+          <button type="submit" id="anunciar-submit" disabled>
+            <i class="ti ti-speakerphone"></i>
+            Publicar anúncio
+          </button>
+
+        </form>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="js/anunciar.js"></script>
+
+</body>
+</html>

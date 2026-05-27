@@ -1,0 +1,89 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --yellow:      #FFCC00;
+  --yellow-dark: #d4a800;
+  --black:       #000000;
+  --gray-950:    #0a0a0a;
+  --gray-900:    #111111;
+  --gray-800:    #1a1a1a;
+  --gray-700:    #252525;
+  --gray-600:    #333333;
+  --gray-400:    #666666;
+  --gray-300:    #999999;
+  --white:       #ffffff;
+  --font-retro:  'Press Start 2P', monospace;
+  --font-body:   'Barlow', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/*--- Animações ---*/
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-9px); }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 4px 4px 0 #000, 0 0 14px rgba(255,204,0,.4); }
+  50%       { box-shadow: 4px 4px 0 #000, 0 0 32px rgba(255,204,0,.9), 0 0 70px rgba(255,204,0,.25); }
+}
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* SCROLLBAR */
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+
+  width: 10px;
+  height: 10px;
+
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
+
+  background: var(--black);
+
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--yellow),
+      var(--yellow-dark)
+    );
+
+  border-radius: 20px;
+
+  border: 2px solid var(--black);
+
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover {
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffe27a,
+      var(--yellow)
+    );
+
+}

@@ -1,0 +1,105 @@
+#favorites-page {
+  min-height: 70vh;
+  padding: 48px 0 80px;
+}
+
+.fav-page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.fav-page-title {
+  font-family: var(--font-body);
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  line-height: 1.1;
+}
+
+.fav-title-icon { font-size: 28px; }
+
+.fav-page-sub {
+  font-size: 14px;
+  color: var(--gray-400);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.fav-clear-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid var(--gray-700);
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: var(--gray-400);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+}
+.fav-clear-btn:hover { border-color: #e87a7a; color: #e87a7a; }
+
+/*--- Estado vazio ---*/
+.fav-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+  gap: 16px;
+}
+
+.fav-empty-icon {
+  font-size: 72px;
+  margin-bottom: 8px;
+  animation: slide-in .5s ease both;
+}
+
+.fav-empty-title {
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.fav-empty-sub {
+  font-size: 15px;
+  color: var(--gray-400);
+  max-width: 420px;
+}
+
+/*--- CTA BUTTON ---*/
+.fav-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--yellow);
+  color: var(--black);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 800;
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  margin-top: 8px;
+  transition: background .2s, transform .2s;
+}
+.fav-cta-btn:hover { background: var(--yellow-dark); transform: translateY(-2px); }
+
+/*--- Grid — reutiliza cat-grid de categorias ---*/
+#fav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
