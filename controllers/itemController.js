@@ -5,7 +5,7 @@ export default {
     async listar (req, res){
         try{
         const itens = await Item.find()
-        .populate('dono', 'usuario')
+        .populate('dono', 'username')
         .populate('categoria', 'nome');
 
         res.status(200).json(itens);
@@ -18,7 +18,7 @@ export default {
             const id = req.params.id;
 
             const item = await Item.findById(id)
-            .populate('dono', 'usuario')
+            .populate('dono', 'username')
             .populate('categoria', 'nome');
 
             if (!item) return res.status(404).json({Erro: 'Item não encontrado'});
@@ -32,23 +32,17 @@ export default {
         try{
             const corpo = req.body;
 
-            const vendedor = await User.findById(req.id);
-
-            if(!vendedor) return res.status(404).json({Erro: "Vendedor não encontrado"});
-
-            corpo.localizacao = vendedor.endereco;
-            
             corpo.dono = req.id;
             
             const novoItem = await Item.create(corpo);
 
-            await novoItem.populate('dono', 'usuario');
+            await novoItem.populate('dono', 'username');
             
             await novoItem.populate('categoria', 'nome');
 
             return res.status(201).json(novoItem);
         } catch (error) {
-            return res.status(500).json(`Erro ao criar item. Erro: ${error}`);
+            return res.status(500).json({Erro: `Erro ao criar item. Erro: ${error}`});
         }
     },
     async atualizar (req, res){
@@ -68,7 +62,7 @@ export default {
             await item.save();
 
             await item
-            .populate('dono', 'usuario')
+            .populate('dono', 'username')
             .populate('categoria', 'nome');
 
             return res.status(200).json(item);

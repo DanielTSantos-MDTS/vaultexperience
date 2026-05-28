@@ -30,15 +30,18 @@ const itemSchema = new Schema ({
         enum: ['Novo', 'Seminovo', 'Usado'],
         required: true
     },
+    franquia:{
+        type: String
+    },
     imagens: [{type: String}],
     dono:{
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    localizacao:{
-        type: enderecoSchema,
-    },
+    // localizacao:{
+    //     type: enderecoSchema,
+    // },
     troca:{
         type: Boolean,
         default: false,
