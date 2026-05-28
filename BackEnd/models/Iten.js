@@ -14,7 +14,7 @@ const itemSchema = new Schema ({
         type: String,
         required: true
     },
-    valor: {
+    precoOriginal: {
         type: Number,
         required: true,
         set: v => Math.round(v * 100),
@@ -39,9 +39,15 @@ const itemSchema = new Schema ({
         ref: 'User',
         required: true
     },
-    // localizacao:{
-    //     type: enderecoSchema,
-    // },
+    especificacoes: [{
+        chave: String, 
+        valor: String
+    }],
+    estoque: {
+        type: Number,
+        default: 1,
+        required: true
+    },
     troca:{
         type: Boolean,
         default: false,
