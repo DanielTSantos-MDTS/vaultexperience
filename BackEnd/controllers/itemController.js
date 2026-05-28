@@ -34,6 +34,19 @@ export default {
 
             corpo.dono = req.id;
             
+            if(req.files && req.files.length > 0){
+                corpo.imagens = req.files.map(arquivo => arquivo.path);
+            }
+
+            if(corpo.especificacoes){
+                try{
+                    corpo.especificacoes = JSON.parse(corpo.especificacoes);
+                } catch (e){
+                    console.error("Erro ao desempacotar as especificações: " + e);
+                    return res.status(400).json({Erro: `Formato de Especificações Inválidas.`});
+                }
+            }
+            
             const novoItem = await Item.create(corpo);
 
             await novoItem.populate('dono', 'username');

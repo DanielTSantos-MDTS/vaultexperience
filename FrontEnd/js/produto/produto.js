@@ -7,8 +7,8 @@ const urlFetch = `http://localhost:3000/item/${idProduto}`;
 const PRODUTO = {
   id: 1,
   categoria: "Exemplo",
-  subcategoria: "Super Nintendo",
-  slug: "super-nintendo-snes-classic",
+  subcategoria: "base",
+  slug: "base",
 
   titulo: "Base",
   descricaoRapida: "Base",
@@ -160,11 +160,12 @@ fetch(urlFetch, {
     alert(`Erro ao buscar produto: ${dados.Erro}`);
     return;
   }
-
+  
   PRODUTO.id = dados._id;
   PRODUTO.titulo = dados.nome;
   PRODUTO.descricaoRapida = dados.descricao;
-  PRODUTO.precoAtual = dados.valor;
+  PRODUTO.precoOriginal = dados.precoOriginal;
+  PRODUTO.precoAtual = dados.precoOriginal;
   PRODUTO.condicaoAtiva = dados.estado;
   PRODUTO.vendedor.nome = dados.dono.username;
 
@@ -172,6 +173,11 @@ fetch(urlFetch, {
 
   if(dados.franquia) PRODUTO.subcategoria = dados.franquia;
 
+  PRODUTO.especificacoes = dados.especificacoes || [];
+  PRODUTO.imagens = dados.imagens || [];
+
+  console.log(dados.especificacoes);
+  
   renderPage();
 })
 .catch(erro => {
@@ -215,7 +221,9 @@ function renderBreadcrumb() {
 
 /*--- RENDER — GALERIA ---*/
 function renderGallery() {
-  const imgs   = PRODUTO.imagens;
+  const imgs = (PRODUTO.imagens && PRODUTO.imagens.length > 0) 
+      ? PRODUTO.imagens 
+      : ["https://placehold.co/600x600/1a1a1a/555555?text=Sem+Foto&font=Montserrat"];
   const badges = PRODUTO.badges.map((b, i) =>
     `<span class="badge ${b.classe}" style="animation-delay:${i * .1}s">${b.texto}</span>`
   ).join('');

@@ -101,37 +101,48 @@ form.addEventListener('submit', e => {
     fotos:     fotos.map(f => f.file),
   };
 
-  // Log para depuração — substituir pela chamada real à API
   console.log('Payload do anúncio:', payload);
 
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin .8s linear infinite"></i> Publicando...';
 
-  // Simula envio (substituir por chamada real à API)
-
   const vault_token = localStorage.getItem('vault_token');  
 
+  const formData = new FormData();
+
+  formData.append('nome', tituloInput.value);
+  formData.append('descricao', descricaoInput.value);
+  formData.append('precoOriginal', precoInput.value);
+  formData.append('categoria', categoriaEl.value);
+  formData.append('estado', condicaoEl.value);
+  if(franquiaEl.value) formData.append('franquia', franquiaEl.value);
+
+  const specsMockadas = [
+    {chave: "Plataforma", valor: "SNES"},
+    {chave: "Condição", valor: "Seminovo"}
+  ]
+
+  formData.append('especificacoes', JSON.stringify(specsMockadas));
+
+  if(fotos.length > 0){
+    for(let i = 0; i < fotos.length; i++){
+      formData.append('imagens', fotos[i].file);
+    }
+  }
+  
   fetch('http://localhost:3000/item/anunciar',{
     method: 'POST',
     headers:{
-      'Content-Type': 'application/json',
       'authorization': `Bearer ${vault_token}`
     },
-    body: JSON.stringify({
-      nome: tituloInput.value,
-      descricao: descricaoInput.value,
-      valor: precoInput.value,
-      categoria: categoriaEl.value,
-      estado: condicaoEl.value,
-      franquia: franquiaEl.value
-    })
+    body: formData
   })
   .then(resposta => resposta.json())
   .then(dados =>{
     if(dados.Erro){
       alert(`Erro: ${dados.Erro}`)
     } else{
-      console.log(`Dados Enviado: \r ${dados}`);      
+      console.log("Dados Enviados: " + dados);      
       setTimeout(() => {
         submitBtn.innerHTML = '<i class="ti ti-check"></i> Anúncio publicado!';
         submitBtn.style.background = '#22c55e';
