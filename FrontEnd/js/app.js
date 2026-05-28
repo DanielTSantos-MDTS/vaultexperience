@@ -348,67 +348,54 @@ function buildCards() {
   });
 }
 
-// O nosso Caminhão de Entregas!
 fetch('http://localhost:3000/item')
   .then(resposta => resposta.json())
   .then(listaDeItens => {
-      // 1. Apontamos para as prateleira
+      // 1. Apontamos para as prateleiras
       const prateleiraPopulares = document.getElementById('grid-populares');
-
       const prateleiraOfertas = document.getElementById('grid-ofertas');
 
-
       prateleiraPopulares.innerHTML = ''; 
+      prateleiraOfertas.innerHTML = ''; // Aproveitei para limpar a de ofertas também!
 
-      prateleiraOfertas.innerHTML = ''; 
-      
-
+      // 2. Filtramos quem está em oferta
       const itensEmOferta = listaDeItens.filter(item => item.valor < 100);
       
-      // 3. Colocamos os produtos reais na prateleira
-      listaDeItens.forEach((item, index) => {
-          
-          // Usamos o molde exato dos seus amigos, mas com dados do banco!
+      // AQUI ENTRA A MÁGICA: .slice(0, TOTAL_CARDS) fatia a lista antes de desenhar!
+      // (Certifique-se de que a variável TOTAL_CARDS existe no topo do seu arquivo, ex: const TOTAL_CARDS = 8;)
+      
+      listaDeItens.slice(0, TOTAL_CARDS).forEach((item, index) => {
           const quadradinhoHTML = `
-            <div class="card" style="animation: slide-in .5s ease ${index * 0.08}s both; cursor: pointer;" onclick="window.location.href='produto.html'">
-              
+            <div class="card" style="animation: slide-in .5s ease ${index * 0.08}s both; cursor: pointer;" onclick="window.location.href='produto.html?id=${item._id}'">
               <div class="card-img" style="display: flex; align-items: center; justify-content: center; background-color: #222;">
                 <span style="color: #555; font-size: 12px;">Sem foto</span>
               </div>
-              
               <div class="card-body">
                 <h3 style="color: #fff; font-size: 16px; margin: 0 0 5px 0;">${item.nome}</h3>
-                <p style="color: #aaa; font-size: 12px; margin: 0 0 10px 0;">${item.categoria.nome}</p>
+                <p style="color: #aaa; font-size: 12px; margin: 0 0 10px 0;">${item.categoria?.nome || 'Sem Categoria'}</p>
                 <h3 style="color: #f1c40f; margin: 0;">R$ ${item.valor}</h3>
-                <p style="color: #555; font-size: 11px; margin-top: 10px;">Vendedor: ${item.dono.usuario}</p>
+                <p style="color: #555; font-size: 11px; margin-top: 10px;">Vendedor: ${item.dono?.username || 'Desconhecido'}</p>
               </div>
-
             </div>
           `;
-
           prateleiraPopulares.innerHTML += quadradinhoHTML;
       });
 
-      itensEmOferta.forEach((item, index) => {
-          
-          // Usamos o molde exato dos seus amigos, mas com dados do banco!
+      // Fazemos o mesmo para as Ofertas!
+      itensEmOferta.slice(0, TOTAL_CARDS).forEach((item, index) => {
           const quadradinhoHTML = `
-            <div class="card" style="animation: slide-in .5s ease ${index * 0.08}s both; cursor: pointer;" onclick="window.location.href='produto.html'">
-              
+            <div class="card" style="animation: slide-in .5s ease ${index * 0.08}s both; cursor: pointer;" onclick="window.location.href='produto.html?id=${item._id}'">
               <div class="card-img" style="display: flex; align-items: center; justify-content: center; background-color: #222;">
                 <span style="color: #555; font-size: 12px;">Sem foto</span>
               </div>
-              
               <div class="card-body">
                 <h3 style="color: #fff; font-size: 16px; margin: 0 0 5px 0;">${item.nome}</h3>
-                <p style="color: #aaa; font-size: 12px; margin: 0 0 10px 0;">${item.categoria.nome}</p>
+                <p style="color: #aaa; font-size: 12px; margin: 0 0 10px 0;">${item.categoria?.nome || 'Sem Categoria'}</p>
                 <h3 style="color: #f1c40f; margin: 0;">R$ ${item.valor}</h3>
-                <p style="color: #555; font-size: 11px; margin-top: 10px;">Vendedor: ${item.dono.usuario}</p>
+                <p style="color: #555; font-size: 11px; margin-top: 10px;">Vendedor: ${item.dono?.username || 'Desconhecido'}</p>
               </div>
-
             </div>
           `;
-
           prateleiraOfertas.innerHTML += quadradinhoHTML;
       });
       
@@ -417,13 +404,17 @@ fetch('http://localhost:3000/item')
       console.error("Erro na requisição:", erro);
   });
       
-  fetch('http://localhost:3000/categoria')
+  fetch('http://localhost:3000/item')
   .then(resposta => resposta.json())
-  .then(listaDeFranquias =>{
+  .then(listaDeItens =>{
     prateleiraFranquias.innerHTML = ''; 
 
-    listaDeFranquias.forEach((franquia, index) => {
-      const cardFranquia = `
+    const itensComFranquia = listaDeItens.filter(item => item.franquia !== undefined && item.franquia !== "");
+
+    const franquiasUnicas = [...new Set(itensComFranquia.map(item => item.franquia))];
+
+    franquiasUnicas.forEach((nomeDaFranquia, index) => {
+        const cardFranquia = `
             <div class="card" style="animation: slide-in .5s ease ${index * 0.08}s both; cursor: pointer;" onclick="window.location.href='produto.html'">
               
               <div class="card-img" style="display: flex; align-items: center; justify-content: center; background-color: #222;">
@@ -431,16 +422,16 @@ fetch('http://localhost:3000/item')
               </div>
               
               <div class="card-body">
-                <p style="color: #aaa; font-size: 12px; margin: 0 0 10px 0;">${franquia.nome}</p>
+                <p style="color: #aaa; font-size: 12px; margin: 0 0 10px 0;">${nomeDaFranquia}</p>
               </div>
 
             </div>
-          `
+        `;
 
-            prateleiraFranquias.innerHTML += cardFranquia;
+        prateleiraFranquias.innerHTML += cardFranquia;
     })
   })
-  .catch(error => {
+  .catch(erro => {
     console.error("Erro na requisição:", erro);
   })
 

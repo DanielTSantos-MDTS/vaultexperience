@@ -1,14 +1,17 @@
+const urlParams = new URLSearchParams(window.location.search);
+const idProduto = urlParams.get('id');
+const vault_token = localStorage.getItem('vault_token');
+const urlFetch = `http://localhost:3000/item/${idProduto}`;
+
+
 const PRODUTO = {
-  id: "snes-classic-001",
-  categoria: "Consoles",
+  id: 1,
+  categoria: "Exemplo",
   subcategoria: "Super Nintendo",
   slug: "super-nintendo-snes-classic",
 
-  titulo: "Super Nintendo SNES Classic Edition — Console Completo com 2 Controles e 21 Jogos",
-  descricaoRapida: `Console <strong>Super Nintendo SNES Classic Edition</strong> em ótimo estado de conservação.
-    Acompanha <strong>2 controles originais</strong>, cabo HDMI, fonte e manual.
-    Pré-instalado com <strong>21 jogos clássicos</strong> incluindo Super Mario World, Zelda: A Link to the Past e muito mais.`,
-
+  titulo: "Base",
+  descricaoRapida: "Base",
   imagens: [
     "https://via.placeholder.com/600x600/1a1a1a/ffcc00?text=Foto+1",
     "https://via.placeholder.com/600x600/1a1a1a/ffcc00?text=Foto+2",
@@ -24,7 +27,7 @@ const PRODUTO = {
     { texto: "✦ Raro",     classe: "badge-rare" },
   ],
 
-  precoOriginal: 749.90,
+  precoOriginal: 14.2,
   precoAtual:    524.90,
   desconto:      30,
   parcelas:      12,
@@ -45,8 +48,8 @@ const PRODUTO = {
     { estrelas: 1, pct: 1  },
   ],
 
-  condicoes: ["Seminovo", "Usado", "Colecionador"],
-  condicaoAtiva: "Seminovo",
+  condicoes: ["Seminovo", "Usado", "Novo"],
+  condicaoAtiva: ["Seminovo"],
 
   specsRapidas: [
     { icone: "🎮", chave: "Plataforma",           valor: "Super Nintendo (SNES)"               },
@@ -146,6 +149,34 @@ const PRODUTO = {
   ],
 };
 
+fetch(urlFetch, {
+  headers: {
+    'authorization': `Bearer ${vault_token}`
+  }
+})
+.then(resposta => resposta.json())
+.then(dados => {
+  if (dados.Erro) {
+    alert(`Erro ao buscar produto: ${dados.Erro}`);
+    return;
+  }
+
+  PRODUTO.id = dados._id;
+  PRODUTO.titulo = dados.nome;
+  PRODUTO.descricaoRapida = dados.descricao;
+  PRODUTO.precoAtual = dados.valor;
+  PRODUTO.condicaoAtiva = dados.estado;
+  PRODUTO.vendedor.nome = dados.dono.username;
+
+  PRODUTO.categoria = dados.categoria?.nome || 'Sem Categoria';
+
+  if(dados.franquia) PRODUTO.subcategoria = dados.franquia;
+
+  renderPage();
+})
+.catch(erro => {
+  console.error("Erro fatal ao buscar a encomenda:", erro);
+});
 
 /* --- Utilitários (HELPERS) ---*/
 const fmtPreco = n => n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -570,5 +601,5 @@ function bindEvents() {
   });
 }
 
-/*--- INIT ---*/
-renderPage();
+// /*--- INIT ---*/
+// renderPage();

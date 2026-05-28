@@ -117,14 +117,14 @@
               <div class="select-wrapper">
                 <select id="categoria">
                   <option value="" disabled selected>Selecione</option>
-                  <option>Action Figures</option>
+                  <!-- <option>Action Figures</option>
                   <option>Quadrinhos & Mangás</option>
                   <option>Games</option>
                   <option>Cards & TCG</option>
                   <option>Vestuário Geek</option>
                   <option>Acessórios</option>
                   <option>Eletrônicos</option>
-                  <option>Outros</option>
+                  <option>Outros</option> -->
                 </select>
                 <i class="ti ti-chevron-down select-icon"></i>
               </div>
@@ -216,7 +216,35 @@
 
   </main>
 
-  <script src="js/anunciar.js"></script>
+  <script>
+      async function carregarCategorias() {
+      try {
+          const resposta = await fetch('http://localhost:3000/categoria'); 
+          const categorias = await resposta.json();
+          
+          const selectCategoria = document.getElementById('categoria');
+          
+          categorias.forEach(cat => {
+              const option = document.createElement('option');
+              
+              option.value = cat._id; 
+              
+              option.textContent = cat.nome; 
+              
+              selectCategoria.appendChild(option);
+          });
+      } catch (erro) {
+          console.error("Erro ao buscar categorias da fábrica:", erro);
+      }
+  }
+
+  
+    document.addEventListener('DOMContentLoaded', () =>{
+      carregarCategorias();
+    })
+  </script>
+
+  <script src="js/anunciar.js" defer></script>
 
 </body>
 </html>

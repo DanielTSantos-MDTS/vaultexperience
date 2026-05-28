@@ -5,7 +5,7 @@ export default {
     async listar (req, res){
         try{
         const itens = await Item.find()
-        .populate('dono', 'usuario')
+        .populate('dono', 'username')
         .populate('categoria', 'nome');
 
         res.status(200).json(itens);
@@ -18,7 +18,7 @@ export default {
             const id = req.params.id;
 
             const item = await Item.findById(id)
-            .populate('dono', 'usuario')
+            .populate('dono', 'username')
             .populate('categoria', 'nome');
 
             if (!item) return res.status(404).json({Erro: 'Item não encontrado'});
@@ -36,7 +36,7 @@ export default {
             
             const novoItem = await Item.create(corpo);
 
-            await novoItem.populate('dono', 'usuario');
+            await novoItem.populate('dono', 'username');
             
             await novoItem.populate('categoria', 'nome');
 
@@ -62,7 +62,7 @@ export default {
             await item.save();
 
             await item
-            .populate('dono', 'usuario')
+            .populate('dono', 'username')
             .populate('categoria', 'nome');
 
             return res.status(200).json(item);

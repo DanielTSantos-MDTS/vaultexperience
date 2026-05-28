@@ -30,6 +30,9 @@ const itemSchema = new Schema ({
         enum: ['Novo', 'Seminovo', 'Usado'],
         required: true
     },
+    franquia:{
+        type: String
+    },
     imagens: [{type: String}],
     dono:{
         type: Schema.Types.ObjectId,

@@ -123,6 +123,7 @@ form.addEventListener('submit', e => {
       valor: precoInput.value,
       categoria: categoriaEl.value,
       estado: condicaoEl.value,
+      franquia: franquiaEl.value
     })
   })
   .then(resposta => resposta.json())
