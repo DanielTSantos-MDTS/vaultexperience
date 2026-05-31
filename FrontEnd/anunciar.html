@@ -4,15 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anunciar - Vault Experience</title>
-
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/anunciar.css">
-  <link rel="stylesheet" href="css/store.css">
   <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/anunciar.css">
 </head>
 
 <body>
@@ -24,225 +22,537 @@
 
   <main class="anunciar-page">
 
-    <!-- LADO ESQUERDO — logo + benefícios -->
+    <!-- LADO ESQUERDO -->
     <section class="anunciar-left">
-
       <div class="anunciar-logo">
         <img src="assets/logo.png" alt="Vault Experience">
       </div>
-
       <h1>
         Anuncie em poucos<br>
         minutos com total<br>
         <span>segurança</span>
       </h1>
-
       <p>
         Coloque seu produto à venda na maior plataforma
         geek do Brasil e alcance milhares de colecionadores.
       </p>
-
       <ul class="benefit-list">
-
         <li class="benefit-item">
-          <div class="benefit-icon">
-            <i class="ti ti-shield-check"></i>
-          </div>
+          <div class="benefit-icon"><i class="ti ti-shield-check"></i></div>
           <div class="benefit-text">
             <strong>Ambiente seguro</strong>
             <span>Usuários verificados e ferramentas de proteção para negociações seguras.</span>
           </div>
         </li>
-
         <li class="benefit-item">
-          <div class="benefit-icon">
-            <i class="ti ti-star"></i>
-          </div>
+          <div class="benefit-icon"><i class="ti ti-star"></i></div>
           <div class="benefit-text">
             <strong>Seu anúncio em destaque</strong>
             <span>Seu produto sendo visto por milhões de usuários todos os dias.</span>
           </div>
         </li>
-
         <li class="benefit-item">
-          <div class="benefit-icon">
-            <i class="ti ti-currency-dollar"></i>
-          </div>
+          <div class="benefit-icon"><i class="ti ti-currency-dollar"></i></div>
           <div class="benefit-text">
             <strong>Recomendação de preço</strong>
             <span>Ajudamos você a definir o melhor preço para vender o seu produto.</span>
           </div>
         </li>
-
         <li class="benefit-item">
-          <div class="benefit-icon">
-            <i class="ti ti-bolt"></i>
-          </div>
+          <div class="benefit-icon"><i class="ti ti-bolt"></i></div>
           <div class="benefit-text">
             <strong>Publicação instantânea</strong>
             <span>Seu anúncio vai ao ar em segundos, sem burocracia.</span>
           </div>
         </li>
-
       </ul>
-
     </section>
 
-    <!-- LADO DIREITO — formulário -->
+    <!-- LADO DIREITO — formulário dinâmico -->
     <section class="anunciar-right">
-
       <div class="anunciar-card">
 
         <h2>Criar anúncio</h2>
-        <p class="card-subtitle">Preencha as informações do seu produto</p>
+        <p class="card-subtitle" id="card-subtitle">Escolha a categoria do seu produto</p>
+
+        <!-- STEP INDICATOR -->
+        <div class="step-indicator" id="step-indicator">
+          <div class="step-dot active" id="step-dot-1">1</div>
+          <div class="step-line" id="step-line-1"></div>
+          <div class="step-dot" id="step-dot-2">2</div>
+          <div class="step-line" id="step-line-2"></div>
+          <div class="step-dot" id="step-dot-3">3</div>
+        </div>
 
         <form id="anunciar-form">
 
-          <!-- Título -->
-          <div class="input-group">
-            <label for="titulo">Título do anúncio</label>
-            <input
-              type="text"
-              id="titulo"
-              placeholder="Ex: Action Figure Marvel — Homem de Ferro"
-              maxlength="80"
-            >
+          <!-- CATEGORIA -->
+          <div class="form-section visible" id="step-1">
+            <div class="category-grid">
+              <button type="button" class="cat-btn" data-cat="consoles">
+                <i class="ti ti-device-gamepad-2"></i> Consoles / Video Games
+              </button>
+              <button type="button" class="cat-btn" data-cat="jogos">
+                <i class="ti ti-disc"></i> Jogos
+              </button>
+              <button type="button" class="cat-btn" data-cat="livros">
+                <i class="ti ti-book"></i> Livros / Mangás
+              </button>
+              <button type="button" class="cat-btn" data-cat="figures">
+                <i class="ti ti-robot"></i> Figures / Funkos
+              </button>
+              <button type="button" class="cat-btn" data-cat="assinaturas">
+                <i class="ti ti-key"></i> Assinaturas / Keys
+              </button>
+              <button type="button" class="cat-btn" data-cat="acessorios">
+                <i class="ti ti-headphones"></i> Acessórios
+              </button>
+              <button type="button" class="cat-btn" data-cat="softwares" style="grid-column: span 2;">
+                <i class="ti ti-code"></i> Softwares
+              </button>
+            </div>
+
+            <div class="form-nav" style="margin-top:4px;">
+              <button type="button" class="btn-next-step" id="btn-go-step2" disabled>
+                Continuar <i class="ti ti-arrow-right"></i>
+              </button>
+            </div>
           </div>
 
-          <!-- Categoria + Condição -->
-          <div class="input-row">
+          <!-- MODELO DO ANÚNCIO -->
+          <div class="form-section" id="step-2">
+            <div class="model-grid" id="model-grid">
+              <button type="button" class="model-btn" data-model="normal">
+                <i class="ti ti-tag"></i>
+                <strong>Normal</strong>
+                <span>Um item específico com preço fixo.</span>
+              </button>
+              <button type="button" class="model-btn" data-model="dinamico" id="model-dinamico">
+                <i class="ti ti-layers-subtract"></i>
+                <strong>Dinâmico</strong>
+                <span>Vários itens ou variações para o comprador escolher.</span>
+              </button>
+              <button type="button" class="model-btn" data-model="servicos" id="model-servicos">
+                <i class="ti ti-tool"></i>
+                <strong>Serviços</strong>
+                <span>Preço sob orçamento, sem valor fixo.</span>
+              </button>
+            </div>
 
+            <div class="form-nav">
+              <button type="button" class="btn-back-step" id="btn-back-to-1">
+                <i class="ti ti-arrow-left"></i>
+              </button>
+              <button type="button" class="btn-next-step" id="btn-go-step3" disabled>
+                Continuar <i class="ti ti-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+          <div class="form-section" id="step-3">
+
+            <!-- CAMPOS COMUNS A TODOS -->
             <div class="input-group">
-              <label for="categoria">Categoria</label>
+              <label for="titulo">Título do anúncio</label>
+              <input type="text" id="titulo" placeholder="Ex: PS5 Slim — Edição Padrão" maxlength="80">
+            </div>
+
+            <!-- CONSOLES -->
+            <div id="fields-consoles" class="cat-fields" style="display:none; flex-direction:column; gap:20px;">
+              <div class="input-group">
+                <label for="console-modelo">Modelo</label>
+                <div class="select-wrapper">
+                  <select id="console-modelo">
+                    <option value="" disabled selected>Selecione o modelo</option>
+                    <option>PlayStation 5</option>
+                    <option>PlayStation 4</option>
+                    <option>PlayStation 3</option>
+                    <option>Xbox Series X/S</option>
+                    <option>Xbox One</option>
+                    <option>Nintendo Switch</option>
+                    <option>Nintendo Switch Lite</option>
+                    <option>Game Boy / GBA</option>
+                    <option>Mega Drive / SNES</option>
+                    <option>Outro</option>
+                  </select>
+                  <i class="ti ti-chevron-down select-icon"></i>
+                </div>
+              </div>
+              <div class="input-group">
+                <label>Condição</label>
+                <div class="radio-group" id="condicao-consoles">
+                  <button type="button" class="radio-btn" data-val="Novo">Novo</button>
+                  <button type="button" class="radio-btn" data-val="Seminovo">Seminovo</button>
+                  <button type="button" class="radio-btn" data-val="Usado">Usado</button>
+                  <button type="button" class="radio-btn" data-val="Digital">Produto Digital</button>
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="console-incluso">Incluso na caixa</label>
+                <textarea id="console-incluso" rows="3" placeholder="Ex: Console, 1 controle, cabo HDMI, fonte, caixa original..."></textarea>
+              </div>
+              <div class="input-group">
+                <label for="console-midia">Mídia</label>
+                <div class="select-wrapper">
+                  <select id="console-midia">
+                    <option value="" disabled selected>Selecione</option>
+                    <option>Somente Digital</option>
+                    <option>Mídia Física</option>
+                    <option>Digital + Mídia Física</option>
+                  </select>
+                  <i class="ti ti-chevron-down select-icon"></i>
+                </div>
+              </div>
+              <div class="input-row">
+                <div class="input-group">
+                  <label for="console-localidade">Localização</label>
+                  <input type="text" id="console-localidade" placeholder="Ex: São Paulo, SP">
+                </div>
+                <div class="input-group">
+                  <label for="console-quantidade">Quantidade</label>
+                  <input type="number" id="console-quantidade" min="1" value="1" placeholder="1">
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="console-raridade">Raridade</label>
+                <div class="select-wrapper">
+                  <select id="console-raridade">
+                    <option value="" disabled selected>Selecione</option>
+                    <option>Comum</option>
+                    <option>Raro</option>
+                    <option>Relíquia / Edição de Colecionador</option>
+                  </select>
+                  <i class="ti ti-chevron-down select-icon"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- JOGOS -->
+            <div id="fields-jogos" class="cat-fields" style="display:none; flex-direction:column; gap:20px;">
+              <div class="input-row">
+                <div class="input-group">
+                  <label for="jogo-plataforma">Plataforma</label>
+                  <div class="select-wrapper">
+                    <select id="jogo-plataforma">
+                      <option value="" disabled selected>Selecione</option>
+                      <option>PlayStation 5</option>
+                      <option>PlayStation 4</option>
+                      <option>PlayStation 3</option>
+                      <option>Xbox Series X/S</option>
+                      <option>Xbox One</option>
+                      <option>Nintendo Switch</option>
+                      <option>PC</option>
+                      <option>Game Boy / GBA</option>
+                    </select>
+                    <i class="ti ti-chevron-down select-icon"></i>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="jogo-localidade">Localização</label>
+                  <input type="text" id="jogo-localidade" placeholder="Ex: Curitiba, PR">
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="jogo-estado">Estado do produto</label>
+                <textarea id="jogo-estado" rows="3" placeholder="Ex: Sem arranhões, caixa original em ótimo estado, acompanha manual..."></textarea>
+              </div>
+            </div>
+
+            <!-- LIVROS / MANGÁS -->
+            <div id="fields-livros" class="cat-fields" style="display:none; flex-direction:column; gap:20px;">
+              <div class="input-group">
+                <label>Condição</label>
+                <div class="radio-group" id="condicao-livros">
+                  <button type="button" class="radio-btn" data-val="Novo">Novo</button>
+                  <button type="button" class="radio-btn" data-val="Seminovo">Seminovo</button>
+                  <button type="button" class="radio-btn" data-val="Usado">Usado</button>
+                  <button type="button" class="radio-btn" data-val="E-book">E-book</button>
+                </div>
+              </div>
+              <div class="input-row">
+                <div class="input-group">
+                  <label for="livro-editora">Editora <span class="optional-label">(opcional)</span></label>
+                  <input type="text" id="livro-editora" placeholder="Ex: Panini, Shueisha...">
+                </div>
+                <div class="input-group">
+                  <label for="livro-volume">Volume <span class="optional-label">(opcional)</span></label>
+                  <input type="text" id="livro-volume" placeholder="Ex: Vol. 1–10">
+                </div>
+              </div>
+              <div class="input-row">
+                <div class="input-group">
+                  <label for="livro-localidade">Localização</label>
+                  <input type="text" id="livro-localidade" placeholder="Ex: Rio de Janeiro, RJ">
+                </div>
+                <div class="input-group">
+                  <label for="livro-quantidade">Quantidade</label>
+                  <input type="number" id="livro-quantidade" min="1" value="1" placeholder="1">
+                </div>
+              </div>
+            </div>
+
+            <!-- FIGURES / FUNKOS -->
+            <div id="fields-figures" class="cat-fields" style="display:none; flex-direction:column; gap:20px;">
+              <div class="input-row">
+                <div class="input-group">
+                  <label for="figure-personagem">Modelo / Personagem</label>
+                  <input type="text" id="figure-personagem" placeholder="Ex: Batman, Goku...">
+                </div>
+                <div class="input-group">
+                  <label for="figure-escala">Escala / Tamanho <span class="optional-label">(opcional)</span></label>
+                  <input type="text" id="figure-escala" placeholder="Ex: 1/6, 15cm">
+                </div>
+              </div>
+              <div class="input-group">
+                <label>Condição</label>
+                <div class="radio-group" id="condicao-figures">
+                  <button type="button" class="radio-btn" data-val="Novo">Novo</button>
+                  <button type="button" class="radio-btn" data-val="Seminovo">Seminovo</button>
+                  <button type="button" class="radio-btn" data-val="Usado">Usado</button>
+                  <button type="button" class="radio-btn" data-val="Digital">Produto Digital</button>
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="figure-localidade">Localização</label>
+                <input type="text" id="figure-localidade" placeholder="Ex: Belo Horizonte, MG">
+              </div>
+              <div class="input-group">
+                <label class="checkbox-group">
+                  <input type="checkbox" id="figure-caixa">
+                  <span>Possui caixa original</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- ASSINATURAS/KEYS -->
+            <div id="fields-assinaturas" class="cat-fields" style="display:none; flex-direction:column; gap:20px;">
+              <div class="input-group">
+                <label for="key-subcategoria">Subcategoria</label>
+                <div class="select-wrapper">
+                  <select id="key-subcategoria">
+                    <option value="" disabled selected>Selecione</option>
+                    <option>Key de Jogo</option>
+                    <option>Assinatura</option>
+                    <option>Gift Card</option>
+                    <option>Moedas em Jogos</option>
+                  </select>
+                  <i class="ti ti-chevron-down select-icon"></i>
+                </div>
+              </div>
+              <div class="info-badge">
+                <i class="ti ti-info-circle"></i>
+                <span>Produto digital: a condição será definida automaticamente como <strong>Digital / Online</strong>.</span>
+              </div>
+              <div class="input-row">
+                <div class="input-group">
+                  <label for="key-plataforma">Plataforma</label>
+                  <div class="select-wrapper">
+                    <select id="key-plataforma">
+                      <option value="" disabled selected>Selecione</option>
+                      <option>Steam</option>
+                      <option>PSN</option>
+                      <option>Xbox Live</option>
+                      <option>VP de Valorant</option>
+                      <option>Diamantes Free Fire</option>
+                      <option>Robux</option>
+                      <option>League of Legends</option>
+                      <option>Battle.net</option>
+                      <option>Epic Games</option>
+                      <option>Outros</option>
+                    </select>
+                    <i class="ti ti-chevron-down select-icon"></i>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="key-quantidade">Quantidade</label>
+                  <input type="number" id="key-quantidade" min="1" value="1" placeholder="1">
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="key-regiao">Região de ativação</label>
+                <div class="select-wrapper">
+                  <select id="key-regiao">
+                    <option value="" disabled selected>Selecione</option>
+                    <option>Global</option>
+                    <option>Brasil (BR)</option>
+                    <option>América Latina (LATAM)</option>
+                    <option>América do Norte (NA)</option>
+                    <option>Europa (EU)</option>
+                  </select>
+                  <i class="ti ti-chevron-down select-icon"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- ACESSÓRIOS -->
+            <div id="fields-acessorios" class="cat-fields" style="display:none; flex-direction:column; gap:20px;">
+              <div class="input-row">
+                <div class="input-group">
+                  <label for="aces-tipo">Tipo de acessório</label>
+                  <div class="select-wrapper">
+                    <select id="aces-tipo">
+                      <option value="" disabled selected>Selecione</option>
+                      <option>Controle</option>
+                      <option>Headset</option>
+                      <option>Mouse</option>
+                      <option>Teclado</option>
+                      <option>Decoração</option>
+                      <option>Cabo / Fonte</option>
+                      <option>Outros</option>
+                    </select>
+                    <i class="ti ti-chevron-down select-icon"></i>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="aces-localidade">Localização</label>
+                  <input type="text" id="aces-localidade" placeholder="Ex: Porto Alegre, RS">
+                </div>
+              </div>
+              <div class="input-group">
+                <label>Condição</label>
+                <div class="radio-group" id="condicao-acessorios">
+                  <button type="button" class="radio-btn" data-val="Novo">Novo</button>
+                  <button type="button" class="radio-btn" data-val="Seminovo">Seminovo</button>
+                  <button type="button" class="radio-btn" data-val="Usado">Usado</button>
+                  <button type="button" class="radio-btn" data-val="Digital">Produto Digital</button>
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="aces-incluso">Incluso na caixa <span class="optional-label">(opcional)</span></label>
+                <textarea id="aces-incluso" rows="2" placeholder="Ex: Controle, cabo USB, adaptador..."></textarea>
+              </div>
+              <div class="input-group">
+                <label for="aces-compat">Compatibilidade <span class="optional-label">(opcional)</span></label>
+                <input type="text" id="aces-compat" placeholder="Ex: Funciona no PS5 e PC">
+              </div>
+            </div>
+
+            <!-- SOFTWARES -->
+            <div id="fields-softwares" class="cat-fields" style="display:none; flex-direction:column; gap:20px;">
+              <div class="input-row">
+                <div class="input-group">
+                  <label for="sw-categoria">Categoria</label>
+                  <div class="select-wrapper">
+                    <select id="sw-categoria">
+                      <option value="" disabled selected>Selecione</option>
+                      <option>Produtividade</option>
+                      <option>Edição & Design</option>
+                      <option>Utilitários / VPN / Proxy</option>
+                      <option>Segurança</option>
+                      <option>Outros</option>
+                    </select>
+                    <i class="ti ti-chevron-down select-icon"></i>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="sw-plataforma">Plataforma</label>
+                  <div class="select-wrapper">
+                    <select id="sw-plataforma">
+                      <option value="" disabled selected>Selecione</option>
+                      <option>Windows</option>
+                      <option>macOS</option>
+                      <option>Linux</option>
+                      <option>Web</option>
+                      <option>Multi-plataforma</option>
+                    </select>
+                    <i class="ti ti-chevron-down select-icon"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="sw-licenca">Tipo de licença</label>
+                <div class="select-wrapper">
+                  <select id="sw-licenca">
+                    <option value="" disabled selected>Selecione</option>
+                    <option>Vitalícia</option>
+                    <option>Anual</option>
+                    <option>Mensal</option>
+                  </select>
+                  <i class="ti ti-chevron-down select-icon"></i>
+                </div>
+              </div>
+              <div class="input-group">
+                <label for="sw-incluso">O que inclui <span class="optional-label">(opcional)</span></label>
+                <textarea id="sw-incluso" rows="2" placeholder="Ex: Chave de ativação, suporte, atualizações..."></textarea>
+              </div>
+            </div>
+
+            <!-- VARIAÇÕES DINÂMICAS (modelo DINÂMICO) -->
+            <div id="section-variacoes" style="display:none; flex-direction:column; gap:16px;">
+              <span class="section-title"><i class="ti ti-layers-subtract"></i> &nbsp;Variações do anúncio</span>
+              <div class="info-badge">
+                <i class="ti ti-info-circle"></i>
+                <span>Adicione cada variação disponível. O comprador poderá escolher uma delas no momento da compra.</span>
+              </div>
+              <div class="variacoes-list" id="variacoes-list"></div>
+              <button type="button" class="btn-add-variacao" id="btn-add-variacao">
+                <i class="ti ti-plus"></i> Adicionar variação
+              </button>
+            </div>
+
+            <!-- DESCRIÇÃO -->
+            <div class="input-group">
+              <label for="descricao">Descrição</label>
+              <textarea id="descricao" placeholder="Descreva o produto com detalhes: estado, acompanha caixa, defeitos, etc." rows="4"></textarea>
+            </div>
+
+            <!-- FRANQUIA -->
+            <div class="input-group">
+              <label for="franquia">Franquia <span class="optional-label">(opcional)</span></label>
               <div class="select-wrapper">
-                <select id="categoria">
-                  <option value="" disabled selected>Selecione</option>
-                  <!-- <option>Action Figures</option>
-                  <option>Quadrinhos & Mangás</option>
-                  <option>Games</option>
-                  <option>Cards & TCG</option>
-                  <option>Vestuário Geek</option>
-                  <option>Acessórios</option>
-                  <option>Eletrônicos</option>
-                  <option>Outros</option> -->
+                <select id="franquia">
+                  <option value="">Selecione</option>
+                  <option>Star Wars</option>
+                  <option>Senhor dos Anéis</option>
+                  <option>Marvel</option>
+                  <option>DC</option>
+                  <option>Rockstar</option>
+                  <option>Riot</option>
+                  <option>Garena</option>
+                  <option>Nintendo</option>
+                  <option>Outros</option>
                 </select>
                 <i class="ti ti-chevron-down select-icon"></i>
               </div>
             </div>
 
+            <!-- PREÇO (label muda para Serviços) -->
             <div class="input-group">
-              <label for="condicao">Condição</label>
-              <div class="select-wrapper">
-                <select id="condicao">
-                  <option value="" disabled selected>Selecione</option>
-                  <option>Novo</option>
-                  <option>Seminovo</option>
-                  <option>Usado</option>
-                </select>
-                <i class="ti ti-chevron-down select-icon"></i>
+              <label for="preco" id="preco-label">Preço (R$)</label>
+              <div class="price-wrapper">
+                <span class="price-prefix">R$</span>
+                <input type="number" id="preco" placeholder="0,00" min="0" step="0.01">
               </div>
             </div>
 
-          </div>
-
-          <!-- Franquia (opcional) -->
-          <div class="input-group">
-            <label for="franquia">Franquia <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--gray-400);font-size:12px;">(opcional)</span></label>
-            <div class="select-wrapper">
-              <select id="franquia">
-                <option value="">Selecione</option>
-                <option>Star Wars</option>
-                <option>Senhor dos Anéis</option>
-                <option>Marvel</option>
-                <option>DC</option>
-                <option>Rockstar</option>
-                <option>Riot</option>
-                <option>Garena</option>
-                <option>Nintendo</option>
-                <option>Outros</option>
-              </select>
-              <i class="ti ti-chevron-down select-icon"></i>
+            <!-- FOTOS -->
+            <div class="input-group" id="fotos-group">
+              <label>Fotos do produto</label>
+              <div class="upload-area" id="upload-area">
+                <i class="ti ti-photo-plus upload-icon"></i>
+                <span class="upload-label">Clique ou arraste as fotos aqui</span>
+                <span class="upload-hint">Até 8 imagens · JPG, PNG ou WEBP</span>
+                <input type="file" id="foto-input" accept="image/*" multiple hidden>
+              </div>
+              <div class="foto-preview" id="foto-preview"></div>
             </div>
-          </div>
 
-          <!-- Descrição -->
-          <div class="input-group">
-            <label for="descricao">Descrição</label>
-            <textarea
-              id="descricao"
-              placeholder="Descreva o produto com detalhes: estado, acompanha caixa, defeitos, etc."
-              rows="4"
-            ></textarea>
-          </div>
-
-          <!-- Preço -->
-          <div class="input-group">
-            <label for="preco">Preço (R$)</label>
-            <div class="price-wrapper">
-              <span class="price-prefix">R$</span>
-              <input
-                type="number"
-                id="preco"
-                placeholder="0,00"
-                min="0"
-                step="0.01"
-              >
+            <div class="form-nav">
+              <button type="button" class="btn-back-step" id="btn-back-to-2">
+                <i class="ti ti-arrow-left"></i>
+              </button>
+              <button type="submit" id="anunciar-submit" disabled>
+                <i class="ti ti-speakerphone"></i>
+                Publicar anúncio
+              </button>
             </div>
-          </div>
 
-          <!-- Upload de foto -->
-          <div class="input-group">
-            <label>Fotos do produto</label>
-            <div class="upload-area" id="upload-area">
-              <i class="ti ti-photo-plus upload-icon"></i>
-              <span class="upload-label">Clique ou arraste as fotos aqui</span>
-              <span class="upload-hint">Até 8 imagens · JPG, PNG ou WEBP</span>
-              <input type="file" id="foto-input" accept="image/*" multiple hidden>
-            </div>
-            <div class="foto-preview" id="foto-preview"></div>
           </div>
-
-          <!-- Botão -->
-          <button type="submit" id="anunciar-submit" disabled>
-            <i class="ti ti-speakerphone"></i>
-            Publicar anúncio
-          </button>
 
         </form>
-
       </div>
-
     </section>
 
   </main>
-
-  <script>
-      async function carregarCategorias() {
-      try {
-          const resposta = await fetch('http://localhost:3000/categoria'); 
-          const categorias = await resposta.json();
-          
-          const selectCategoria = document.getElementById('categoria');
-          
-          categorias.forEach(cat => {
-              const option = document.createElement('option');
-              
-              option.value = cat._id; 
-              
-              option.textContent = cat.nome; 
-              
-              selectCategoria.appendChild(option);
-          });
-      } catch (erro) {
-          console.error("Erro ao buscar categorias da fábrica:", erro);
-      }
-  }
-
-  
-    document.addEventListener('DOMContentLoaded', () =>{
-      carregarCategorias();
-    })
-  </script>
 
   <script src="js/anunciar.js" defer></script>
 

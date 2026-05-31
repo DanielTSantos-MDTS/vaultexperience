@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Central de Ajuda — Vault Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="css/mobile-menu.css">
+<link rel="stylesheet" href="css/store.css">
+<link rel="stylesheet" href="css/ajuda.css">
+</head>
+
+<body>
+<!-- NAVBAR -->
+<header id="navbar">
+  <div class="nav-top">
+    <a href="#" class="logo" aria-label="Vault Experience – Início">
+      <img src="assets/logo.png" alt="Vault Experience" class="logo-img" />
+    </a>
+
+    <!-- Barra de busca -->
+    <div class="search-wrap">
+      <input type="text" placeholder="Buscar consoles, jogos, mangás…" aria-label="Buscar" />
+      <button class="search-btn" aria-label="Pesquisar">
+        <svg width="16" height="16" fill="none" stroke="#000" stroke-width="2.5" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Ações do usuario - Área de interação -->
+    <nav class="nav-actions">
+      <button class="btn-anunciar" onclick="window.location.href='anunciar.html'">Anunciar</button>
+
+      <!-- SVG de Favoritos -->
+      <button class="icon-btn" data-valt="fav-btn" aria-label="Favoritos"
+  onclick="window.location.href='favorites.html'">
+        <svg width="22" height="22" fill="none" stroke="#ccc" stroke-width="1.8" viewBox="0 0 24 24">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+
+      <!-- SVG do Carrinho de compras -->
+      <button class="icon-btn" data-valt="cart-btn" aria-label="Carrinho"
+  onclick="window.location.href='cart.html'">
+        <svg width="22" height="22" fill="none" stroke="#ccc" stroke-width="1.8" viewBox="0 0 24 24">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+      </button>
+
+      <button class="icon-btn" id="hamburger-btn" aria-label="Menu"></button>
+    
+  <!-- Área de Login -->
+<div class="user-menu-container">
+
+  <!-- BOTÃO ENTRAR -->
+  <div id="auth-area">
+
+    <button
+  class="login-btn"
+  id="login-btn"
+>
+
+  Entrar
+
+</button>
+
+  </div>
+
+  <!-- PERFIL -->
+  <div
+    class="user-menu hidden"
+    id="user-menu"
+  >
+
+    <button
+      class="icon-btn"
+      id="user-btn"
+      title="Minha Conta"
+    >
+
+      <svg width="22" height="22" fill="none" stroke="#ccc" stroke-width="1.8" viewBox="0 0 24 24">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+
+    </button>
+
+    <div class="user-dropdown" id="user-dropdown">
+
+      <div class="user-dropdown-header">
+
+        <span
+          class="user-name"
+          id="username-display"
+        >
+          Username
+        </span>
+
+        <span class="user-status">
+          Online
+        </span>
+
+      </div>
+      <hr class="dropdown-divider">
+      <ul class="dropdown-list">
+        <li>
+          <a href="dashboard.html?tab=meus-anuncios">
+            <span class="material-symbols-rounded">storefront</span>
+            Meus Anúncios
+          </a>
+        </li>
+        <li>
+          <a href="dashboard.html?tab=meus-pedidos">
+            <span class="material-symbols-rounded">package</span>
+            Meus Pedidos
+          </a>
+        </li>
+        <li>
+          <a href="dashboard.html?tab=carteira">
+            <span class="material-symbols-rounded">account_balance_wallet</span>
+            Carteira
+          </a>
+        </li>
+        <li>
+          <a href="dashboard.html?tab=minha-conta">
+            <span class="material-symbols-rounded">manage_accounts</span>
+            Minha Conta
+          </a>
+        </li>
+        <li>
+          <a href="dashboard.html?tab=seguranca">
+            <span class="material-symbols-rounded">shield</span>
+            Segurança & Privacidade
+          </a>
+        </li>
+        <li>
+          <a href="ajuda.html">
+            <span class="material-symbols-rounded">help</span>
+            Ajuda
+          </a>
+        </li>
+      </ul>
+      <hr class="dropdown-divider">
+      <ul class="dropdown-list">
+        <li>
+          <a
+            href="#"
+            class="logout-link"
+            id="logout-btn">
+            <span class="material-symbols-rounded">
+              logout
+            </span>
+            Sair
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</header>
+<!-- Voltar ao painel -->
+<div class="back-bar">
+  <div class="back-bar-inner">
+    <a href="dashboard.html" class="back-link">
+      <span class="ms" style="font-size:16px">arrow_back</span> Voltar ao painel
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<div class="help-hero">
+  <div class="help-hero-inner">
+    <h1>Central de Ajuda</h1>
+    <p>Encontre respostas, abra tickets de suporte e acesse todos os recursos da plataforma.</p>
+    <div class="help-search">
+      <input type="text" id="help-search-input" placeholder="Buscar na central de ajuda..." />
+      <button aria-label="Buscar">
+        <svg width="16" height="16" fill="none" stroke="#000" stroke-width="2.2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CONTEÚDO ═══════════════════ -->
+<div class="help-wrap">
+
+  <!-- FAQ -->
+  <div class="section-label"><span class="ms">quiz</span> Perguntas Frequentes</div>
+  <div class="help-grid full" style="margin-bottom:40px">
+    <div class="help-card">
+      <div class="faq-list" id="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Como faço para anunciar um produto?
+            <span class="ms faq-arrow" style="font-size:20px">expand_more</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Para anunciar, clique no botão <strong style="color:var(--yellow)">Anunciar</strong> no topo da página. Preencha as informações do produto, adicione fotos de qualidade e defina o preço. Após envio, seu anúncio passa por análise e fica ativo em até 24h.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Quanto tempo leva para o saldo ser liberado?
+            <span class="ms faq-arrow" style="font-size:20px">expand_more</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              O saldo fica disponível <strong style="color:var(--yellow)">7 dias após a confirmação da entrega</strong> pelo comprador. Esse prazo serve como garantia para ambas as partes em caso de mediação.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Como funciona a proteção ao comprador?
+            <span class="ms faq-arrow" style="font-size:20px">expand_more</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Toda compra é protegida pela nossa intermediação. Se o produto não chegar ou for diferente do anúncio, você pode abrir uma mediação em até 7 dias após a entrega. Nossa equipe analisa o caso e reembolsa se necessário.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Quais são as formas de pagamento aceitas?
+            <span class="ms faq-arrow" style="font-size:20px">expand_more</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Aceitamos <strong style="color:var(--yellow)">Pix</strong> (aprovação instantânea), <strong style="color:var(--yellow)">Cartão de Crédito</strong> (em até 12×) e <strong style="color:var(--yellow)">Boleto Bancário</strong> (aprovação em até 3 dias úteis).
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Como sacar meu dinheiro?
+            <span class="ms faq-arrow" style="font-size:20px">expand_more</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Acesse <strong style="color:var(--yellow)">Painel → Minhas Retiradas</strong>, clique em "Sacar meu dinheiro" e informe sua chave Pix. O valor cai na sua conta em até 1 dia útil. O valor mínimo para saque é R$ 10,00.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Meu anúncio foi reprovado, e agora?
+            <span class="ms faq-arrow" style="font-size:20px">expand_more</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Anúncios são reprovados por não seguirem nossas diretrizes (fotos de baixa qualidade, descrição insuficiente, categoria incorreta, etc.). Acesse <strong style="color:var(--yellow)">Meus Anúncios → Reprovados</strong>, edite as informações e reenvie para análise.
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /faq-list -->
+    </div>
+  </div>
+
+  <!-- Tickets e Suporte -->
+  <div class="section-label"><span class="ms">confirmation_number</span> Suporte</div>
+  <div class="help-grid" style="margin-bottom:40px">
+    <div class="help-card">
+      <div class="help-card-icon">🎫</div>
+      <h3>Abrir Ticket de Suporte</h3>
+      <p>Está com algum problema técnico, dúvida sobre uma compra ou precisa de ajuda especializada? Nossa equipe responde em até 24h úteis.</p>
+      <div class="ticket-status">
+        <div>
+          <div style="font-size:12px;color:var(--gray-400);margin-bottom:10px">Seus tickets abertos</div>
+          <div style="font-family:var(--font-retro);font-size:18px;color:var(--white)">0</div>
+        </div>
+        <button class="btn btn-yellow" onclick="window.location.href='tickets.html'">
+          <span class="ms" style="font-size:16px">add</span> Novo Ticket
+        </button>
+      </div>
+    </div>
+
+    <div class="help-card">
+      <div class="help-card-icon">💬</div>
+      <h3>Fale Conosco</h3>
+      <p>Para assuntos comerciais, parcerias e contatos que não envolvam suporte técnico, fale diretamente com nosso time pelo e-mail abaixo.</p>
+      <div class="email-box">
+        <span class="ms" style="color:var(--yellow);font-size:18px">></span>
+        <span>contato@vaultexperience.com</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Links úteis -->
+  <div class="section-label"><span class="ms">link</span> Links Úteis</div>
+  <div style="margin-bottom:40px">
+    <div class="links-grid">
+      <a href="#" class="link-item"><span class="ms" style="font-size:18px;color:var(--yellow)">play_circle</span> Como funciona a plataforma</a>
+      <a href="#" class="link-item"><span class="ms" style="font-size:18px;color:var(--yellow)">percent</span> Tarifas e taxas</a>
+      <a href="#" class="link-item"><span class="ms" style="font-size:18px;color:var(--yellow)">payments</span> Formas de pagamento</a>
+      <a href="#" class="link-item"><span class="ms" style="font-size:18px;color:var(--yellow)">gavel</span> Termos de uso</a>
+      <a href="#" class="link-item"><span class="ms" style="font-size:18px;color:var(--yellow)">policy</span> Política de privacidade</a>
+      <a href="#" class="link-item"><span class="ms" style="font-size:18px;color:var(--yellow)">assignment_return</span> Política de devolução</a>
+      <a href="#" class="link-item"><span class="ms" style="font-size:18px;color:var(--yellow)">verified_user</span> Programa de verificação</a>
+      <a href="#" class="link-item"><span class="ms" style="font-size:18px;color:var(--yellow)">sell</span> Guia do vendedor</a>
+    </div>
+  </div>
+
+  <!-- Redes sociais -->
+  <div class="section-label"><span class="ms">groups</span> Redes Sociais</div>
+  <div style="margin-bottom:48px">
+    <p style="font-size:13px;color:var(--gray-400);margin-bottom:16px">Acompanhe a Vault Experience para novidades, promoções e conteúdo exclusivo.</p>
+    <div class="social-grid">
+      <a href="#" class="social-btn social-discord" target="_blank" rel="noopener">
+        <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+        </svg>
+        Discord
+      </a>
+      <a href="#" class="social-btn social-youtube" target="_blank" rel="noopener">
+        <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+        YouTube
+      </a>
+      <a href="#" class="social-btn social-facebook" target="_blank" rel="noopener">
+        <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        Facebook
+      </a>
+      <a href="#" class="social-btn social-instagram" target="_blank" rel="noopener">
+        <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+        </svg>
+        Instagram
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="js/ajuda.js"></script>
+<script src="js/store.js"></script>
+<script src="js/logout.js"></script>
+</body>
+</html>
