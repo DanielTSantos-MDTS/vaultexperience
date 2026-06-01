@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import express from "express";
 import dotenv from 'dotenv';
 import cors from 'cors';
-dotenv.config();
+import { createClient } from "redis";
 
 import Reputacao from './models/Reputacao.js';
 import reputacaoRouter from './Routes/reputacaoRouter.js';
@@ -13,6 +13,9 @@ import categoriaRouter from './Routes/categoriaRouter.js'
 import vendaRouter from './Routes/vendaRouter.js';
 import trocaRouter from './Routes/trocaRouter.js';
 import authRouter from './Routes/authRouter.js';
+
+dotenv.config();
+
 
 const app = express();
 const port = 3000;

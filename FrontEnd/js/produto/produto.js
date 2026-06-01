@@ -148,46 +148,12 @@ const PRODUTO = {
     },
   ],
 };
-
-fetch(urlFetch, {
-  headers: {
-    'authorization': `Bearer ${vault_token}`
-  }
-})
-.then(resposta => resposta.json())
-.then(dados => {
-  if (dados.Erro) {
-    alert(`Erro ao buscar produto: ${dados.Erro}`);
-    return;
-  }
-  
-  PRODUTO.id = dados._id;
-  PRODUTO.titulo = dados.nome;
-  PRODUTO.descricaoRapida = dados.descricao;
-  PRODUTO.precoOriginal = dados.precoOriginal;
-  PRODUTO.precoAtual = dados.precoOriginal;
-  PRODUTO.condicaoAtiva = dados.estado;
-  PRODUTO.vendedor.nome = dados.dono.username;
-
-  PRODUTO.categoria = dados.categoria?.nome || 'Sem Categoria';
-
-  if(dados.franquia) PRODUTO.subcategoria = dados.franquia;
-
-  PRODUTO.especificacoes = dados.especificacoes || [];
-  PRODUTO.imagens = dados.imagens || [];
-
-  console.log(dados.especificacoes);
-  
-  renderPage();
-})
-.catch(erro => {
-  console.error("Erro fatal ao buscar a encomenda:", erro);
-});
-
 /* --- Utilitários (HELPERS) ---*/
+
 const fmtPreco = n => n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 function renderStars(media, big = false) {
+  debugger;
   const full  = Math.floor(media);
   const empty = 5 - full;
   const cls   = big ? 'reviews-stars-big' : 'stars';
@@ -198,14 +164,34 @@ function renderStars(media, big = false) {
 }
 
 function stockLabel(status, qtd) {
+  debugger;
   if (status === 'out') return { dot: 'out', cls: 'stock-out', txt: 'Sem estoque' };
   if (status === 'low') return { dot: 'low', cls: 'stock-low', txt: `Apenas ${qtd} unidade${qtd > 1 ? 's' : ''} restante${qtd > 1 ? 's' : ''}!` };
   return { dot: 'in', cls: 'stock-in', txt: 'Em estoque' };
 }
 
+async function carregarProduto(){
+  try{
+    const resposta = await fetch(urlFetch, {
+      headers: {'authorization': `Bearer ${vault_token}`}
+    });
+    const dados = await resposta.json();
+
+    if(dados.Erro) throw new Error (dados.Erro);
+
+    Object.assign(PRODUTO, dados);
+
+    renderPage()
+  } catch (error){
+    console.error(`Erro na comunicação ${erro}`);
+    renderPage();
+    debugger;
+  }
+}
 
 /*--- RENDER'S — BREADCRUMB ---*/
 function renderBreadcrumb() {
+  debugger;
   const p = PRODUTO;
   document.getElementById('breadcrumb').innerHTML = `
     <a href="index.html">Início</a>
@@ -216,11 +202,13 @@ function renderBreadcrumb() {
     <span class="breadcrumb-sep">›</span>
     <span>${p.titulo.split('—')[0].trim()}</span>
   `;
+  console.log('breadecumb ativo!');
 }
 
 
 /*--- RENDER — GALERIA ---*/
 function renderGallery() {
+  debugger;
   const imgs = (PRODUTO.imagens && PRODUTO.imagens.length > 0) 
       ? PRODUTO.imagens 
       : ["https://placehold.co/600x600/1a1a1a/555555?text=Sem+Foto&font=Montserrat"];
@@ -253,12 +241,14 @@ function renderGallery() {
 
 /*--- RENDER — INFO DO PRODUTO ---*/
 function renderProductInfo() {
+  debugger;
   const p  = PRODUTO;
   const vd = p.vendedor;
 
   const condTabs = p.condicoes.map(c =>
-    `<button class="cond-tab ${c === p.condicaoAtiva ? 'active' : ''}" data-cond="${c}">${c}</button>`
-  ).join('');
+  // Colocamos o alerta direto no HTML!
+  `<button onclick="alert('ESTOU VIVO!')" class="cond-tab ${c === p.condicaoAtiva ? 'active' : ''}" data-cond="${c}">${c}</button>`
+).join('');
 
   const specs = p.specsRapidas.map(s => `
     <div class="spec-row">
@@ -312,6 +302,7 @@ function renderProductInfo() {
 
 /*--- RENDER — CAIXA DE COMPRA ---*/
 function renderPurchaseBox() {
+  debugger;
   const p  = PRODUTO;
   const vd = p.vendedor;
   const st = stockLabel(p.estoqueStatus, p.estoqueQtd);
@@ -428,11 +419,13 @@ function renderPurchaseBox() {
         <button class="btn-seller">Ver perfil do vendedor →</button>
       </div>
     </div>`;
+    debugger;
 }
 
 
 /*--- RENDER — SEÇÕES INFERIORES ---*/
 function renderBottom() {
+  debugger;
   const p = PRODUTO;
 
   const descSections = p.descricaoCompleta.map(s => {
@@ -521,21 +514,35 @@ function renderBottom() {
 
 /*--- RENDER PRINCIPAL ---*/
 function renderPage() {
+  debugger;
+  alert('Carregando produto');
   document.title = `${PRODUTO.titulo.split('—')[0].trim()} – Vault Experience`;
   renderBreadcrumb();
+  debugger;
+  // 1. O operário constrói a parede (Cimento fresco)
   document.getElementById('product-page').innerHTML =
     renderGallery() + renderProductInfo() + renderPurchaseBox();
+    debugger;
   document.getElementById('product-bottom').innerHTML = renderBottom();
-  bindEvents();
+  debugger;
+
+  // 2. O TRUQUE DE MESTRE: Mandamos o operário respirar por 150 milissegundos
+  // Isso dá tempo ao navegador para secar o "cimento" e o HTML existir de verdade na tela
+  setTimeout(() => {
+    bindEvents(); // Os pregos agora vão fixar-se perfeitamente!
+  }, 4000);
 }
 
-
 /*--- EVENTOS ---*/
+console.log("🛠️ Ligando os fios dos botões!");
 function bindEvents() {
+  debugger;
   const p = PRODUTO;
-
+  debugger;
   /* Galeria: troca de foto */
   document.getElementById('gallery-thumbs').addEventListener('click', e => {
+    console.log('Troca de foto');
+    debugger;
     const thumb = e.target.closest('.thumb');
     if (!thumb) return;
     const idx = parseInt(thumb.dataset.idx, 10);
@@ -549,15 +556,20 @@ function bindEvents() {
   let qty = 1;
   const qtyNum = document.getElementById('qty-num');
   document.getElementById('qty-minus').addEventListener('click', () => {
+    console.log('Alterou a quantidade para -')
+    debugger;
     if (qty > 1) qtyNum.textContent = --qty;
   });
   document.getElementById('qty-plus').addEventListener('click', () => {
+    console.log('Alterou a quantidade para +')
     if (qty < p.estoqueMax) qtyNum.textContent = ++qty;
   });
 
   /*--- Abas de condição ---*/
   document.querySelectorAll('.cond-tab').forEach(tab => {
     tab.addEventListener('click', () => {
+      document.log('Clicou na condição');
+      debugger;
       document.querySelectorAll('.cond-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
     });
@@ -570,6 +582,8 @@ function bindEvents() {
   /* Chips de incremento */
   document.querySelectorAll('.lance-chip').forEach(chip => {
     chip.addEventListener('click', () => {
+      console.log("evento acionado");
+      debugger;
       const add      = parseFloat(chip.dataset.add);
       const current  = parseFloat(lanceInput.value) || 0;
       lanceInput.value = (current + add).toFixed(2);
@@ -579,6 +593,7 @@ function bindEvents() {
 
   /* Mostrar/esconder estado do botão */
   lanceInput.addEventListener('input', () => {
+    debugger;
     const val = parseFloat(lanceInput.value);
     btnLance.disabled = !(val > 0);
   });
@@ -586,6 +601,7 @@ function bindEvents() {
 
   /* Enviar lance */
   btnLance.addEventListener('click', () => {
+    debugger;
     const val = parseFloat(lanceInput.value);
     if (!val || val <= 0) return;
 
@@ -607,7 +623,11 @@ function bindEvents() {
       setTimeout(() => toast.remove(), 400);
     }, 4000);
   });
+  console.log('EventBind ativo');
+  debugger;
 }
 
 // /*--- INIT ---*/
 // renderPage();
+// LIGA A MÁQUINA
+carregarProduto();

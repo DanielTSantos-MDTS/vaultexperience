@@ -10,7 +10,7 @@ const itemSchema = new Schema ({
         type: String,
         required: true
     },
-    descricao:{
+    descricaoRapida:{
         type: String,
         required: true
     },
@@ -24,6 +24,9 @@ const itemSchema = new Schema ({
       type: Schema.Types.ObjectId,
       ref: 'Categoria',
       required: true
+    },
+    subcategoria: {
+        type: String
     },
     estado:{
         type: String,
@@ -43,7 +46,16 @@ const itemSchema = new Schema ({
         chave: String, 
         valor: String
     }],
-    estoque: {
+    specRapidas: {
+        type: Array
+    },
+    badges: {
+        type: Array
+    },
+    descricaoCompleta:{
+        type: String
+    },
+    estoqueQtd: {
         type: Number,
         default: 1,
         required: true
