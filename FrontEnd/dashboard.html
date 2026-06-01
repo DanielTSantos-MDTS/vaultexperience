@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Usuário — Vault Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  <link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="css/mobile-menu.css">
+<link rel="stylesheet" href="css/store.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header id="navbar">
+  <div class="nav-top">
+    <a href="index.html" class="logo" aria-label="Vault Experience – Início">
+      <img src="assets/logo.png" alt="Vault Experience" class="logo-img" />
+    </a>
+
+    <div class="search-wrap">
+      <input type="text" id="search-input" placeholder="Buscar consoles, jogos, mangás…" aria-label="Buscar" />
+      <button class="search-btn" aria-label="Pesquisar">
+        <svg width="16" height="16" fill="none" stroke="#000" stroke-width="2.5" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="nav-actions">
+      <button class="btn-anunciar">Anunciar</button>
+
+      <button class="icon-btn" data-valt="fav-btn" aria-label="Favoritos"
+  onclick="window.location.href='favorites.html'">
+        <svg width="22" height="22" fill="none" stroke="#ccc" stroke-width="1.8" viewBox="0 0 24 24">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+
+      <button class="icon-btn" data-valt="cart-btn" aria-label="Carrinho"
+  onclick="window.location.href='cart.html'">
+        <svg width="22" height="22" fill="none" stroke="#ccc" stroke-width="1.8" viewBox="0 0 24 24">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+      </button>
+
+      <button class="icon-btn" id="hamburger-btn" aria-label="Menu"></button>
+
+      <div class="user-menu-container">
+        <div id="auth-area">
+          <button class="login-btn" id="login-btn">Entrar</button>
+        </div>
+        <div class="user-menu hidden" id="user-menu">
+          <button class="icon-btn" id="user-btn" title="Minha Conta">
+            <svg width="22" height="22" fill="none" stroke="#ccc" stroke-width="1.8" viewBox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-dropdown-header">
+              <span class="user-name" id="username-display">Username</span>
+              <span class="user-status">Online</span>
+            </div>
+            <hr class="dropdown-divider">
+            <ul class="dropdown-list">
+              <li><a href="dashboard.html?tab=meus-anuncios"><span class="material-symbols-rounded">storefront</span>Meus Anúncios</a></li>
+              <li><a href="dashboard.html?tab=meus-pedidos"><span class="material-symbols-rounded">package</span>Meus Pedidos</a></li>
+              <li><a href="dashboard.html?tab=carteira"><span class="material-symbols-rounded">account_balance_wallet</span>Carteira</a></li>
+              <li><a href="dashboard.html?tab=minha-conta"><span class="material-symbols-rounded">manage_accounts</span>Minha Conta</a></li>
+              <li><a href="dashboard.html?tab=seguranca"><span class="material-symbols-rounded">shield</span>Segurança & Privacidade</a></li>
+              <li><a href="ajuda.html"><span class="material-symbols-rounded">help</span>Ajuda</a></li>
+            </ul>
+            <hr class="dropdown-divider">
+            <ul class="dropdown-list">
+              <li>
+                <a href="#" class="logout-link" id="logout-btn">
+                  <span class="material-symbols-rounded">logout</span>Sair
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-sub" role="navigation" aria-label="Categorias"></div>
+    </nav>
+  </div>
+</header>
+
+<!-- LAYOUT PRINCIPAL -->
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-section">
+      <div class="sb-label">Painel</div>
+      <button class="sb-item" id="sb-resumo">
+        <span class="ms" style="font-size:18px">dashboard</span> Resumo
+      </button>
+      <button class="sb-item" id="sb-carteira">
+        <span class="ms" style="font-size:18px">account_balance_wallet</span> Carteira
+      </button>
+      <button class="sb-item" id="sb-transacoes">
+        <span class="ms" style="font-size:18px">receipt_long</span> Transações
+      </button>
+    </div>
+
+    <hr class="sb-divider" />
+
+    <div class="sb-section">
+      <div class="sb-label">Anúncios &amp; Vendas</div>
+      <button class="sb-item" id="sb-meus-anuncios">
+        <span class="ms" style="font-size:18px">sell</span> Meus Anúncios
+      </button>
+      <button class="sb-item" id="sb-minhas-vendas">
+        <span class="ms" style="font-size:18px">storefront</span> Minhas Vendas
+      </button>
+      <button class="sb-item" id="sb-perguntas">
+        <span class="ms" style="font-size:18px">forum</span> Perguntas Recebidas
+      </button>
+    </div>
+
+    <hr class="sb-divider" />
+
+    <div class="sb-section">
+      <div class="sb-label">Compras</div>
+      <button class="sb-item" id="sb-meus-pedidos">
+        <span class="ms" style="font-size:18px">shopping_bag</span> Meus Pedidos
+      </button>
+    </div>
+
+    <hr class="sb-divider" />
+
+    <div class="sb-section">
+      <div class="sb-label">Financeiro</div>
+      <button class="sb-item" id="sb-retiradas">
+        <span class="ms" style="font-size:18px">payments</span> Minhas Retiradas
+      </button>
+      <button class="sb-item" id="sb-recargas">
+        <span class="ms" style="font-size:18px">add_card</span> Recargas
+      </button>
+    </div>
+
+    <hr class="sb-divider" />
+
+    <div class="sb-section">
+      <div class="sb-label">Configurações</div>
+      <button class="sb-item" id="sb-minha-conta">
+        <span class="ms" style="font-size:18px">manage_accounts</span> Minha Conta
+      </button>
+      <button class="sb-item" id="sb-seguranca">
+        <span class="ms" style="font-size:18px">shield</span> Segurança &amp; Privacidade
+      </button>
+      <button class="sb-item" id="sb-verificacoes">
+        <span class="ms" style="font-size:18px">verified_user</span> Verificações
+      </button>
+      <button class="sb-item" id="sb-ajuda">
+        <span class="ms" style="font-size:18px">help</span> Ajuda
+      </button>
+    </div>
+
+    <hr class="sb-divider" />
+
+    <div style="padding: 8px 0 16px;">
+      <button class="sb-item sb-logout" id="sb-logout">
+        <span class="ms" style="font-size:18px">logout</span> Sair
+      </button>
+    </div>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="dash-content">
+
+    <!-- RESUMO -->
+    <section class="dash-page" id="page-resumo">
+      <div class="sec-title">
+        <span class="ms">dashboard</span> Resumo
+      </div>
+
+      <div class="grid-3">
+        <div class="card-yellow">
+          <div class="card-label">Saldo na Conta</div>
+          <div class="card-value">R$ 0,00</div>
+          <button class="btn btn-yellow btn-sm" style="margin-top:12px">
+            <span class="ms" style="font-size:14px">refresh</span> Recarregar
+          </button>
+        </div>
+        <div class="card-dark" style="border-color:rgba(255,204,0,.15)">
+          <div class="card-label">Saldo a Liberar</div>
+          <div class="card-value">R$ 0,00</div>
+          <div style="font-size:11px;color:var(--gray-400);margin-top:8px;line-height:1.5">
+            Liberado 7 dias após confirmação da entrega
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">Saldo Disponível</div>
+          <div class="card-value-green">R$ 0,00</div>
+          <div style="font-size:11px;color:var(--gray-400);margin-top:8px">Disponível para retirada</div>
+        </div>
+      </div>
+
+      <div class="profile-banner">
+        <div class="profile-avatar" id="avatar-initials">VU</div>
+        <div>
+          <div style="font-family:var(--font-retro);font-size:11px;color:var(--white);margin-bottom:4px">
+             Bem-vindo, <span id="profile-username">Vault User</span>!
+             <span id="profile-id" style="font-family:var(--font-body);font-size:11px;color:var(--gray-400);margin-left:6px">#000000</span>
+           </div>
+          <div style="font-size:13px;color:var(--gray-300);margin-top:4px">Membro desde 2024</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:8px">
+            <span class="ms" style="font-size:16px;color:var(--green)">verified</span>
+            <span style="font-size:12px;color:var(--green);font-weight:700">Conta Verificada</span>
+          </div>
+        </div>
+        <button class="btn btn-outline" style="margin-left:auto" data-tab="minha-conta">
+          <span class="ms" style="font-size:16px">person</span> Ver meu perfil
+        </button>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div class="card-label" style="margin:0">Resumo de Vendas</div>
+          <div class="period-tabs" data-period-tabs>
+            <button class="period-tab active" data-period="hoje">Hoje</button>
+            <button class="period-tab" data-period="ontem">Ontem</button>
+            <button class="period-tab" data-period="esta-semana">Esta semana</button>
+            <button class="period-tab" data-period="este-mes">Este mês</button>
+          </div>
+        </div>
+        <div id="period-output">
+          <div style="text-align:center;padding:20px 0">
+            <div style="font-family:var(--font-retro);font-size:24px;color:var(--yellow);margin-bottom:8px">R$ 0,00</div>
+            <div style="font-size:13px;color:var(--gray-300)">0 vendas hoje</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARTEIRA -->
+    <section class="dash-page" id="page-carteira">
+      <div class="sec-title"><span class="ms">account_balance_wallet</span> Carteira</div>
+      <div class="grid-2">
+        <div class="card-yellow">
+          <div class="card-label">Total de Vendas</div>
+          <div class="card-value">R$ 0,00</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Saldo Depositado</div>
+          <div class="card-value-sm">R$ 0,00</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card-dark">
+          <div class="card-label">Saldo a Liberar</div>
+          <div class="card-value-sm">R$ 0,00</div>
+          <div style="font-size:11px;color:var(--gray-400);margin-top:6px">Liberado 7 dias após entrega</div>
+        </div>
+        <div class="card" style="border-color:rgba(76,209,55,.2)">
+          <div class="card-label">Disponível para Retirada</div>
+          <div class="card-value-green">R$ 0,00</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;background:var(--gray-800);border:1px solid var(--gray-700);border-radius:8px;padding:20px;margin-top:8px">
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px">Retirar seus ganhos</div>
+          <div style="font-size:12px;color:var(--gray-400)">Transfira o saldo disponível para sua conta</div>
+        </div>
+        <button class="btn btn-yellow"><span class="ms" style="font-size:18px">payments</span> Retirar</button>
+      </div>
+    </section>
+
+    <!-- TRANSAÇÕES -->
+    <section class="dash-page" id="page-transacoes">
+      <div class="sec-title"><span class="ms">receipt_long</span> Transações</div>
+      <div class="grid-2" style="margin-bottom:24px">
+        <div class="card-dark"><div class="card-label">Saldo a Liberar</div><div class="card-value-sm">R$ 0,00</div></div>
+        <div class="card" style="border-color:rgba(76,209,55,.2)"><div class="card-label">Saldo Disponível</div><div class="card-value-green">R$ 0,00</div></div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--gray-700)">
+          <div class="card-label" style="margin:0">Extrato Detalhado</div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>ID</th><th>Data</th><th>Descrição</th><th>Status</th><th>Valor</th><th>Total na Conta</th>
+            </tr></thead>
+           <tbody id="tbody-transacoes"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEUS ANÚNCIOS -->
+    <section class="dash-page" id="page-meus-anuncios">
+      <div class="sec-title"><span class="ms">sell</span> Meus Anúncios</div>
+      <div class="filters" data-filter-group>
+        <button class="filter-btn active" data-filter>Ativos</button>
+        <button class="filter-btn" data-filter>Em análise</button>
+        <button class="filter-btn" data-filter>Reprovados</button>
+        <button class="filter-btn" data-filter>Desativados</button>
+        <button class="filter-btn" data-filter>Suspensos</button>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Anúncio</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Ações</th></tr></thead>
+           <tbody id="tbody-meus-anuncios"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEUS PEDIDOS -->
+    <section class="dash-page" id="page-meus-pedidos">
+      <div class="sec-title"><span class="ms">shopping_bag</span> Meus Pedidos</div>
+      <div class="filters">
+        <select class="filter-select"><option>Status de Pagamento</option><option>Aprovado</option><option>Pendente</option><option>Encerrado</option></select>
+        <select class="filter-select"><option>Status do Pedido</option><option>Entregue</option><option>Cancelado</option><option>Em andamento</option></select>
+        <input class="filter-input" placeholder="Código do pedido" style="width:170px">
+        <input class="filter-input" type="date" style="width:150px">
+        <input class="filter-input" placeholder="Vendedor" style="width:150px">
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Produto</th><th>Pagamento</th><th>Total</th><th>Data / Hora</th><th>Status</th><th></th></tr></thead>
+            <tbody id="tbody-meus-pedidos"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- MINHAS VENDAS -->
+    <section class="dash-page" id="page-minhas-vendas">
+      <div class="sec-title"><span class="ms">storefront</span> Minhas Vendas</div>
+      <div class="filters">
+        <select class="filter-select"><option>Pagamento</option><option>Aprovado</option><option>Pendente</option><option>Encerrado</option></select>
+        <select class="filter-select"><option>Status do Pedido</option><option>Entregues</option><option>Não entregues</option><option>Em mediação</option></select>
+        <input class="filter-input" placeholder="Código da venda" style="width:170px">
+        <input class="filter-input" placeholder="Comprador (nome / ID)" style="width:190px">
+        <input class="filter-input" type="date" style="width:150px">
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Produto</th><th>Comprador</th><th>Pagamento</th><th>Total</th><th>Data / Hora</th><th>Status</th><th></th></tr></thead>
+            <tbody id="tbody-minhas-vendas"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERGUNTAS RECEBIDAS -->
+    <section class="dash-page" id="page-perguntas">
+      <div class="sec-title"><span class="ms">forum</span> Perguntas Recebidas</div>
+      <div class="filters" data-filter-group>
+        <button class="filter-btn active" data-filter>Todas</button>
+        <button class="filter-btn" data-filter>Não lidas</button>
+        <button class="filter-btn" data-filter>Lidas</button>
+        <button class="filter-btn" data-filter>Respondidas</button>
+      </div>
+
+      <div class="q-card" data-question-card>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+          <div>
+            <div style="font-weight:700;font-size:13px;color:var(--white)">user_gamer123</div>
+            <div style="font-size:11px;color:var(--gray-400);margin-top:2px">28/05/2024 · 14h30</div>
+          </div>
+          <span class="badge badge-red" data-question-badge>Não lida</span>
+        </div>
+        <div style="font-size:13px;color:#ccc;line-height:1.5;margin-bottom:4px">Esse card ainda está disponível? Aceita troca?</div>
+        <div class="q-reply" data-reply-area>
+          <input type="text" data-reply-input placeholder="Escreva sua resposta..." />
+          <button class="btn btn-yellow btn-sm" data-reply-btn>
+            <span class="ms" style="font-size:14px">send</span> Responder
+          </button>
+        </div>
+      </div>
+
+      <div class="q-card" data-question-card>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+          <div>
+            <div style="font-weight:700;font-size:13px;color:var(--white)">retro_collector</div>
+            <div style="font-size:11px;color:var(--gray-400);margin-top:2px">26/05/2024 · 22h00</div>
+          </div>
+          <span class="badge badge-yellow" data-question-badge>Lida</span>
+        </div>
+        <div style="font-size:13px;color:#ccc;line-height:1.5;margin-bottom:4px">Faz entrega para o interior do Nordeste?</div>
+        <div class="q-reply" data-reply-area>
+          <input type="text" data-reply-input placeholder="Escreva sua resposta..." />
+          <button class="btn btn-yellow btn-sm" data-reply-btn>
+            <span class="ms" style="font-size:14px">send</span> Responder
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MINHAS RETIRADAS -->
+    <section class="dash-page" id="page-retiradas">
+      <div class="sec-title"><span class="ms">payments</span> Minhas Retiradas</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;background:var(--gray-800);border:1px solid var(--gray-700);border-radius:8px;padding:20px;margin-bottom:24px">
+        <div>
+          <div class="card-label">Saldo Disponível</div>
+          <div class="card-value-green">R$ 0,00</div>
+        </div>
+        <button class="btn btn-yellow"><span class="ms" style="font-size:18px">payments</span> Sacar meu dinheiro</button>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Data</th><th>Valor</th><th>Chave Pix / Recebedor</th><th>Status</th></tr></thead>
+            <tbody id="tbody-retiradas"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECARGAS -->
+    <section class="dash-page" id="page-recargas">
+      <div class="sec-title"><span class="ms">add_card</span> Recargas</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;background:var(--gray-800);border:1px solid var(--gray-700);border-radius:8px;padding:20px;margin-bottom:24px">
+        <div>
+          <div class="card-label">Saldo Disponível</div>
+          <div class="card-value">R$ 0,00</div>
+        </div>
+        <button class="btn btn-yellow"><span class="ms" style="font-size:18px">add_card</span> Recarregar</button>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID da Recarga</th><th>Data</th><th>Hora</th><th>Valor</th><th>Status</th></tr></thead>
+            <tbody id="tbody-recargas"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- MINHA CONTA -->
+    <section class="dash-page" id="page-minha-conta">
+        <div style="margin-bottom:28px">
+  <div class="form-label">Foto de Perfil</div>
+  <div style="display:flex;align-items:center;gap:16px">
+
+    <div style="position:relative;cursor:pointer" id="av-trigger">
+      <div id="av-preview" style="width:76px;height:76px;border-radius:50%;background:var(--yellow);border:3px solid rgba(255,204,0,.35);display:flex;align-items:center;justify-content:center;font-family:var(--font-retro);font-size:14px;color:#000;overflow:hidden;transition:.2s">VU</div>
+      <div id="av-overlay" style="position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s;pointer-events:none">
+        <span class="ms" style="color:#fff;font-size:20px">edit</span>
+      </div>
+    </div>
+    <div>
+  <div style="font-family:var(--font-retro);font-size:10px;color:var(--white);margin-bottom:6px" id="av-username"></div>
+  <div style="font-size:12px;color:var(--gray-400);margin-bottom:10px">Clique no avatar ou no botão para trocar</div>
+  <button type="button" class="btn btn-outline btn-sm" id="av-btn-open">
+    <span class="ms" style="font-size:15px">face</span> Trocar avatar
+  </button>
+  </div>
+  </div>
+
+  <div id="av-picker" style="display:none;margin-top:20px;border-top:1px solid var(--gray-800);padding-top:20px">
+    <div style="font-family:var(--font-retro);font-size:7px;color:var(--yellow);letter-spacing:1px;margin-bottom:14px">
+      Escolha seu avatar
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,72px);gap:12px">
+      <div class="av-option" data-id="1"><img src="assets/avatars/avatar1.jpg" alt="Avatar 1"></div>
+      <div class="av-option" data-id="2"><img src="assets/avatars/avatar2.jpg" alt="Avatar 2"></div>
+      <div class="av-option" data-id="3"><img src="assets/avatars/avatar3.jpg" alt="Avatar 3"></div>
+      <div class="av-option" data-id="4"><img src="assets/avatars/avatar4.jpg" alt="Avatar 4"></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:16px">
+      <button type="button" class="btn btn-yellow btn-sm" id="av-confirm" style="font-family:var(--font-retro);font-size:8px">Salvar</button>
+      <button type="button" class="btn btn-outline btn-sm" id="av-cancel">Cancelar</button>
+      <span id="av-saved" style="display:none;font-size:11px;color:var(--green);margin-left:auto">✓ Avatar salvo!</span>
+    </div>
+  </div>
+
+  </div>
+      <div class="sec-title"><span class="ms">manage_accounts</span> Minha Conta</div>
+      <div class="card" style="max-width:580px">
+        <form id="form-minha-conta">
+          <div class="form-group">
+            <label class="form-label">Nome de Usuário</label>
+            <input type="text" class="form-input" id="input-username" value="vaultuser" placeholder="Seu username" />
+          </div>
+          <div class="form-group">
+         <label class="form-label">E-mail</label>
+         <div style="display:flex;gap:8px;align-items:center">
+           <input type="email" class="form-input" value="usuario@email.com" readonly style="flex:1">
+         </div>
+         <div style="font-size:11px;color:var(--gray-400);margin-top:6px">Um link de confirmação será enviado para seu e-mail.</div>
+       </div>
+       <div id="email-nao-verificado" style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;margin-bottom:18px;padding:10px 14px;background:rgba(255,63,63,.07);border:1px solid rgba(255,63,63,.2);border-radius:6px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="ms" style="color:var(--red);font-size:16px">warning</span>
+            <span style="font-size:12px;color:#ff9999">E-mail ainda não verificado</span>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" id="btn-verificar-email">
+            <span class="ms" style="font-size:14px">mark_email_unread</span> Verificar
+          </button>
+        </div>
+        
+        <div id="email-verificado" style="display:none;align-items:center;gap:8px;margin-top:6px;padding:10px 14px;background:rgba(76,209,55,.06);border:1px solid rgba(76,209,55,.2);border-radius:6px">
+          <span class="ms" style="color:var(--green);font-size:16px">verified</span>
+          <span style="font-size:12px;color:#9be887">E-mail verificado</span>
+        </div>
+       <div class="form-group">
+          <label class="form-label">Telefone</label>
+          <div style="display:flex;gap:8px">
+            <input type="tel" class="form-input" id="input-telefone" placeholder="+55 (11) 99999-9999" style="flex:1">
+            <button type="button" class="btn btn-outline btn-sm" id="btn-verificar-tel">
+              <span class="ms" style="font-size:15px">sms</span> Verificar
+            </button>
+          </div>
+         <div style="font-size:11px;color:var(--gray-400);margin-top:6px">Um código SMS será enviado para confirmar seu número.</div>
+       </div>
+          <div class="form-group">
+            <label class="form-label">Nova Senha</label>
+            <input type="password" class="form-input" placeholder="••••••••" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirmar Senha</label>
+            <input type="password" class="form-input" placeholder="••••••••" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Biografia</label>
+            <textarea class="form-input" placeholder="Escreva algo sobre você..."></textarea>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+            <button type="submit" class="btn btn-yellow">Salvar alterações</button>
+            <button type="button" class="btn btn-red" id="btn-deactivate-account">
+              <span class="ms" style="font-size:16px">warning</span> Desativar Conta
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- SEGURANÇA & PRIVACIDADE -->
+<section class="dash-page" id="page-seguranca">
+  <div class="sec-title"><span class="ms">shield</span> Segurança &amp; Privacidade</div>
+  <div class="card" style="max-width:580px">
+
+    <!-- Aviso -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;padding:12px;background:rgba(255,204,0,.05);border-radius:6px;border:1px solid rgba(255,204,0,.15)">
+      <span class="ms" style="color:var(--yellow)">info</span>
+      <span style="font-size:12px;color:#ccc">Dados sensíveis em modo leitura. Para alterações, entre em contato com o suporte.</span>
+    </div>
+
+    <!-- Dados da conta (puxados do BD) -->
+    <div class="info-row"><span class="info-row-label">Nome Completo</span><span class="info-row-value" id="seg-nome">—</span></div>
+    <div class="info-row"><span class="info-row-label">Data de Nascimento</span><span class="info-row-value" id="seg-nascimento">—</span></div>
+
+    <!-- CPF — editável uma vez, depois bloqueia -->
+     <div id="bloco-cpf-form" style="margin-top:8px">
+       <div class="form-group">
+         <label class="form-label">CPF</label>
+         <div style="display:flex;gap:8px">
+           <input type="text" class="form-input" id="input-cpf" placeholder="000.000.000-00" maxlength="14" style="flex:1">
+           <button type="button" class="btn btn-yellow btn-sm" id="btn-salvar-cpf">
+             <span class="ms" style="font-size:15px">save</span> Salvar
+           </button>
+         </div>
+         <div style="font-size:11px;color:var(--gray-400);margin-top:6px">O CPF não poderá ser alterado após salvo. Para correções abra um ticket.</div>
+       </div>
+     </div>
+     
+     <div id="bloco-cpf-view" style="display:none">
+       <div class="info-row"><span class="info-row-label">CPF</span><span class="info-row-value" id="seg-cpf">—</span></div>
+     </div>
+
+    <!-- Endereço somente leitura (após salvo) -->
+    <div id="bloco-endereco-view" style="display:none">
+      <div class="info-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <span class="info-row-label">Endereço Completo</span>
+        <span class="info-row-value" style="font-size:13px;line-height:1.6" id="seg-endereco">—</span>
+      </div>
+    </div>
+
+    <!-- Endereço editável -->
+    <div id="bloco-endereco-form" style="margin-top:16px">
+      <div style="font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Endereço</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div class="form-group" style="margin:0">
+          <label class="form-label">CEP</label>
+          <input type="text" class="form-input" id="seg-cep" placeholder="00000-000" maxlength="9">
+        </div>
+        <div class="form-group" style="margin:0">
+          <label class="form-label">Estado</label>
+          <input type="text" class="form-input" id="seg-estado" placeholder="SP" maxlength="2">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Rua / Logradouro</label>
+        <input type="text" class="form-input" id="seg-rua" placeholder="Rua das Flores, 123 – Apto 45">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bairro</label>
+        <input type="text" class="form-input" id="seg-bairro" placeholder="Centro">
+      </div>
+      <button type="button" class="btn btn-yellow btn-sm" id="btn-salvar-endereco">
+        <span class="ms" style="font-size:15px">save</span> Salvar Endereço
+      </button>
+    </div>
+
+    <!-- 2 FATORES 2FA -->
+    <div style="margin-top:20px;display:flex;align-items:center;justify-content:space-between;padding:16px;background:var(--gray-950);border:1px solid var(--gray-800);border-radius:8px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="ms" style="font-size:22px;color:var(--yellow)">security</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:3px">Verificação em Duas Etapas (2FA)</div>
+          <div style="font-size:12px;color:var(--gray-400)">Adicione uma camada extra de segurança à sua conta</div>
+        </div>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+        <span style="font-size:12px;color:var(--gray-400)" id="label-2fa">Desativado</span>
+        <div style="position:relative;width:42px;height:24px">
+          <input type="checkbox" id="toggle-2fa" style="opacity:0;width:0;height:0;position:absolute">
+          <div id="track-2fa" style="position:absolute;inset:0;background:var(--gray-700);border-radius:999px;transition:.3s;cursor:pointer"></div>
+          <div id="thumb-2fa" style="position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:.3s;pointer-events:none"></div>
+        </div>
+      </label>
+    </div>
+
+    <!-- Documentos -->
+    <div style="margin-top:24px">
+      <div style="font-family:var(--font-retro);font-size:8px;color:var(--yellow);margin-bottom:16px;display:flex;align-items:center;gap:8px">
+        <span class="ms" style="font-size:16px">folder_shared</span> Documentos
+      </div>
+
+      <div style="background:rgba(255,204,0,.05);border:1px solid rgba(255,204,0,.15);border-radius:8px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px">
+        <span class="ms" style="color:var(--yellow);font-size:18px;flex-shrink:0">info</span>
+        <div style="font-size:12px;color:#ccc;line-height:1.6">
+          Os documentos são enviados <strong style="color:var(--yellow)">uma única vez</strong> e não podem ser alterados após o envio.
+          Para correções, abra um <a href="#" style="color:var(--yellow)">ticket de suporte</a> ou envie um e-mail para
+          <strong style="color:var(--yellow)">suporte@vaultexperience.com</strong>.
+        </div>
+      </div>
+
+      <div id="docs-container">
+
+        <!-- Identidade -->
+        <div class="doc-row" id="doc-identidade">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--gray-950);border:1px solid var(--gray-800);border-radius:8px;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="ms" style="font-size:20px;color:var(--gray-400)">badge</span>
+              <div>
+                <div style="font-size:13px;font-weight:700;color:var(--white)">Identidade (RG/CNH)</div>
+                <div style="font-size:11px;color:var(--gray-400);margin-top:2px">Documento de identificação oficial com foto</div>
+              </div>
+            </div>
+            <div class="doc-status" data-doc="identidade">
+              <label class="btn btn-outline btn-sm" style="cursor:pointer">
+                <span class="ms" style="font-size:14px">upload</span> Enviar
+                <input type="file" accept="image/*,.pdf" style="display:none" data-upload="identidade">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selfie -->
+        <div class="doc-row" id="doc-selfie">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--gray-950);border:1px solid var(--gray-800);border-radius:8px;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="ms" style="font-size:20px;color:var(--gray-400)">face</span>
+              <div>
+                <div style="font-size:13px;font-weight:700;color:var(--white)">Selfie com Documento</div>
+                <div style="font-size:11px;color:var(--gray-400);margin-top:2px">Foto segurando o documento ao lado do rosto</div>
+              </div>
+            </div>
+            <div class="doc-status" data-doc="selfie">
+              <label class="btn btn-outline btn-sm" style="cursor:pointer">
+                <span class="ms" style="font-size:14px">upload</span> Enviar
+                <input type="file" accept="image/*" style="display:none" data-upload="selfie">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comprovante -->
+        <div class="doc-row" id="doc-comprovante">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--gray-950);border:1px solid var(--gray-800);border-radius:8px;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="ms" style="font-size:20px;color:var(--gray-400)">home</span>
+              <div>
+                <div style="font-size:13px;font-weight:700;color:var(--white)">Comprovante de Residência</div>
+                <div style="font-size:11px;color:var(--gray-400);margin-top:2px">Conta de luz, água ou telefone (últimos 3 meses)</div>
+              </div>
+            </div>
+            <div class="doc-status" data-doc="comprovante">
+              <label class="btn btn-outline btn-sm" style="cursor:pointer">
+                <span class="ms" style="font-size:14px">upload</span> Enviar
+                <input type="file" accept="image/*,.pdf" style="display:none" data-upload="comprovante">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botão enviar para análise -->
+      <div style="margin-top:16px;padding:16px;background:var(--gray-950);border:1px solid var(--gray-800);border-radius:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:3px">Enviar documentos para análise</div>
+          <div style="font-size:12px;color:var(--gray-400)">Após enviar todos os arquivos, clique para submeter ao suporte.</div>
+        </div>
+        <button type="button" class="btn btn-yellow" id="btn-enviar-docs">
+          <span class="ms" style="font-size:18px">send</span> Enviar para análise
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+    <!-- VERIFICAÇÕES -->
+<section class="dash-page" id="page-verificacoes">
+  <div class="sec-title"><span class="ms">verified_user</span> Verificações</div>
+  <div style="background:rgba(255,204,0,.06);border:1px solid rgba(255,204,0,.2);border-radius:8px;padding:16px;margin-bottom:24px;display:flex;align-items:center;gap:14px">
+    <span class="ms" style="color:var(--yellow);font-size:28px;flex-shrink:0">emoji_events</span>
+    <div>
+      <div style="font-weight:700;color:var(--yellow);font-size:13px;margin-bottom:3px">Aumente sua credibilidade!</div>
+      <div style="font-size:12px;color:#ccc;line-height:1.5">Vendedores verificados vendem até <strong style="color:var(--yellow)">70% mais</strong>. Complete todas as verificações e inspire confiança nos compradores.</div>
+    </div>
+  </div>
+  <div class="verify-grid">
+
+    <!-- Perfil -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:14px;display:flex;align-items:center;gap:8px">
+        <span class="ms" id="verify-perfil-icon" style="color:var(--gray-400)">radio_button_unchecked</span> Perfil Completo
+      </div>
+      <div class="verify-check" id="verify-perfil-status">
+        <span style="font-size:12px;color:var(--gray-400)">Incompleto</span>
+      </div>
+      <button class="btn btn-outline btn-sm" style="margin-top:14px" data-tab="minha-conta">Meus dados</button>
+    </div>
+
+    <!-- Telefone -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:14px;display:flex;align-items:center;gap:8px">
+        <span class="ms" id="verify-tel-icon" style="color:var(--gray-400)">radio_button_unchecked</span> Telefone
+      </div>
+      <div style="font-family:var(--font-retro);font-size:18px;color:var(--white);margin:10px 0" id="verify-tel-number">***</div>
+      <div class="verify-check" id="verify-tel-status">
+        <span style="font-size:12px;color:var(--gray-400)">Não verificado</span>
+      </div>
+      <button class="btn btn-outline btn-sm" style="margin-top:14px" data-tab="minha-conta">Alterar</button>
+    </div>
+
+    <!-- Documentos -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:14px;display:flex;align-items:center;gap:8px">
+        <span class="ms" id="verify-docs-icon" style="color:var(--gray-400)">radio_button_unchecked</span> Documentos
+      </div>
+      <div class="verify-check" id="verify-doc-identidade">
+        <span style="font-size:12px;color:var(--gray-400)">Identidade — Não enviado</span>
+      </div>
+      <div class="verify-check" id="verify-doc-selfie">
+        <span style="font-size:12px;color:var(--gray-400)">Selfie — Não enviado</span>
+      </div>
+      <div class="verify-check" id="verify-doc-comprovante">
+        <span style="font-size:12px;color:var(--gray-400)">Comprovante — Não enviado</span>
+      </div>
+      <button class="btn btn-outline btn-sm" style="margin-top:14px" data-tab="seguranca">Ver documentos</button>
+    </div>
+
+    <!-- Email -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:14px;display:flex;align-items:center;gap:8px">
+        <span class="ms" id="verify-email-icon" style="color:var(--gray-400)">radio_button_unchecked</span> E-mail
+      </div>
+      <div style="font-size:13px;color:var(--white);margin:10px 0;word-break:break-all" id="verify-email-address">—</div>
+      <div class="verify-check" id="verify-email-status">
+        <span style="font-size:12px;color:var(--gray-400)">Não verificado</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  </main>
+</div>
+
+<script src="js/dashboard-context.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/app.js"></script>
+<script src="js/store.js"></script>
+<script src="js/logout.js"></script>
+</body>
+</html>
