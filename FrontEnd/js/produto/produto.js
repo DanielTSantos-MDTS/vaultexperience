@@ -8,7 +8,7 @@ const PRODUTO = {
   categoria: 'Produto',
   subcategoria: '',
   titulo: 'Carregando...',
-  descricaoRapida: '',
+  descricao: '',
   imagens: [],
   badges: [],
   precoOriginal: 0,
@@ -41,7 +41,6 @@ const fmtPreco = n =>
   Number(n).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 function renderStars(media, big = false) {
-  debugger;
   const full  = Math.floor(media);
   const empty = 5 - full;
   const cls   = big ? 'reviews-stars-big' : 'stars';
@@ -52,7 +51,6 @@ function renderStars(media, big = false) {
 }
 
 function stockLabel(status, qtd) {
-  debugger;
   if (status === 'out') return { dot: 'out', cls: 'stock-out', txt: 'Sem estoque' };
   if (status === 'low') return { dot: 'low', cls: 'stock-low', txt: `Apenas ${qtd} restante${qtd !== 1 ? 's' : ''}!` };
   return { dot: 'in', cls: 'stock-in', txt: 'Em estoque' };
@@ -180,7 +178,6 @@ function updateLightboxImg() {
 
 //--- RENDERS ---//
 function renderBreadcrumb() {
-  debugger;
   const p = PRODUTO;
   const el = document.getElementById('breadcrumb');
   if (!el) return;
@@ -227,7 +224,6 @@ function renderGallery() {
 }
 
 function renderProductInfo() {
-  debugger;
   const p  = PRODUTO;
   const vd = p.vendedor;
   const condTabs = p.condicoes.length
@@ -267,7 +263,7 @@ function renderProductInfo() {
         <div class="condition-tabs">${condTabs}</div>
       </div>
       <hr class="divider">
-      <p class="desc-snippet">${p.descricaoRapida}</p>
+      <p class="desc-snippet">${p.descricao}</p>
       ${specs ? `<div class="specs-quick">${specs}</div>` : ''}
       ${tags  ? `<div class="tags">${tags}</div>` : ''}
     </div>`;
@@ -386,11 +382,9 @@ function renderPurchaseBox() {
         <button class="btn-seller">Ver perfil do vendedor →</button>
       </div>
     </div>`;
-    debugger;
 }
 
 function renderBottom() {
-  debugger;
   const p = PRODUTO;
 
   const descSections = p.descricaoCompleta.length
@@ -400,7 +394,7 @@ function renderBottom() {
           : `<p>${s.conteudo}</p>`;
         return `<h3>${s.titulo}</h3>${body}`;
       }).join('')
-    : `<p>${p.descricaoRapida || 'Sem descrição disponível.'}</p>`;
+    : `<p>${p.descricao || 'Sem descrição disponível.'}</p>`;
 
   const specRows = p.especificacoes.length
     ? p.especificacoes.map(e => `<tr><td>${e.chave}</td><td>${e.valor}</td></tr>`).join('')
@@ -501,21 +495,6 @@ function renderBottom() {
     </div>`;
 }
 
-//--- Render principal ---//
-function renderPage() {
-  debugger;
-  alert('Carregando produto');
-  document.title = `${PRODUTO.titulo.split('—')[0].trim()} – Vault Experience`;
-  renderBreadcrumb();
-
-  const pagina = document.getElementById('product-page');
-  const bottom = document.getElementById('product-bottom');
-  if (pagina) pagina.innerHTML = renderGallery() + renderProductInfo() + renderPurchaseBox();
-  if (bottom) bottom.innerHTML = renderBottom();
-
-  bindEvents();
-  bindComments();
-
   //--- Comentários / Perguntas ---//
 function bindComments() {
   const input   = document.getElementById('comment-input');
@@ -595,11 +574,28 @@ function _escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 }
-}
 
+
+
+//--- Render principal ---//
+function renderPage() {
+  document.title = `${PRODUTO.titulo.split('—')[0].trim()} – Vault Experience`;
+  renderBreadcrumb();
+
+  const pagina = document.getElementById('product-page');
+  const bottom = document.getElementById('product-bottom');
+  if (pagina) pagina.innerHTML = renderGallery() + renderProductInfo() + renderPurchaseBox();
+  if (bottom) bottom.innerHTML = renderBottom();
+
+  bindEvents();
+  bindComments();
+}
 function bindEvents() {
-  debugger;
   const p = PRODUTO;
+
+  const btnCart = document.getElementById('btn-cart');  // ← NOVO
+  const btnBuy = document.getElementById('btn-buy');    // ← NOVO
+  const btnWishlist = document.getElementById('btn-wishlist');  // ← NOVO
 
   //--- Botão Anunciar na navbar ---//
   document.querySelector('.btn-anunciar')?.addEventListener('click', () => {
@@ -667,14 +663,12 @@ function bindEvents() {
   });
 
   //--- Abas de condição ---//
-  document.querySelectorAll('.cond-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.log('Clicou na condição');
-      debugger;
-      document.querySelectorAll('.cond-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-    });
-  });
+  // document.querySelectorAll('.cond-tab').forEach(tab => {
+  //   tab.addEventListener('click', () => {
+  //     document.querySelectorAll('.cond-tab').forEach(t => t.classList.remove('active'));
+  //     tab.classList.add('active');
+  //   });
+  // });
 
   //--- Lance / chips ---//
   const lanceInput = document.getElementById('lance-input');
@@ -721,15 +715,15 @@ const iconeMap = {
 };
 
 function preencherProduto(dados) {
-  PRODUTO.id              = dados._id;
-  PRODUTO.titulo          = dados.nome            || 'Produto';
-  PRODUTO.descricaoRapida = dados.descricao        || '';
-  PRODUTO.precoOriginal   = dados.precoOriginal    || 0;
-  PRODUTO.precoAtual      = dados.precoOriginal    || 0;
+  PRODUTO.id              = dados.id;
+  PRODUTO.titulo          = dados.titulo            || 'Produto';
+  PRODUTO.descricao       = dados.descricao         || '';
+  PRODUTO.precoOriginal   = dados.precoOriginal     || 0;
+  PRODUTO.precoAtual      = dados.precoOriginal     || 0;
   PRODUTO.valorParcela    = PRODUTO.precoAtual / PRODUTO.parcelas;
-  PRODUTO.categoria       = dados.categoria?.nome  || 'Produto';
-  PRODUTO.condicaoAtiva   = dados.estado           || '';
-  PRODUTO.condicoes       = dados.estado ? [dados.estado] : [];
+  PRODUTO.categoria       = dados.categoria  || 'Produto';
+  PRODUTO.condicaoAtiva   = dados.condicaoAtiva           || '';
+  PRODUTO.condicoes       = dados.condicoes ? dados.condicoes : [];
   PRODUTO.especificacoes  = dados.especificacoes   || [];
   PRODUTO.imagens         = (dados.imagens || []).map(img =>
     img.startsWith('http') ? img : `http://localhost:3000${img}`
@@ -740,9 +734,9 @@ function preencherProduto(dados) {
     chave: e.chave,
     valor: e.valor,
   }));
-  if (dados.dono) {
-    PRODUTO.vendedor.nome       = dados.dono.username || 'Vendedor';
-    PRODUTO.vendedor.inicial    = (dados.dono.username || 'V')[0].toUpperCase();
+  if (dados.vendedor) {
+    PRODUTO.vendedor.nome       = dados.vendedor.nome || 'Vendedor';
+    PRODUTO.vendedor.inicial    = (dados.vendedor.nome || 'V')[0].toUpperCase();
     PRODUTO.vendedor.verificado = true;
   }
 }

@@ -21,20 +21,19 @@ export default {
 
             const itemDB = await Item.findById(id)
             .populate('dono', 'username')
-            .populate('categoria', 'nome');
+            .populate('categoria', 'titulo');
 
             if (!itemDB) return res.status(404).json({Erro: 'Item não encontrado'});
 
-            // A COZINHA: Montando a Pizza exatamente com o formato que o Front-end exige!
             const item = {
             id: itemDB._id,
-            titulo: itemDB.nome,
-            descricaoRapida: itemDB.descricaoRapida,
+            titulo: itemDB.titulo,
+            descricao: itemDB.descricao,
             precoOriginal: itemDB.precoOriginal,
             precoAtual: itemDB.precoOriginal, 
             categoria: itemDB.categoria?.nome || 'Sem Categoria',
             subcategoria: itemDB.franquia || 'Diversos',
-            slug: itemDB.nome.toLowerCase().replace(/ /g, '-'),
+            slug: itemDB.titulo.toLowerCase().replace(/ /g, '-'),
             imagens: itemDB.imagens && itemDB.imagens.length > 0 ? itemDB.imagens : ["https://placehold.co/600x600/1a1a1a/555555?text=Sem+Foto"],
             
             // Dados fixos de segurança para a tela não quebrar:
@@ -108,6 +107,16 @@ export default {
             const corpo = req.body;
 
             corpo.dono = req.id;
+
+            const nomeCategoria = corpo.categoria;
+
+            const categoryId = await Categoria.findOne({nome: nomeCategoria});
+
+            if (!categoryId){
+                return res.status(404).json({Erro: `Categoria '${nomeCategoria}' não encontrada`});
+            }
+
+            corpo.categoria = categoryId._id;;
             
             if(req.files && req.files.length > 0){
                 corpo.imagens = req.files.map(arquivo => arquivo.path);

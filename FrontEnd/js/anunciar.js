@@ -328,7 +328,7 @@ function coletarEspecificacoes() {
     const caixa = document.getElementById('figure-caixa');
     if (caixa) specs.push({ chave: 'Caixa Original', valor: caixa.checked ? 'Sim' : 'Não' });
   } else if (cat === 'assinaturas') {
-    specs.push({ chave: 'Condição', valor: 'Produto Digital / Online' });
+    specs.push({ chave: 'Condição', valor: 'Produto Digital' });
     pick('key-subcategoria', 'Subcategoria');
     pick('key-plataforma', 'Plataforma');
     pick('key-quantidade', 'Quantidade');
@@ -361,7 +361,7 @@ form.addEventListener('submit', async e => {
   const vault_token = localStorage.getItem('vault_token');
   const formData = new FormData();
 
-  formData.append('nome', document.getElementById('titulo').value.trim());
+  formData.append('titulo', document.getElementById('titulo').value.trim());
   formData.append('descricao', document.getElementById('descricao').value.trim());
   formData.append('categoria', state.categoria);
   formData.append('modelo', state.modelo);
@@ -381,7 +381,7 @@ form.addEventListener('submit', async e => {
 
   //--- Estado (condicao) — trata assinaturas automaticamente ---//
   const condicaoFinal = state.categoria === 'assinaturas'
-    ? 'Produto Digital / Online'
+    ? 'Produto Digital'
     : (state.condicao || 'Não informado');
   formData.append('estado', condicaoFinal);
 

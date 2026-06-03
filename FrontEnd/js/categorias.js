@@ -596,7 +596,7 @@ function updateFilterBadge() {
 }
 
 /*--- EVENTOS ---*/
-function bindEvents() {
+function bindEventsCategorias() {
   // ORGANIZAÇÃO DO SORT
   dom.sortSel?.addEventListener('change', () => {
     state.sort = dom.sortSel.value;

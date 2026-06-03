@@ -6,11 +6,16 @@ import Categoria from "./Categoria.js";
 import enderecoSchema from "./Endereco.js";
 
 const itemSchema = new Schema ({
-    nome: {
+    titulo: {
         type: String,
         required: true
     },
-    descricaoRapida:{
+    modelo: {
+        type: String,
+        enum: ['normal', 'dinamico', 'serviços'],
+        required: true
+    },
+    descricao:{
         type: String,
         required: true
     },
@@ -30,7 +35,7 @@ const itemSchema = new Schema ({
     },
     estado:{
         type: String,
-        enum: ['Novo', 'Seminovo', 'Usado'],
+        enum: ['Novo', 'Seminovo', 'Usado', 'Produto Digital', 'Não informado'],
         required: true
     },
     franquia:{
@@ -52,8 +57,8 @@ const itemSchema = new Schema ({
     badges: {
         type: Array
     },
-    descricaoCompleta:{
-        type: String
+    variacoes: {
+        type: Array
     },
     estoqueQtd: {
         type: Number,
@@ -64,6 +69,9 @@ const itemSchema = new Schema ({
         type: Boolean,
         default: false,
         required: true
+    },
+    localizacao: {
+        type: String
     },
     negociacao:{
         type: Boolean,

@@ -364,7 +364,7 @@ fetch('http://localhost:3000/item')
         listaDeItens.slice(0, TOTAL_CARDS).forEach((item, index) => {
 
         const imagemCapa = (item.imagens && item.imagens.length > 0)
-        ? `<img src="${item.imagens[0]}" alt="${item.nome}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px 8px 0 0;" />`
+        ? `<img src="${item.imagens[0]}" alt="${item.titulo}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px 8px 0 0;" />`
     : `<div style="display: flex; flex-direction: column; width: 100%; height: 100%; align-items: center; justify-content: center; background-color: #1a1a1a; border-radius: 8px 8px 0 0; color: #444;">
          <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom: 8px;">
            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -380,7 +380,7 @@ fetch('http://localhost:3000/item')
                 ${imagemCapa}
               </div>
               <div class="card-body">
-                <h3 style="color: #fff; font-size: 16px; margin: 0 0 5px 0;">${item.nome}</h3>
+                <h3 style="color: #fff; font-size: 16px; margin: 0 0 5px 0;">${item.titulo}</h3>
                 <p style="color: #aaa; font-size: 12px; margin: 0 0 10px 0;">${item.categoria?.nome || 'Sem Categoria'}</p>
                 <h3 style="color: #f1c40f; margin: 0;">R$ ${item.precoOriginal}</h3>
                 <p style="color: #555; font-size: 11px; margin-top: 10px;">Vendedor: ${item.dono?.username || 'Desconhecido'}</p>
@@ -394,7 +394,7 @@ fetch('http://localhost:3000/item')
       prateleiraOfertas.innerHTML = '';
       itensEmOferta.slice(0, TOTAL_CARDS).forEach((item, index) => {
         const imagemCapa = (item.imagens && item.imagens.length > 0)
-        ? `<img src="${item.imagens[0]}" alt="${item.nome}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px 8px 0 0;" />`
+        ? `<img src="${item.imagens[0]}" alt="${item.titulo}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px 8px 0 0;" />`
     : `<div style="display: flex; flex-direction: column; width: 100%; height: 100%; align-items: center; justify-content: center; background-color: #1a1a1a; border-radius: 8px 8px 0 0; color: #444;">
          <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom: 8px;">
            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -437,7 +437,7 @@ fetch('http://localhost:3000/item')
     prateleiraFranquias.innerHTML = ''; 
     franquiasUnicas.forEach((nomeDaFranquia, index) => {
         const cardFranquia = `
-            <div class="card" style="animation: slide-in .5s ease ${index * 0.08}s both; cursor: pointer;" onclick="window.location.href='produto.html'">
+            <div class="card" style="animation: slide-in .5s ease ${index * 0.08}s both; cursor: pointer;" onclick="window.location.href='categorias.html?filtro=${nomeDaFranquia}'">
               
               <div class="card-img" style="display: flex; align-items: center; justify-content: center; background-color: #222;">
                 <span style="color: #555; font-size: 12px;">Sem foto</span>

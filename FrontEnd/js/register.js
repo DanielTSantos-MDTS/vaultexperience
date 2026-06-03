@@ -132,6 +132,7 @@ registerForm.addEventListener('submit', (e) => {
       alert (`Erro: ${dados.Erro}`)
     } else {
       alert("Registro Concluído com sucesso!");
+      saveLocalStorage(dados);
       window.location.href = 'login.html';
     }
   })
@@ -139,3 +140,15 @@ registerForm.addEventListener('submit', (e) => {
     console.error(`Erro na comunicação com o banco de dados. Erro: ${erro}`);
   })
 });
+
+/*--- Salvar localStorage ---*/
+
+function saveLocalStorage(dados){
+  localStorage.setItem('vault_token', dados.token);
+  localStorage.setItem('vault_user', dados.username);
+  localStorage.setItem('vault_nascimento', dados.dataNascimento);
+  localStorage.setItem('vault_contato', dados.contatoPrincipal);
+  localStorage.setItem('vault_id', dados._id);
+  localStorage.setItem('vault_logged', 'true');
+  window.location.href = 'index.html';
+}
