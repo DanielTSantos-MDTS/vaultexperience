@@ -1,0 +1,87 @@
+import Troca from '../models/Troca.js';
+
+export default{
+    async listar(req, res){
+        try{
+            const trocas = await Troca.find()
+            .populate('ofertante', 'username')
+            .populate('destinatario', 'username')
+            .populate('itemOfertado', 'titulo')
+            .populate('itemDesejado', 'titulo');
+            
+            res.status(200).json(trocas);
+        } catch(error){
+            res.status(500).json(`Erro ao listar trocas. Erro: ${error}`);
+        }
+    },
+    async buscarPorId(req,res){
+        try{
+            const id = req.params.id;
+            
+            const troca = await Troca.findById(id)
+            .populate('ofertante', 'username')
+            .populate('destinatario', 'username')
+            .populate('itemOfertado', 'titulo')
+            .populate('itemDesejado', 'titulo');
+
+            if(!troca) return res.status(404).json({Erro: "Troca não encontrada"});
+
+            return res.status(200).json(troca);
+        } catch(error){
+            res.status(500).json(`Erro ao buscar troca. Erro: ${error}`);
+        }
+    },
+    async criar(req, res){
+        try{
+            const corpo = req.body;
+
+            const novaTroca = await Troca.create(corpo);
+
+            await novaTroca.populate('ofertante', 'username');
+            await novaTroca.populate('destinatario', 'username');
+            await novaTroca.populate('itemOfertado', 'titulo');
+            await novaTroca.populate('itemDesejado', 'titulo');
+
+            return res.status(201).json(novaTroca);
+        } catch (error){
+            return res.status(500).json(`Erro ao criar troca. Erro: ${error}`);
+        }
+    },
+    async atualizar(req, res){
+        try{
+            const id = req.params.id;
+
+            const atualizacao = req.body; // corrigido: era 'corpo' (variável inexistente)
+
+            const troca = await Troca.findById(id);
+
+            if(!troca) return res.status(404).json({Erro: "Troca não encontrada"});
+
+            Object.assign(troca, atualizacao);
+
+            await troca.save();
+
+            await troca.populate('ofertante', 'username');
+            await troca.populate('destinatario', 'username');
+            await troca.populate('itemOfertado', 'titulo');
+            await troca.populate('itemDesejado', 'titulo');
+            
+            return res.status(200).json(troca);
+        } catch(error){
+            return res.status(500).json(`Erro ao atualizar troca. Erro: ${error}`);
+        }
+    },
+    async apagar(req, res){
+        try{
+            const id = req.params.id;
+
+            const troca = await Troca.findByIdAndDelete(id);
+
+            if(!troca) return res.status(404).json({Erro: "Troca não encontrada"});
+
+            return res.status(200).json(`Troca apagada com sucesso`);
+        } catch(error){
+            return res.status(500).json(`Erro ao apagar troca. Erro: ${error}`);
+        }
+    }
+}

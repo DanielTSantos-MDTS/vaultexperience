@@ -1,0 +1,181 @@
+/*--- MOBILE MENU --- */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.95);
+  z-index: 200;
+  flex-direction: column;
+  padding: 32px 24px;
+  gap: 24px;
+  animation: slide-in .25s ease both;
+}
+.mobile-overlay.open { display: flex; }
+.mobile-close {
+  align-self: flex-end;
+  background: none; border: none;
+  color: var(--white); font-size: 28px; cursor: pointer;
+}
+.mobile-cat-list { display: flex; flex-direction: column; gap: 4px; }
+.mobile-cat-list button {
+  background: none; border: none;
+  color: #bbb;
+  font-family: var(--font-body);
+  font-size: 18px; font-weight: 600;
+  text-align: left;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gray-800);
+  cursor: pointer;
+  transition: color .2s;
+}
+.mobile-cat-list button:hover,
+.mobile-cat-list button.active { color: var(--yellow); }
+
+/*--- Design responsivo - sistema adaptavel --- */
+@media (max-width: 768px) {
+  .nav-link    { display: none; }
+  .btn-anunciar { display: none; }
+  .search-wrap { max-width: unset; }
+  .logo-img    { height: 44px; }
+  .hero-bg     { min-height: 260px; padding: 32px 16px 40px; }
+}
+@media (max-width: 480px) {
+  .nav-top       { padding: 10px 14px; gap: 12px; }
+  .nav-sub-inner { padding: 0 14px; }
+  #products      { padding: 28px 14px 56px; }
+}
+
+/*--- Responsivo footer --- */
+@media (max-width: 1024px) {
+  .footer-main { grid-template-columns: 1.4fr 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+  .footer-desc  { max-width: 100%; }
+}
+@media (max-width: 640px) {
+  .footer-main { grid-template-columns: 1fr 1fr; gap: 32px; padding: 40px 16px 32px; }
+  .footer-brand { grid-column: 1 / -1; }
+  .footer-bottom { flex-direction: column; text-align: center; padding: 16px; }
+}
+@media (max-width: 360px) {
+  .footer-main { grid-template-columns: 1fr; }
+}
+/*--- Responsivo copy Mobile --- */
+@media (max-width: 600px) {
+    .footer-bottom {
+        flex-direction: column; 
+        gap: 10px;
+        min-height: auto;
+    }
+/*--- copy fluxo normal + deslocamento --- */
+    .footer-copy {
+        position: static; 
+        transform: none; 
+        order: 1;         
+    }
+/*--- Tag "Press Start to Play" --- */
+    .footer-badge {
+        margin-left: 0;   
+        order: 2;   
+    }
+}
+
+/*--- RESPONSIVIDADE FOOTER --- */
+@media (max-width:1100px) {
+  .product-page { grid-template-columns:1fr 1fr; }
+  .purchase-box { grid-column:1/-1; position:static; }
+  .reviews-layout { grid-template-columns:200px 1fr; }
+  .related-grid { grid-template-columns:repeat(3,1fr); }
+  .footer-main { grid-template-columns:1.4fr 1fr 1fr; }
+  .footer-brand { grid-column:1/-1; }
+}
+@media (max-width:768px) {
+  .product-page { grid-template-columns:1fr; }
+  .gallery { grid-column:1; }
+  .product-info { grid-column:1; }
+  .reviews-layout { grid-template-columns:1fr; }
+  .reviews-summary { flex-direction:row; text-align:left; flex-wrap:wrap; }
+  .related-grid { grid-template-columns:repeat(2,1fr); }
+  .nav-link,.btn-anunciar { display:none; }
+  .logo-img { height:44px; }
+  .footer-main { grid-template-columns:1fr 1fr; gap:32px; padding:40px 16px 32px; }
+  .footer-brand { grid-column:1/-1; }
+  .footer-bottom { flex-direction:column; text-align:center; }
+}
+@media (max-width:480px) {
+  .product-page,.product-bottom { padding:0 14px 48px; }
+  .breadcrumb { padding:12px 14px; }
+  .related-grid { grid-template-columns:repeat(2,1fr); }
+}
+
+/*--- RESPONSIVIDADE TEXTOS CARD --- */
+@media (max-width: 1100px) { 
+    .product-grid { grid-template-columns: repeat(3, 1fr); } 
+}
+
+@media (max-width: 700px) { 
+    .product-grid { grid-template-columns: repeat(2, 1fr); } 
+    .hero-title-lg { font-size: 28px; }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* teste (não apagar) */
+/* MOBILE MENU app.css
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.95);
+  z-index: 200;
+  flex-direction: column;
+  padding: 32px 24px;
+  gap: 24px;
+  animation: slide-in .25s ease both;
+}
+.mobile-overlay.open { display: flex; }
+.mobile-close {
+  align-self: flex-end;
+  background: none; border: none;
+  color: var(--white); font-size: 28px; cursor: pointer;
+}
+.mobile-cat-list { display: flex; flex-direction: column; gap: 4px; }
+.mobile-cat-list button {
+  background: none; border: none;
+  color: #bbb;
+  font-family: var(--font-body);
+  font-size: 18px; font-weight: 600;
+  text-align: left;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gray-800);
+  cursor: pointer;
+  transition: color .2s;
+}
+.mobile-cat-list button:hover,
+.mobile-cat-list button.active { color: var(--yellow); }
+
+Design responsivo - sistema adaptavel
+@media (max-width: 768px) {
+  .nav-link    { display: none; }
+  .btn-anunciar { display: none; }
+  .search-wrap { max-width: unset; }
+  .logo-img    { height: 44px; }
+  .hero-bg     { min-height: 260px; padding: 32px 16px 40px; }
+}
+@media (max-width: 480px) {
+  .nav-top       { padding: 10px 14px; gap: 12px; }
+  .nav-sub-inner { padding: 0 14px; }
+  #products      { padding: 28px 14px 56px; }
+} */
